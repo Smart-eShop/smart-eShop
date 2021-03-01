@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        {
+
             $admin= new User ([
                 'name' => 'Admin',
                 'email' => 'admin@smarteshop.com',
@@ -24,17 +24,13 @@ class UserSeeder extends Seeder
                 'last_name' => 'Admin',
                 'password' => Hash::make('admin123'),
             ]);
-            $admin->save();
-            $role = Role::where('role', '=', 'Admin')->get('id');
-            $admin->roles()->sync(1,false);
 
-        }
-
+        $admin->save();
+        $admin->roles()->sync(1, false);
+       
         $faker = Faker::create();
-
-        foreach (range(1,7) as $index) {
-            $fakers = new User([
-
+        foreach (range(1,8) as $fakeUser) {
+            $fakeUser =new User([
                 'name' => $faker->userName,
                 'email' => $faker->email,
                 'first_name'=> $faker->firstName,
