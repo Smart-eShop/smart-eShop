@@ -23,9 +23,9 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'password' => Hash::make($request->password),
         ]);
-//        $user->roles()->attach(2);
+        $user->roles()->attach(2);
 
-        return response()->json($user);
+        return response()->json($user, 200);
     }
 
 
