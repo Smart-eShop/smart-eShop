@@ -16,8 +16,20 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'first_name',
+        'last_name',
+        'address',
+        'password'
     ];
+
+    public function roles(){
+
+        return $this->belongsToMany(Role::class, 'role_users', 'role_id', 'user_id');
+    }
+
+
 
     /**
      * The attributes that should be hidden for arrays.
