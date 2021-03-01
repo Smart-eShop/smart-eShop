@@ -13,20 +13,21 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-    Role::create([
-        'role' => 'Admin',
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now()
-    ]);
-    Role::create([
-        'role' => 'Seller',
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now()
-    ]);
-    Role::create([
-        'role' => 'Buyer',
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now()
-    ]);
-}
+        Role::create([
+            'role' => 'Admin',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        Role::create([
+            'role' => 'Seller',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        Role::create([
+            'role' => 'Buyer',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+    }
 }
