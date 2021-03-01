@@ -10,5 +10,5 @@ Run composer install
 
 Run php artisan key:generate
 
-php artisan migrate
+php artisan migrate--seed
 
