@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
         $admin->save();
         $admin->roles()->sync(1, false);
-       
+
         $faker = Faker::create();
         foreach (range(1,8) as $fakeUser) {
             $fakeUser =new User([
@@ -38,10 +38,9 @@ class UserSeeder extends Seeder
                 'address'=> $faker->address,
                 'password' => bcrypt('secret'),
             ]);
-            $fakers->save();
-            $fakers->roles()->attach(3);
+            $fakeUser->save();
+            $fakeUser->roles()->attach(3);
         }
-
     }
 }
 
