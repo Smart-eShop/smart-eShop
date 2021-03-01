@@ -14,5 +14,7 @@ php artisan migrate--seed
 
 
 Fronted
+
 Go to the sub-folder cd fronted
+
 npm install
