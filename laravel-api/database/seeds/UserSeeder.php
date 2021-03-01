@@ -1,5 +1,7 @@
 <?php
 
+use App\Role;
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +27,7 @@ class UserSeeder extends Seeder
         }
 
         $faker = Faker::create();
-        foreach (range(1,7) as $index) {
+        foreach (range(1,8) as $index) {
             DB::table('users')->insert([
                 'name' => $faker->userName,
                 'email' => $faker->email,
@@ -35,5 +37,10 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('secret'),
             ]);
         }
+
+       /* foreach (User::all() as $user) {
+            $roles = \App\Role::inRandomOrder()->take(rand(2, 3))->pluck('id');
+            $user->roles()->attach($roles);
+        }*/
     }
 }
