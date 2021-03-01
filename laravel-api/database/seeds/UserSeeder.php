@@ -12,23 +12,29 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
+     * @return User
      */
     public function run()
     {
         {
-            DB::table('users')->insert([
+            $admin= new User ([
                 'name' => 'Admin',
                 'email' => 'admin@smarteshop.com',
                 'first_name' => 'Admin',
                 'last_name' => 'Admin',
                 'password' => Hash::make('admin123'),
             ]);
+            $admin->save();
+            $role = Role::where('role', '=', 'Admin')->get('id');
+            $admin->roles()->sync(1,false);
+
         }
 
         $faker = Faker::create();
-        foreach (range(1,8) as $index) {
-            DB::table('users')->insert([
+
+        foreach (range(1,7) as $index) {
+            $fakers = new User([
+
                 'name' => $faker->userName,
                 'email' => $faker->email,
                 'first_name'=> $faker->firstName,
@@ -36,11 +42,10 @@ class UserSeeder extends Seeder
                 'address'=> $faker->address,
                 'password' => bcrypt('secret'),
             ]);
+            $fakers->save();
+            $fakers->roles()->attach(3);
         }
 
-       /* foreach (User::all() as $user) {
-            $roles = \App\Role::inRandomOrder()->take(rand(2, 3))->pluck('id');
-            $user->roles()->attach($roles); //bandoma daryt kad i pivot table nueitu
-        }*/
     }
 }
+
