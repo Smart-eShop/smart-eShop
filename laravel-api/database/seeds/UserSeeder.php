@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
 
        /* foreach (User::all() as $user) {
             $roles = \App\Role::inRandomOrder()->take(rand(2, 3))->pluck('id');
-            $user->roles()->attach($roles);
+            $user->roles()->attach($roles); //bandoma daryt kad i pivot table nueitu
         }*/
     }
 }
