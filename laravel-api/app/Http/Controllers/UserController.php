@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,9 +24,13 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'password' => Hash::make($request->password),
         ]);
-        $user->roles()->attach(2);
 
-        return response()->json($user, 200);
+
+       $role = Role::where('role','=','Buyer')->get('id');
+       $user->roles()->attach($role);
+
+        return response()->json($user,200);
+
     }
 
 

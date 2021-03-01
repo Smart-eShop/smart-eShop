@@ -12,21 +12,22 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
+     * @return User
      */
     public function run()
     {
 
-          $admin= new User ([
+            $admin= new User ([
                 'name' => 'Admin',
                 'email' => 'admin@smarteshop.com',
                 'first_name' => 'Admin',
                 'last_name' => 'Admin',
                 'password' => Hash::make('admin123'),
             ]);
+
         $admin->save();
         $admin->roles()->sync(1, false);
-
+       
         $faker = Faker::create();
         foreach (range(1,8) as $fakeUser) {
             $fakeUser =new User([
@@ -37,8 +38,10 @@ class UserSeeder extends Seeder
                 'address'=> $faker->address,
                 'password' => bcrypt('secret'),
             ]);
-            $fakeUser->save();
-            $fakeUser->roles()->attach(3);
+            $fakers->save();
+            $fakers->roles()->attach(3);
         }
+
     }
 }
+
