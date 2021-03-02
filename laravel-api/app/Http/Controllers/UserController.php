@@ -25,11 +25,12 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $accessToken = $user->createToken('authToken')->accessToken;
 
        $role = Role::where('role','=','Buyer')->get('id');
        $user->roles()->attach($role);
 
-        return response()->json($user,200);
+        return response()->json(['user'=>$user, 'access_token'=>$accessToken],200);
 
     }
 

@@ -17,7 +17,7 @@ class HomeController extends Controller
         // $user = User::find(1);
         //  $user->roles()->attach(1);
         // dd($user->roles);
-        return view('home');
+        return view('welcome');
     }
 
     /**
