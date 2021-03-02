@@ -1,15 +1,14 @@
-import Login from './components/Login'
-import './App.css';
+
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Register from './components/Register';
+import Main from './components/Main';
 
 
 function App() {
   return (
     <div>
-<Login/>
-<Register/>
-</div>
+      <Main />
+    </div>
   );
 }
 
