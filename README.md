@@ -10,7 +10,9 @@ Run composer install
 
 Run php artisan key:generate
 
-php artisan migrate--seed
+php artisan migrate --seed
+
+Run php artisan passport:install
 
 
 Fronted
