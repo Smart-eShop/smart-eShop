@@ -19,4 +19,14 @@ Fronted
 
 Go to the sub-folder cd fronted
 
-npm install
+Go to user-side 
+
+### `npm install`
+
+### `npm start`
+
+Go to admin side
+
+### `npm install`
+
+### `npm start`
