@@ -23,6 +23,8 @@ Route::post('register', 'UserController@registerUser');
 //Admin login
 Route::post('login/admin', 'AdminController@adminLogin');
 
+Route::post('role/update', 'AdminController@updateRole'); //Pakeisti role useriui
+
 Route::post('login', 'UserController@userLogin');
 
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
