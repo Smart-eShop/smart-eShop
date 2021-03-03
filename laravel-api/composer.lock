@@ -1421,6 +1421,7 @@
         },
         {
 
+
             "name": "laravel/ui",
             "version": "v2.4.0",
             "source": {
@@ -1456,6 +1457,7 @@
                 "psr-4": {
                     "Laravel\\Ui\\": "src/",
                     "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+
 
                 }
             },
@@ -1494,25 +1496,33 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/lcobucci/jwt/zipball/b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
                 "reference": "b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
+
                 "shasum": ""
             },
             "require": {
+                "ext-hash": "*",
+                "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
+
+
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
+
                 "infection/infection": "^0.20",
                 "lcobucci/coding-standard": "^6.0",
                 "mikey179/vfsstream": "^1.6",
                 "phpbench/phpbench": "^0.17",
+
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
+
                 "phpunit/phpunit": "^9.4"
             },
             "type": "library",
@@ -1544,7 +1554,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
+
                 "source": "https://github.com/lcobucci/jwt/tree/4.0.1"
+
             },
             "funding": [
                 {
@@ -1556,7 +1568,9 @@
                     "type": "patreon"
                 }
             ],
+
             "time": "2021-01-28T00:13:50+00:00"
+
         },
         {
             "name": "league/commonmark",
@@ -7459,6 +7473,8 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "source": "https://github.com/sebastianbergmann/comparator/tree/4.0.6"
+
+
             },
             "funding": [
                 {
@@ -7516,6 +7532,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/complexity/issues",
                 "source": "https://github.com/sebastianbergmann/complexity/tree/2.0.2"
+
             },
             "funding": [
                 {
@@ -7523,6 +7540,8 @@
                     "type": "github"
                 }
             ],
+
+
             "time": "2020-10-26T15:52:27+00:00"
         },
         {
@@ -7786,6 +7805,8 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
                 "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.2"
+
+
             },
             "funding": [
                 {
@@ -7843,6 +7864,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/lines-of-code/issues",
                 "source": "https://github.com/sebastianbergmann/lines-of-code/tree/1.0.3"
+
             },
             "funding": [
                 {
@@ -7850,6 +7872,8 @@
                     "type": "github"
                 }
             ],
+
+
             "time": "2020-11-28T06:42:11+00:00"
         },
         {
