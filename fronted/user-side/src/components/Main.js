@@ -7,7 +7,7 @@ import Contact from './Contact/Contact';
 import Products from './Products/Products';
 import "../neumorphism.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar/Navbar';
 import TermsConditions from "../components/TermsConditions";
 
 
@@ -18,7 +18,7 @@ function Main() {
     <Switch>
       <Route path='/login' exact component={Login} />
       <Route path='/register' exact component={Register} />
-      <Route path='/home' exact component={Products} />
+      <Route path='/products' exact component={Products} />
       <Route path='/about' exact component={About} />
       <Route path='/contact-us' exact component={Contact} />
       <Route path='/terms-conditions' exact component={TermsConditions} />
