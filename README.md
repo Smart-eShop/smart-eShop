@@ -23,6 +23,6 @@ Go to user-side
 ### `npm install`
 ### `npm start`
 
-npm install
+Go to admin-side
 ### `npm install`
 ### `npm start`
