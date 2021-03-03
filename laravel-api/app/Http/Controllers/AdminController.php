@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DB;
 
 class AdminController extends Controller
 {
@@ -26,7 +27,7 @@ class AdminController extends Controller
     }
 
 
-    //roles pakeitimas
+    //roles pakeitimas // neveikia  plius route irgi blogas
     public function updateRole(Request $request, $role_id)
     {
         // patikrinti ar adminas prisijunges
@@ -39,8 +40,10 @@ class AdminController extends Controller
             ->join('roles', 'role_users.role_id', 'roles.id')
             ->where('role_users.user_id', $userId)
             ->get();
+
         $roles = [];
         foreach($hasRole as $role) {
+
             $roles[] = $role->role_id;
         }
         //
@@ -50,7 +53,7 @@ class AdminController extends Controller
         $role = Role::where('id', $role_id)->first();
         $role->users()->attach($userId);
 
-        return response()->json(["message" => "Role sekmingai prideta ",200]);
+        return response()->json(["message" => "Role sekmingai pakeista ",200]);
 
     }
 }
