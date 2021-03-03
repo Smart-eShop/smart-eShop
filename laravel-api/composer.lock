@@ -1353,16 +1353,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "daae1c43f1300fe88c05d83db6f3d8f76677ad88"
+                "reference": "04ad32c1a3328081097a181875733fa51f402083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/daae1c43f1300fe88c05d83db6f3d8f76677ad88",
-                "reference": "daae1c43f1300fe88c05d83db6f3d8f76677ad88",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/04ad32c1a3328081097a181875733fa51f402083",
+                "reference": "04ad32c1a3328081097a181875733fa51f402083",
                 "shasum": ""
             },
             "require": {
@@ -1415,13 +1415,11 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.6.0"
+                "source": "https://github.com/laravel/tinker/tree/v2.6.1"
             },
-            "time": "2021-01-26T20:35:18+00:00"
+            "time": "2021-03-02T16:53:12+00:00"
         },
         {
-
-
             "name": "laravel/ui",
             "version": "v2.4.0",
             "source": {
@@ -1457,8 +1455,6 @@
                 "psr-4": {
                     "Laravel\\Ui\\": "src/",
                     "Illuminate\\Foundation\\Auth\\": "auth-backend/"
-
-
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1467,7 +1463,6 @@
             ],
             "authors": [
                 {
-
                     "name": "Taylor Otwell",
                     "email": "taylor@laravel.com"
                 }
@@ -1482,7 +1477,67 @@
                 "source": "https://github.com/laravel/ui/tree/v2.4.0"
             },
             "time": "2020-09-11T15:31:52+00:00"
-
+        },
+        {
+            "name": "lcobucci/clock",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/clock.git",
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/353d83fe2e6ae95745b16b3d911813df6a05bfb3",
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "infection/infection": "^0.17",
+                "lcobucci/coding-standard": "^6.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpunit/php-code-coverage": "9.1.4",
+                "phpunit/phpunit": "9.3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\Clock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Cobucci",
+                    "email": "lcobucci@gmail.com"
+                }
+            ],
+            "description": "Yet another clock abstraction",
+            "support": {
+                "issues": "https://github.com/lcobucci/clock/issues",
+                "source": "https://github.com/lcobucci/clock/tree/2.0.x"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/lcobucci",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/lcobucci",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-08-27T18:56:02+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -1496,33 +1551,25 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/lcobucci/jwt/zipball/b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
                 "reference": "b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
-
                 "shasum": ""
             },
             "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-
-
                 "lcobucci/clock": "^2.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-
                 "infection/infection": "^0.20",
                 "lcobucci/coding-standard": "^6.0",
                 "mikey179/vfsstream": "^1.6",
                 "phpbench/phpbench": "^0.17",
-
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
                 "phpunit/php-invoker": "^3.1",
-
                 "phpunit/phpunit": "^9.4"
             },
             "type": "library",
@@ -1554,9 +1601,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-
                 "source": "https://github.com/lcobucci/jwt/tree/4.0.1"
-
             },
             "funding": [
                 {
@@ -1568,9 +1613,7 @@
                     "type": "patreon"
                 }
             ],
-
             "time": "2021-01-28T00:13:50+00:00"
-
         },
         {
             "name": "league/commonmark",
@@ -7473,8 +7516,6 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "source": "https://github.com/sebastianbergmann/comparator/tree/4.0.6"
-
-
             },
             "funding": [
                 {
@@ -7532,7 +7573,6 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/complexity/issues",
                 "source": "https://github.com/sebastianbergmann/complexity/tree/2.0.2"
-
             },
             "funding": [
                 {
@@ -7540,8 +7580,6 @@
                     "type": "github"
                 }
             ],
-
-
             "time": "2020-10-26T15:52:27+00:00"
         },
         {
@@ -7805,8 +7843,6 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
                 "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.2"
-
-
             },
             "funding": [
                 {
@@ -7864,7 +7900,6 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/lines-of-code/issues",
                 "source": "https://github.com/sebastianbergmann/lines-of-code/tree/1.0.3"
-
             },
             "funding": [
                 {
@@ -7872,8 +7907,6 @@
                     "type": "github"
                 }
             ],
-
-
             "time": "2020-11-28T06:42:11+00:00"
         },
         {
