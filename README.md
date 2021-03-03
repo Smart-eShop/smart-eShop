@@ -1,6 +1,6 @@
 # Smart-eShop
 # How to use
-Back-end
+## Back-end
 
 Go to the sub-folder cd laravel-api
 
@@ -15,8 +15,14 @@ php artisan migrate --seed
 Run php artisan passport:install
 
 
-Fronted
+## Front-end
 
 Go to the sub-folder cd fronted
 
-npm install
+Go to user-side
+### `npm install`
+### `npm start`
+
+Go to admin-side
+### `npm install`
+### `npm start`

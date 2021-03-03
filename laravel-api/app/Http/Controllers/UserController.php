@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -17,29 +18,66 @@ class UserController extends Controller
      */
     protected function registerUser(Request $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'password' => Hash::make($request->password),
+
+        $validation = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            ]);
+
+
+        $secret = env('GOOGLE_RECAPTCHA_SECRET');
+        $captchaId = $request->input('recaptcha');
+        $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
+
+
+        if($responseCaptcha->success == true) {
+            if ($validation->fails()) {
+                return response()->json(["error" => $validation->errors()]);
+            } else {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'password' => bcrypt($request->password),
+                ]);
+
+                $accessToken = $user->createToken('authToken')->accessToken;
+                $role = Role::where('role', '=', 'Buyer')->get('id');
+                $user->roles()->attach($role);
+
+
+                return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
+            }
+            } else {
+                return response()->json(['error'=>[
+                    'recaptcha' => ['Recaptcha error']
+                ]]);
+            }
+        }
+
+    public function userLogin(Request $request)
+    {
+        $loginData = $request->validate([
+            'name' => 'required',
+            'password' => 'required'
         ]);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        $role = Role::all();
 
-       $role = Role::where('role','=','Buyer')->get('id');
-       $user->roles()->attach($role);
+        if(!auth()->attempt($loginData)){
+            return response()->json(['message' => 'Invalid login details!']);
+        } elseif (!auth()->attempt($loginData) && $role->role = 'Admin'){
+            return response()->json(['message' => 'If you are administrator, you should login via login/admin!']);
+        }
 
-        return response()->json(['user'=>$user, 'access_token'=>$accessToken],200);
+        $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
+        return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -48,7 +86,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -59,7 +97,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -70,7 +108,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -81,8 +119,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -93,7 +131,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
