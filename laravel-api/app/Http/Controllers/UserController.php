@@ -21,7 +21,7 @@ class UserController extends Controller
     {
 
         $validation = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             ]);
@@ -31,8 +31,8 @@ class UserController extends Controller
         $captchaId = $request->input('recaptcha');
         $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
 
+//        if($responseCaptcha->success == true) {
 
-      //  if($responseCaptcha->success == true) {
             if ($validation->fails()) {
                 return response()->json(["error" => $validation->errors()]);
             } else {
@@ -51,11 +51,13 @@ class UserController extends Controller
 
                 return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
             }
-   /*         } else {
-                return response()->json(['error'=>[
-                    'recaptcha' => ['Recaptcha error']
-                ]]);
-            }*/
+
+//            } else {
+//                return response()->json(['error'=>[
+//                    'recaptcha' => ['Recaptcha error']
+//                ]]);
+//            }
+
         }
 
     public function userLogin(Request $request)

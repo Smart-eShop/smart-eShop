@@ -1506,6 +1506,43 @@
                 }
             },
 
+            "time": "2020-09-11T15:31:52+00:00"
+        },
+        {
+            "name": "lcobucci/clock",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/clock.git",
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/353d83fe2e6ae95745b16b3d911813df6a05bfb3",
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "infection/infection": "^0.17",
+                "lcobucci/coding-standard": "^6.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-deprecation-rules": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpunit/php-code-coverage": "9.1.4",
+                "phpunit/phpunit": "9.3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\Clock\\": "src"
+                }
+            },
+
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1546,7 +1583,6 @@
 
                 "url": "https://api.github.com/repos/lcobucci/jwt/zipball/b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
                 "reference": "b80c4876a010cd8bfa9c78de64c930bb2fc8fb9a",
-
                 "shasum": ""
             },
             "require": {
@@ -1603,9 +1639,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-
                 "source": "https://github.com/lcobucci/jwt/tree/4.0.1"
-
             },
             "funding": [
                 {
@@ -1617,9 +1651,7 @@
                     "type": "patreon"
                 }
             ],
-
             "time": "2021-01-28T00:13:50+00:00"
-
         },
         {
             "name": "league/commonmark",
