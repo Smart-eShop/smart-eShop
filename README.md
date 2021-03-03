@@ -15,7 +15,7 @@ php artisan migrate --seed
 Run php artisan passport:install
 
 
-## Fronted
+## Front-end
 
 Go to the sub-folder cd fronted
 
