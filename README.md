@@ -27,7 +27,7 @@ Go to user-side
 
 ### `npm start`
 
-Go to admin side
+Go to admin-side
 
 ### `npm install`
 
