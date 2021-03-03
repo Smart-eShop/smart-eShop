@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\RoleUser;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class UserController extends Controller
         $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
 
 
-        if($responseCaptcha->success == true) {
+      //  if($responseCaptcha->success == true) {
             if ($validation->fails()) {
                 return response()->json(["error" => $validation->errors()]);
             } else {
@@ -50,11 +51,11 @@ class UserController extends Controller
 
                 return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
             }
-            } else {
+   /*         } else {
                 return response()->json(['error'=>[
                     'recaptcha' => ['Recaptcha error']
                 ]]);
-            }
+            }*/
         }
 
     public function userLogin(Request $request)
@@ -64,17 +65,17 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
-        $role = Role::all();
-
         if(!auth()->attempt($loginData)){
             return response()->json(['message' => 'Invalid login details!']);
-        } elseif (!auth()->attempt($loginData) && $role->role = 'Admin'){
+        } elseif (auth()->user()->email == "admin@smarteshop.com"){
             return response()->json(['message' => 'If you are administrator, you should login via login/admin!']);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $user_id = auth()->user()->id;
+        $user_name = auth()->user()->name;
 
-        return response()->json(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return response()->json(['user_id' => $user_id, 'username' => $user_name, 'access_token' => $accessToken]);
     }
 
 
