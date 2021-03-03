@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@smarteshop.com',
                 'first_name' => 'Admin',
                 'last_name' => 'Admin',
-                'password' => Hash::make('admin123'),
+                'password' => bcrypt('admin123'),
             ]);
 
         $admin->save();
