@@ -15,15 +15,16 @@ class AdminController extends Controller
 
         if(!$token = auth()->attempt($credentials)){
             return response()->json(['error' => 'duomenys netesingi']);
+        }elseif (auth()->user()->email != 'admin@smarteshop.com'){
+            return response()->json(['error' => 'Tu neturi admino teisiu']);
         }
 
-        $userId = auth()->user()->id;
-        // reikttu role priskirti kai useri kuriame, tada galetume patikrinti ar adminas turi sita role
-        $role = Role::all();
-        $x = User::with('roles')->get();
+        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $userRole = Role::where('role', '=', 'Admin')->get();
 
-        return response()->json(['token' => $token, 'role' => 'Admin', 'Userio-id' => $userId, 'roles' => $role,'x' => $x]);
+        return response()->json(['token' => $token, 'role' => 'Admin', 'userRole' => $userRole, 'access_token'=> $accessToken]);
     }
+
 
     //roles pakeitimas
     public function updateRole(Request $request, $role_id)
