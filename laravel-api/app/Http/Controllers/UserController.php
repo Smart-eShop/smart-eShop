@@ -6,8 +6,7 @@ use App\Role;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -19,22 +18,44 @@ class UserController extends Controller
      */
     protected function registerUser(Request $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'password' => Hash::make($request->password), //gal reikia naudoti ne hash o ta bcrypt?
-        ]);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        $validation = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            ]);
 
-        $role = Role::where('role', '=', 'Buyer')->get('id');
-        $user->roles()->attach($role);
 
-        return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
+        $secret = env('GOOGLE_RECAPTCHA_SECRET');
+        $captchaId = $request->input('recaptcha');
+        $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
 
-    }
+
+        if($responseCaptcha->success == true) {
+            if ($validation->fails()) {
+                return response()->json(["error" => $validation->errors()]);
+            } else {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'password' => bcrypt($request->password),
+                ]);
+
+                $accessToken = $user->createToken('authToken')->accessToken;
+                $role = Role::where('role', '=', 'Buyer')->get('id');
+                $user->roles()->attach($role);
+
+
+                return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
+            }
+            } else {
+                return response()->json(['error'=>[
+                    'recaptcha' => ['Recaptcha error']
+                ]]);
+            }
+        }
 
     public function userLogin(Request $request)
     {
@@ -57,11 +78,6 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
