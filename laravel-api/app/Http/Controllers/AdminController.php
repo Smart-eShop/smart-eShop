@@ -6,6 +6,7 @@ use App\Role;
 use App\RoleUser;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DB;
 
 class AdminController extends Controller
 {
@@ -25,6 +26,7 @@ class AdminController extends Controller
 
         return response()->json(['token' => $token, 'role' => 'Admin', 'userRole' => $userRole, 'access_token' => $accessToken]);
     }
+
 
     //roles pakeitimas
     public function updateRole(Request $request, $id)
