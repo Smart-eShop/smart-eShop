@@ -27,7 +27,8 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::post('login/admin', 'AdminController@adminLogin');
 
 Route::post('updateRole/user_id={user_id}', 'AdminController@updateRole'); //Prideti role useriui
-
+// perziureti uri, ar gerai taip ar kitaip isdelioti?
+Route::post('ban/delete/user_id={user_id}', 'AdminController@banOrDelete');
 
 
 
