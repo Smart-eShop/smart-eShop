@@ -13,6 +13,9 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import './Login.css';
 import Alert from '@material-ui/lab/Alert';
+import Image from '../Login/login-bg.jpg';
+import Box from '@material-ui/core/Box';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '4em',
     paddingLeft: '4em',
     paddingBottom: '4em',
-    paddingTop: '4em',
+    paddingTop: '5em',
     marginBottom: '3em',
     borderRadius: '1.5%',
   },
@@ -32,11 +35,24 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(6),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  container: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(8),
+  },
+  box: {
+    backgroundImage: `url(${Image})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    opacity: '0.9',
+    height: '700px',
+    paddingTop: '2em'
+  }
+
 
 }));
 
@@ -58,77 +74,74 @@ export default function Login() {
         }
       })
 
-  return (
-    <div className="loginBg">
-      <Container component="main" maxWidth='xs' className={classes.main}>
-      <CssBaseline />
-      <div className={classes.paper}>
-      <Avatar className={classes.large}  />
-        <form className={classes.form} onSubmit={handleSubmit} >
-          <TextField
-           onChange={handleChange}
-           onBlur={handleBlur}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-           {touched.username && errors.username ? (
+ 
+      return (
+        <Box className={classes.box}>
+        <Container component="main" maxWidth="xs" className={classes.container}>
+          <CssBaseline />
+          <div className={classes.paper}>
+          <Avatar className={classes.large}  />
+            <form className={classes.form} onSubmit={handleSubmit} >
+              <TextField
+              onChange={handleChange}
+              onBlur={handleBlur}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+               {touched.username && errors.username ? (
         <div>{errors.username}</div>
       ): null}
-          <TextField
-        value={values.password}
-         onChange={handleChange}
-         onBlur={handleBlur}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-       {touched.password && errors.password ? (
+              <TextField              
+              onChange={handleChange}
+              onBlur={handleBlur}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+               {touched.password && errors.password ? (
         <div>{errors.password}</div>
       ): null}
-
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-           <Grid item xs>
-              <Link href="/remind-password" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="default"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-    
-          <Grid container>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
-    </div>
-    
-  );
-}
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+               <Grid item xs>
+                  <Link href="/remind-password" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="default"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        </Container>
+        </Box>
+      );
+    }

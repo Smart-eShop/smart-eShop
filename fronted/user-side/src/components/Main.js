@@ -9,6 +9,7 @@ import "../neumorphism.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import TermsConditions from "../components/TermsConditions";
+import RemindPassword from './RemindPassword/RemindPassword';
 
 
 function Main() {
@@ -22,6 +23,7 @@ function Main() {
       <Route path='/about' exact component={About} />
       <Route path='/contact-us' exact component={Contact} />
       <Route path='/terms-conditions' exact component={TermsConditions} />
+      <Route path='/remind-password' exact component={RemindPassword} />
     </Switch>
   </Router>
   );
