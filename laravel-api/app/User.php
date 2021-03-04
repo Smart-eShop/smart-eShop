@@ -38,10 +38,19 @@ class User extends Authenticatable
         return $this->roles()->where('role', $role)->exists();
         //return null !== $this->roles()->where('role', $role)->first();
     }
+    public function hasRole($role)
+    {//testing
+        return null !== $this->roles()->where('role', $role)->first();
+    }
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new PasswordResetNotification($token));
+    }
+
+    public function bandeleteusers(){
+
+        return $this->belongsTo(BanDeleteUser::class);
     }
 
     /**

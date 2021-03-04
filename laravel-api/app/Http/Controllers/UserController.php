@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\BanDeleteUser;
 use App\Role;
 use App\RoleUser;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -75,6 +79,20 @@ class UserController extends Controller
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
         $user_id = auth()->user()->id;
         $user_name = auth()->user()->name;
+
+        //pirmas variantas
+//        $banned = DB::table('ban_delete_users')->select('*')
+//            ->where('user_id', auth()->user()->id)
+//            ->where('is_banned',1)->get();
+//        if (count($banned) > 0)
+//            return response()->json(["message" => "User is banned"], 200);
+
+        //antras variantas
+        $banned2 = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+        foreach ($banned2 as $bannedUser)
+            if($user_id == $bannedUser->user_id)
+                return response()->json(["message" => "User is banned"], 200);
+
 
         return response()->json(['user_id' => $user_id, 'username' => $user_name, 'access_token' => $accessToken]);
     }
