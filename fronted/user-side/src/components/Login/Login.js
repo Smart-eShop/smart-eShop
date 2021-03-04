@@ -1,57 +1,134 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import "./Login.css";
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import * as Yup from 'yup';
+import {useFormik} from 'formik';
+import './login.css';
+import Alert from '@material-ui/lab/Alert';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: "#eeeeee",
+    paddingRight: '4em',
+    paddingLeft: '4em',
+    paddingBottom: '4em',
+    paddingTop: '4em',
+    marginBottom: '3em',
+    borderRadius: '1.5%',
+  },
+  avatar: {
+    marginBottom: theme.spacing(4),
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(4),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+
+}));
+
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const classes = useStyles();
 
-  function validateForm() {
-    return username.length > 0 && password.length > 0;
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
+  const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
+        initialValues: {
+          username: '',
+          password: ''
+        },
+        validationSchema: Yup.object({
+          username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+          password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+        }),
+        onSubmit: ({username, password}) => {
+          alert("You have successfully logged in");
+        }
+      })
 
   return (
-    <div className="Login"> <h1 className="text-center">Sign In</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
+    <div className="loginBg">
+      <Container component="main" maxWidth='xs' className={classes.main}>
+      <CssBaseline />
+      <div className={classes.paper}>
+      <Avatar className={classes.large}  />
+        <form className={classes.form} onSubmit={handleSubmit} >
+          <TextField
+           onChange={handleChange}
+           onBlur={handleBlur}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
-            type="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
           />
-        </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+           {touched.username && errors.username ? (
+        <div>{errors.username}</div>
+      ): null}
+          <TextField
+        value={values.password}
+         onChange={handleChange}
+         onBlur={handleBlur}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            autoComplete="current-password"
           />
-        </Form.Group>
-        <Col xs="auto">
-        <Form.Group as={Row} controlId="formHorizontalCheck">
-    <Col sm={{ span: 10, offset: 2 }}>
-      <Form.Check label="Remember me" />
-    </Col>
-  </Form.Group>
-    </Col>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Sign in
-        </Button>
-      </Form>
-      <div className="text-center">
-         <a href='/register'>Create account</a>
+       {touched.password && errors.password ? (
+        <div>{errors.password}</div>
+      ): null}
+
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+           <Grid item xs>
+              <Link href="/remind-password" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="default"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+    
+          <Grid container>
+            <Grid item>
+              <Link href="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
       </div>
-     
+    </Container>
     </div>
+    
   );
 }
