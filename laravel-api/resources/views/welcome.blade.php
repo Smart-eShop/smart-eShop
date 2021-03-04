@@ -79,10 +79,13 @@
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+            <div class="content"> <ul>
+                @foreach($users as $user)
+
+                        <li>{{$user->name}}</li>
+
+                @endforeach
+                </ul>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
