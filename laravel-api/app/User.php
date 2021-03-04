@@ -32,9 +32,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id')
             ->withTimestamps();
     }
-    public function getIsAdminAttribute($role)
+
+    public function hasRole($role)
     {
         return $this->roles()->where('role', $role)->exists();
+        //return null !== $this->roles()->where('role', $role)->first();
     }
 
     public function sendPasswordResetNotification($token)
