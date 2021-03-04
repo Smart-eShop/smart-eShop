@@ -29,13 +29,12 @@ class User extends Authenticatable
 
     public function roles()
     {
-
         return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id')
             ->withTimestamps();
     }
-    public function getIsAdminAttribute()
+    public function getIsAdminAttribute($role)
     {
-        return $this->roles()->where('id', 1)->exists();
+        return $this->roles()->where('role', $role)->exists();
     }
 
     public function sendPasswordResetNotification($token)

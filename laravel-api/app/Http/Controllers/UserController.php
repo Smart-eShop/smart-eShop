@@ -48,7 +48,6 @@ class UserController extends Controller
                 $role = Role::where('role', '=', 'Buyer')->get('id');
                 $user->roles()->attach($role);
 
-
                 return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
             }
 
@@ -69,7 +68,7 @@ class UserController extends Controller
 
         if(!auth()->attempt($loginData)){
             return response()->json(['message' => 'Invalid login details!']);
-        } elseif (auth()->user()->email == "admin@smarteshop.com"){
+        } elseif (auth()->user()->getIsAdminAttribute('Admin')){
             return response()->json(['message' => 'If you are administrator, you should login via login/admin!']);
         }
 

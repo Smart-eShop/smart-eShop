@@ -19,14 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 //Auth
 Route::post('register', 'UserController@registerUser');
+Route::post('login', 'UserController@userLogin');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //Admin login
 Route::post('login/admin', 'AdminController@adminLogin');
 
-Route::post('role/update', 'AdminController@updateRole'); //Pakeisti role useriui
+Route::post('updateRole/user_id={user_id}', 'AdminController@updateRole'); //Prideti role useriui
 
-Route::post('login', 'UserController@userLogin');
 
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+
 
