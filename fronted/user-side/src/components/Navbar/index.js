@@ -3,9 +3,7 @@ import {
     Nav,
     NavLink,
     Bars,
-    NavMenu,
-    NavBtn,
-    NavBtnLink
+    NavMenu
 } from './NavbarElement';
 
 const Navbar = () => {
@@ -29,14 +27,9 @@ const Navbar = () => {
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
                 </NavMenu>
-                <NavBtn>
-                    <NavBtnLink to='/login'> <div className="d-flex align-items-center">
-                        <a href="/home" target="_blank" className="btn btn-white d-none d-md-inline-block"><i className="fas fa-book" />SIGN IN</a>
-                        <button className="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon" />
-                        </button>
-                    </div></NavBtnLink>
-                </NavBtn>
+                <NavLink to='/login' activeStyle>
+                        SIGN IN
+          </NavLink>
             </Nav>
         </>
     );

@@ -1,10 +1,10 @@
-@media all and (min-width: 480px) {
-    .Login {
-      padding: 60px 0;
-    }
-  
-    .Login form {
-      margin: 0 auto;
-      max-width: 320px;
-    }
-  }
+.loginBg {
+    background-image: url('./login-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 700px;
+    background-position: center;
+    opacity: 0.9;
+    padding: 8em;
+}
+
