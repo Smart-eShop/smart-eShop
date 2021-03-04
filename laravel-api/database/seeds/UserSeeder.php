@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
             $admin= new User ([
                 'name' => 'Admin',
                 'email' => 'admin@smarteshop.com',

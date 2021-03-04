@@ -7,8 +7,8 @@ use App\Role;
 use App\RoleUser;
 use App\User;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class AdminController extends Controller
@@ -20,7 +20,7 @@ class AdminController extends Controller
 
         if (!$token) {
             return response()->json(['error' => 'Incorrect login data!']);
-        } elseif (!auth()->user()->getIsAdminAttribute('Admin')) {
+        } elseif (!auth()->user()->hasRole('Admin')) {
             return response()->json(['error' => "You don't have permission to login!"]);
         }
 
@@ -34,10 +34,12 @@ class AdminController extends Controller
     //roles pakeitimas
     public function updateRole(Request $request, $id)
     {
-//if(auth()->user()->getIsAdminAttribute('Admin'))
+        if((!auth('api')->check()) || (!auth()->user()->hasRole('Admin'))){
+            //Auth::user()->role->id==1
+            return response()->json(["message" => "You don't have perrmision to change role!"]);
+        }
         User::find($id)->roles()->sync([$request->role_id]);
         return response()->json(["message" => "Role changed successfully"], 200);
-
     }
 
     // userio baninimas ir trinimas

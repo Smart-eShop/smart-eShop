@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Image from '../Register/register-img.jpg';
 import ReCAPTCHA from "react-google-recaptcha";
+import * as Yup from 'yup';
+import {useFormik} from 'formik';
+import {ErrorMessage} from 'formik';
 
 function onChange(value) {
   console.log("Captcha value:", value);
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   avatar: {
+    marginTop: "2em",
     marginBottom: "2em",
     backgroundColor: '#9e9e9e',
     height: '3em',
@@ -57,8 +61,30 @@ const useStyles = makeStyles((theme) => ({
  }
 }));
 
-export default function SignInSide() {
+export default function Register() {
   const classes = useStyles();
+
+  const {handleSubmit, handleChange, values, touched, errors, setFieldValue,  handleBlur} = useFormik({
+    initialValues: {
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      password: ''
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      firstName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      lastName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      email:  Yup.string().email('Invalid email').required('Required'),
+      address: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+    }),
+    onSubmit: ({username, firstName, lastName, email, address, password}) => {
+      alert("You have successfully created account");
+    }
+  })
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -70,10 +96,12 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   variant="outlined"
                   required
                   fullWidth
@@ -82,9 +110,14 @@ export default function SignInSide() {
                   name="username"
                   autoComplete="username"
                 />
+                 {touched.username && errors.username ? (
+        <div>{errors.username}</div>
+      ): null}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -94,9 +127,14 @@ export default function SignInSide() {
                   label="First Name"
                   autoFocus
                 />
+                 {touched.firstName && errors.firstName ? (
+        <div>{errors.firstName}</div>
+      ): null}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   variant="outlined"
                   required
                   fullWidth
@@ -105,9 +143,14 @@ export default function SignInSide() {
                   name="lastName"
                   autoComplete="lname"
                 />
+                 {touched.lastName && errors.lastName ? (
+        <div>{errors.lastName}</div>
+      ): null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   variant="outlined"
                   required
                   fullWidth
@@ -116,9 +159,14 @@ export default function SignInSide() {
                   name="email"
                   autoComplete="email"
                 />
+                 {touched.email && errors.email ? (
+        <div>{errors.email}</div>
+      ): null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   variant="outlined"
                   required
                   fullWidth
@@ -127,9 +175,14 @@ export default function SignInSide() {
                   name="address"
                   autoComplete="address"
                 />
+                {touched.address && errors.address ? (
+        <div>{errors.address}</div>
+      ): null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                   variant="outlined"
                   required
                   fullWidth
@@ -139,6 +192,9 @@ export default function SignInSide() {
                   id="password"
                   autoComplete="current-password"
                 />
+                {touched.password && errors.password ? (
+        <div>{errors.password}</div>
+      ): null}
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -154,7 +210,7 @@ export default function SignInSide() {
               <Grid item>
                 <ReCAPTCHA 
 sitekey="Your client site key"
-onChange={onChange}
+onChange={(response) => setFieldValue("recaptcha", response)}
 />
               </Grid>
             </Grid>

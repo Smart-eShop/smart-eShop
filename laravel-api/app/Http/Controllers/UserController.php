@@ -72,7 +72,7 @@ class UserController extends Controller
 
         if(!auth()->attempt($loginData)){
             return response()->json(['message' => 'Invalid login details!']);
-        } elseif (auth()->user()->getIsAdminAttribute('Admin')){
+        } elseif (auth()->user()->hasRole('Admin')){
             return response()->json(['message' => 'If you are administrator, you should login via login/admin!']);
         }
 
