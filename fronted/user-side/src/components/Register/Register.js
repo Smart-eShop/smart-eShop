@@ -71,7 +71,8 @@ export default function Register() {
       lastName: '',
       email: '',
       address: '',
-      password: ''
+      password: '',
+      recaptcha: null,
     },
     validationSchema: Yup.object({
       username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
@@ -79,10 +80,11 @@ export default function Register() {
       lastName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       email:  Yup.string().email('Invalid email').required('Required'),
       address: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+      password: Yup.string().min(6, 'Password should be longer than 6 characters').required('Required'),
+      recaptcha: Yup.string().nullable().required("Required")
     }),
     onSubmit: ({username, firstName, lastName, email, address, password}) => {
-      alert("You have successfully created account");
+      alert("Account successfully created!");
     }
   })
 
@@ -102,6 +104,7 @@ export default function Register() {
                 <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
+                autoComplete="fname"
                   variant="outlined"
                   required
                   fullWidth
@@ -209,7 +212,7 @@ export default function Register() {
             <Grid container justify="center">
               <Grid item>
                 <ReCAPTCHA 
-sitekey="Your client site key"
+sitekey="6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a"
 onChange={(response) => setFieldValue("recaptcha", response)}
 />
               </Grid>

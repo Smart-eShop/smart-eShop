@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
-  const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
+  const {handleSubmit, handleChange, touched, errors, handleBlur} = useFormik({
         initialValues: {
           username: '',
           password: ''
@@ -68,12 +68,11 @@ export default function Login() {
           username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
           password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
         }),
-        onSubmit: ({username, password}) => {
-          alert("You have successfully logged in");
+        onSubmit: ({username, password}) => { 
+          alert("You have successfully logged in")
         }
       })
 
- 
       return (
         <Box className={classes.box}>
         <Container component="main" maxWidth="xs" className={classes.container}>
