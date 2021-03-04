@@ -17,6 +17,8 @@ class HomeController extends Controller
     {
         $users = User::with('roles')->get();
 
+
+
         return view('welcome', compact('users'));
 
     }

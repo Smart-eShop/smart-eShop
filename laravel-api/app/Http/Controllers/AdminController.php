@@ -6,13 +6,20 @@ use App\BanDeleteUser;
 use App\Role;
 use App\RoleUser;
 use App\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class AdminController extends Controller
 {
+//    public function __construct()
+//    {
+//        $this->middleware('auth', ['except' => ['adminLogin', 'banOrDelete']]);
+//    }
+
     public function adminLogin(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
@@ -43,17 +50,21 @@ class AdminController extends Controller
     }
 
     // userio baninimas ir trinimas
-    public function banOrDelete(Request $request, $id)
+    public function banOrDelete(Request $request, $id, Role $role)
     {
-        $admins = User::all();
-        $admin = $admins->hasRole('Admin');
+        $r = $role->role->first();
+        if(Gate::allows('ban', $r)){
+            return response()->json(["message" => "You are not Admin"], 200);
+        }
+//        if(!($request->user()->hasRole('Admin')))
+//                return response()->json(["message" => "You are not Admin"], 200);
 
         $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
 
         if($request->input('is_banned') == 1){
             foreach ($bannedList as $bannedUser)
                 if($bannedUser->user_id == $id) {
-                    return response()->json(["message" => "User already banned", 'admin' => $admin], 200);
+                    return response()->json(["message" => "User already banned"], 200);
                 }
                          BanDeleteUser::create([
                         'user_id' => $id,
