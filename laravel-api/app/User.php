@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Notifications\PasswordResetNotification;
+use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'password'
     ];
 
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id')
@@ -38,10 +40,6 @@ class User extends Authenticatable
         return $this->roles()->where('role', $role)->exists();
         //return null !== $this->roles()->where('role', $role)->first();
     }
-    public function hasRole($role)
-    {//testing
-        return null !== $this->roles()->where('role', $role)->first();
-    }
 
     public function sendPasswordResetNotification($token)
     {
@@ -52,6 +50,7 @@ class User extends Authenticatable
 
         return $this->belongsTo(BanDeleteUser::class);
     }
+
 
     /**
      * The attributes that should be hidden for arrays.
