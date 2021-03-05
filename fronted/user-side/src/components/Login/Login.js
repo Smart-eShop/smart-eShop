@@ -48,10 +48,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     opacity: '0.9',
-    height: '700px',
-    paddingTop: '2em'
+    height: '1000px',
+    paddingTop: '7em'
   }
-
 
 }));
 
