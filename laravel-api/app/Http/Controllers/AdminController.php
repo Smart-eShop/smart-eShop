@@ -73,12 +73,14 @@ class AdminController extends Controller
             return response()->json(["message" => "User banned successfully"], 200);
 
         }
+
     }
 
     public function unbanUsers($id)
     {
         if (Gate::allows('admin-role')) {
             DB::table('ban_delete_users')
+
                 ->where('user_id', $id)
                 ->update(['is_banned' => 0]);
             return response()->json(["message" => "User successfully unbanned!"], 200);
@@ -107,37 +109,7 @@ class AdminController extends Controller
     }
 
 }
-//        if (Gate::allows('admin-role')){
-//            BanDeleteUser::create([
-//                'user_id' => $id,// kaip paduoti ta id hidden priskirta
-//                'is_banned' => $request->is_banned,
-//                'is_deleted' => 0
-//            ]);
-//            return response()->json(["message" => "User banned successfully"], 200);
-//        }
-//        if (Gate::allows('admin-role')){
-//            $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
-//            foreach ($bannedList as $bannedUser)
-//                if($bannedUser->user_id == $id){
-//                    DB::table('ban_delete_users')
-//                        ->where('user_id', $id)
-//                        ->update(['is_deleted' => 1]);
-//                }
-//
-//                         BanDeleteUser::create([
-//                        'user_id' => $id,
-//                        'is_banned' => $request->input('is_banned'),
-//                        'is_deleted' => 0
-//                    ]);
-//           +
-// return response()->json(["message" => "User banned successfully"], 200);
-//
-//        } elseif ($request->input('is_deleted') == 1){
-//             DB::table('ban_delete_users')
-//                ->where('user_id', $id)
-//                ->update(['is_deleted' => 1]);
 
-// trinam viska kas susija su useriu
-// kas kart atnaujinti trinima, kai prisides dalyku nauju
+
 
 

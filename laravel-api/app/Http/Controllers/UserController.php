@@ -34,8 +34,29 @@ class UserController extends Controller
         $captchaId = $request->input('recaptcha');
         $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
 
-        //if($responseCaptcha->success == true) {
 
+//        $url = 'https://www.google.com/recaptcha/api/siteverify';
+//        $data = [
+//            'secret' => '{GOOGLE_RECAPTCHA_SECRET}',
+//            'response'=> request('recaptcha')
+//        ];
+//
+//        $options = [
+//            'http' => [
+//                'header' => 'Content-Type": "application/x-www-form-urlencoded',
+//                'method' => 'POST',
+//                'content' => http_build_query($data)
+//            ]
+//        ];
+//
+//        $context = stream_context_create($options);
+//        $result = file_get_contents($url, false, $context);
+//        $resultJson = json_decode($result);
+//
+//        if($resultJson->success == true) {
+
+
+        if($responseCaptcha->success == true) {
             if ($validation->fails()) {
                 return response()->json(["error" => $validation->errors()]);
             } else {
@@ -54,11 +75,11 @@ class UserController extends Controller
                 return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
             }
 
-//            } else {
-//                return response()->json(['error'=>[
-//                    'recaptcha' => ['Recaptcha error']
-//                ]]);
-//            }
+            } else {
+                return response()->json(['error'=>[
+                    'recaptcha' => ['Recaptcha error']
+                ]]);
+            }
 
         }
 
