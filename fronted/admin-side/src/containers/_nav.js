@@ -29,6 +29,12 @@ const _nav =  [
     icon: 'cil-pencil',
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Users',
+    to: '/theme/UserRoles',
+    icon: 'cil-puzzle',
+  },
+  {
     _tag: 'CSidebarNavTitle',
     _children: ['Components']
   },

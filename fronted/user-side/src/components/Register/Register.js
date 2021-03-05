@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -63,6 +63,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register() {
   const classes = useStyles();
+  const [usernameInput, setUsername] = useState('');
+  const [firstNameInput, setFirstName] = useState('');
+  const [lastNameInput, setLastName] = useState('');
+  const [emailInput, setEmail] = useState('');
+  const [passwordInput, setPassword] = useState('');
+
+  const registerFetch = e => {
+    console.log("testas")
+    fetch(`https://eshopsmart.herokuapp.com/api/register?name=${usernameInput}&email=${emailInput}&first_name=${firstNameInput}&last_name=${lastNameInput}&password=${passwordInput}`,{
+      method: "POST",
+    }
+)
+    .then(response => response.json())
+    .then(json => console.log(json));
+  }
+
 
   const {handleSubmit, handleChange, values, touched, errors, setFieldValue,  handleBlur} = useFormik({
     initialValues: {
@@ -70,19 +86,21 @@ export default function Register() {
       firstName: '',
       lastName: '',
       email: '',
-      address: '',
-      password: ''
+      // address: '',
+      password: '',
+      recaptcha: null,
     },
     validationSchema: Yup.object({
       username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       firstName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       lastName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       email:  Yup.string().email('Invalid email').required('Required'),
-      address: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+      // address: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      password: Yup.string().min(6, 'Password should be longer than 6 characters').required('Required'),
+      recaptcha: Yup.string().nullable().required("Required")
     }),
-    onSubmit: ({username, firstName, lastName, email, address, password}) => {
-      alert("You have successfully created account");
+    onSubmit: ({username, firstName, lastName, email, password}) => {
+      alert("Account successfully created!");
     }
   })
 
@@ -102,7 +120,9 @@ export default function Register() {
                 <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
+                autoComplete="fname"
                   variant="outlined"
+                  value={usernameInput} onInput={e => setUsername(e.target.value)}
                   required
                   fullWidth
                   id="username"
@@ -121,6 +141,7 @@ export default function Register() {
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
+                  value={firstNameInput} onInput={e => setFirstName(e.target.value)}
                   required
                   fullWidth
                   id="firstName"
@@ -136,6 +157,7 @@ export default function Register() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                   variant="outlined"
+                  value={lastNameInput} onInput={e => setLastName(e.target.value)}
                   required
                   fullWidth
                   id="lastName"
@@ -152,6 +174,7 @@ export default function Register() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                   variant="outlined"
+                  value={emailInput} onInput={e => setEmail(e.target.value)}
                   required
                   fullWidth
                   id="email"
@@ -162,7 +185,7 @@ export default function Register() {
                  {touched.email && errors.email ? (
         <div>{errors.email}</div>
       ): null}
-              </Grid>
+              {/* </Grid>
               <Grid item xs={12}>
                 <TextField
                 onChange={handleChange}
@@ -177,13 +200,14 @@ export default function Register() {
                 />
                 {touched.address && errors.address ? (
         <div>{errors.address}</div>
-      ): null}
+      ): null} */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                   variant="outlined"
+                  value={passwordInput} onInput={e => setPassword(e.target.value)}
                   required
                   fullWidth
                   name="password"
@@ -209,12 +233,13 @@ export default function Register() {
             <Grid container justify="center">
               <Grid item>
                 <ReCAPTCHA 
-sitekey="Your client site key"
+sitekey="6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a"
 onChange={(response) => setFieldValue("recaptcha", response)}
 />
               </Grid>
             </Grid>
             <Button
+              onClick={registerFetch}
               type="submit"
               fullWidth
               variant="contained"

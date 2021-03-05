@@ -7,9 +7,11 @@ use App\Role;
 use App\RoleUser;
 use App\User;
 use Gate;
+// use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 
 class AdminController extends Controller
@@ -17,7 +19,8 @@ class AdminController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except'=>['adminLogin']]);
+        $this->middleware('auth:api', ['except' => ['adminLogin']]);
+
     }
 
     public function adminLogin(Request $request)
@@ -52,6 +55,12 @@ class AdminController extends Controller
     // userio baninimas ir trinimas
     public function banOrDelete(Request $request, $id)
     {
+
+        if(Gate::denies('admin-role')){
+            return response()->json(["message" => "You are not Admin"], 200);
+        }
+
+
         $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
 
         if($request->input('is_banned') == 1){

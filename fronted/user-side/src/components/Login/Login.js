@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,10 +56,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
+
+
 export default function Login() {
   const classes = useStyles();
+  const [usernameInput, setUsername] = useState('');
+  const [passwordInput, setPassword] = useState('');
+  
+  
+ const loginFetch = e => {
+    console.log("labas")
+    fetch(`https://eshopsmart.herokuapp.com/api/login?name=${passwordInput}&password=${usernameInput}`, {
+      method: "POST",
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     "username": 'username',
+    //     "password": 'password',
+    //   }),
+    // }
+}
+    )
+      .then(response => response.json())
+      .then(json => console.log(json));
+    }
 
-  const {handleSubmit, handleChange, values, touched, errors, handleBlur} = useFormik({
+  
+  
+
+  const {handleSubmit, handleChange, touched, errors, handleBlur} = useFormik({
         initialValues: {
           username: '',
           password: ''
@@ -68,12 +97,11 @@ export default function Login() {
           username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
           password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
         }),
-        onSubmit: ({username, password}) => {
-          alert("You have successfully logged in");
+        onSubmit: ({username, password}) => { 
+          alert("You have successfully logged in")
         }
       })
 
- 
       return (
         <Box className={classes.box}>
         <Container component="main" maxWidth="xs" className={classes.container}>
@@ -86,6 +114,7 @@ export default function Login() {
               onBlur={handleBlur}
                 variant="outlined"
                 margin="normal"
+                value={passwordInput} onInput={e =>setPassword(e.target.value)}
                 required
                 fullWidth
                 id="username"
@@ -102,6 +131,7 @@ export default function Login() {
               onBlur={handleBlur}
                 variant="outlined"
                 margin="normal"
+                value={usernameInput} onInput={e =>setUsername(e.target.value)}
                 required
                 fullWidth
                 name="password"
@@ -123,12 +153,14 @@ export default function Login() {
                   </Link>
                 </Grid>
               <Button
+                onClick={loginFetch}
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="default"
                 className={classes.submit}
               >
+              
                 Sign In
               </Button>
               <Grid container>
