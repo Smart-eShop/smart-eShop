@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 import {ErrorMessage} from 'formik';
 
+
 function onChange(value) {
   console.log("Captcha value:", value);
 }
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Register() {
+  const [humanKey, setHumanKey] = useState('');
   const classes = useStyles();
   const [usernameInput, setUsername] = useState('');
   const [firstNameInput, setFirstName] = useState('');
@@ -69,15 +71,44 @@ export default function Register() {
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
 
+// require("es6-promise").polyfill()
+// require("isomorphic-fetch")
+
+// const RECAPTCHA_SERVER_KEY = process.env.RECAPTCHA_SERVER_KEY
+
+// // Validate Human
+// const isHuman = fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+//   method: "post",
+//   headers: {
+//     Accept: "application/json",
+//     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+//   },
+//   body: `secret=${'6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a'}&response=${humanKey}`
+// })
+//   .then(res => res.json())
+//   .then(json => json.success)
+//   // .catch(err => {
+//   //   throw new Error(`Error in Google Siteverify API. ${err.message}`)
+//   // })
+//   // if (humanKey === null || !isHuman) {
+//   //   throw new Error(`YOU ARE NOT A HUMAN.`)
+//   // }
+//   // // The code below will run only after the reCAPTCHA is succesfully validated.
+//   // console.log(humanKey)
+
   const registerFetch = e => {
     console.log("testas")
+
     fetch(`https://eshopsmart.herokuapp.com/api/register?name=${usernameInput}&email=${emailInput}&first_name=${firstNameInput}&last_name=${lastNameInput}&password=${passwordInput}`,{
       method: "POST",
     }
 )
     .then(response => response.json())
+    // .then(setHumanKey(humanKey))
     .then(json => console.log(json));
   }
+
+  const recaptchaRef = React.createRef();
 
 
   const {handleSubmit, handleChange, values, touched, errors, setFieldValue,  handleBlur} = useFormik({
@@ -86,16 +117,14 @@ export default function Register() {
       firstName: '',
       lastName: '',
       email: '',
-      // address: '',
       password: '',
-      recaptcha: null,
+    
     },
     validationSchema: Yup.object({
       username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       firstName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       lastName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       email:  Yup.string().email('Invalid email').required('Required'),
-      // address: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
       password: Yup.string().min(6, 'Password should be longer than 6 characters').required('Required'),
       recaptcha: Yup.string().nullable().required("Required")
     }),
@@ -185,22 +214,6 @@ export default function Register() {
                  {touched.email && errors.email ? (
         <div>{errors.email}</div>
       ): null}
-              {/* </Grid>
-              <Grid item xs={12}>
-                <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="address"
-                  label=" Address"
-                  name="address"
-                  autoComplete="address"
-                />
-                {touched.address && errors.address ? (
-        <div>{errors.address}</div>
-      ): null} */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -233,8 +246,12 @@ export default function Register() {
             <Grid container justify="center">
               <Grid item>
                 <ReCAPTCHA 
-sitekey="6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a"
-onChange={(response) => setFieldValue("recaptcha", response)}
+                
+                ref={recaptchaRef}
+sitekey={'6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a'}
+// onChange={(e)=>setHumanKey(e.target.value)}
+// onChange={(response) => setFieldValue("recaptcha", response)}
+onChange={onChange}
 />
               </Grid>
             </Grid>
