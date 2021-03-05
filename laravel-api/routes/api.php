@@ -27,7 +27,9 @@ Route::post('login/admin', 'AdminController@adminLogin');
 //Admin functions
 Route::post('updateRole/user_id={user_id}', 'AdminController@updateRole'); //Prideti role useriui
 // perziureti uri, ar gerai taip ar kitaip isdelioti?
-Route::post('ban/delete/user_id={user_id}', 'AdminController@banOrDelete');
+Route::post('ban/user_id={user_id}', 'AdminController@ban');
+Route::post('unban/user_id={user_id}', 'AdminController@unban');
+Route::post('delete/user_id={user_id}', 'AdminController@delete');
 
 //Api get
 Route::get('users','ApiController@getUsers');

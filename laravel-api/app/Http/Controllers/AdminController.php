@@ -53,45 +53,56 @@ class AdminController extends Controller
     }
 
     // userio baninimas ir trinimas
-    public function banOrDelete(Request $request, $id)
-    {
 
+    public function ban(Request $request, $id)
+    {
+        if(Gate::denies('admin-role')){
+            return response()->json(["message" => "You are not Admin"], 200);
+        }
+        $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+        foreach ($bannedList as $bannedUser)
+            if($bannedUser->user_id == $id) {
+                return response()->json(["message" => "User already banned"], 200);
+            }
+        BanDeleteUser::create([
+            'user_id' => $id,
+            'is_banned' => request('is_banned'),
+            'is_deleted' => 0
+            ]);
+        return response()->json(["message" => "User banned successfully"], 200);
+    }
+
+    public function unban(Request $request, $id)
+    {
         if(Gate::denies('admin-role')){
             return response()->json(["message" => "You are not Admin"], 200);
         }
 
+        $user = BanDeleteUser::where('user_id', $id);
+        $user->delete();
 
-        $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+        return response()->json(["message" => "User unbanned successfully"], 200);
+    }
 
-        if($request->input('is_banned') == 1){
-            foreach ($bannedList as $bannedUser)
-                if($bannedUser->user_id == $id) {
-                    return response()->json(["message" => "User already banned"], 200);
-                }
-                         BanDeleteUser::create([
-                        'user_id' => $id,
-                        'is_banned' => $request->input('is_banned'),
-                        'is_deleted' => 0
-                    ]);
-            return response()->json(["message" => "User banned successfully"], 200);
-
-        } elseif ($request->input('is_deleted') == 1){
-             DB::table('ban_delete_users')
-                ->where('user_id', $id)
-                ->update(['is_deleted' => 1]);
-
-            // trinam viska kas susija su useriu
-            // kas kart atnaujinti trinima, kai prisides dalyku nauju
-
-            $role_user = RoleUser::where('user_id', $id);
-            $role_user->delete();
-
-            $users = User::all();
-            $user = $users->find($id);
-            $user->delete();
-
-            return response()->json(["message" => "User deleted successfully"], 200);
+    public function delete(Request $request, $id)
+    {
+        if(Gate::denies('admin-role')){
+            return response()->json(["message" => "You are not Admin"], 200);
         }
+        $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+        foreach ($bannedList as $bannedUser)
+            if($bannedUser->user_id == $id) {
+
+                $role_user = RoleUser::where('user_id', $id);
+                $role_user->delete();
+
+                $users = User::all();
+                $user = $users->find($id);
+                $user->delete();
+
+                return response()->json(["message" => "User deleted successfully"], 200);
+            }
+        return response()->json(["message" => "User is not banned, first u have ban"], 200);
 
     }
 
