@@ -12,27 +12,8 @@ import {
 import { DocsLink } from 'src/reusable'
 
 
-// data to be sent to the POST request
-let _data = {
-  title: "foo",
-  body: "bar", 
-  userId:1
-}
-
-
-
-
-
 const UserRoles = () => {
 
-
-
-
- 
-
-
- const [input, setInput] = useState('');
- const [inputa, setInputa] = useState('');
 
 
   const [modal, setModal] = useState(false)
@@ -68,7 +49,8 @@ const UserRoles = () => {
           <CButton
             color="secondary"
             onClick={toggle}
-          >Cancel</CButton>
+          >Cancel
+          </CButton>
         </CModalFooter>
       </CModal>
 
@@ -95,18 +77,6 @@ const UserRoles = () => {
           >Cancel</CButton>
         </CModalFooter>
       </CModal>
-
-
-
-
-
-
-
-
-
-
-
-
           <p>Delete users, change roles.</p>
           <table className="table">
             <thead>
@@ -135,12 +105,12 @@ const UserRoles = () => {
                color="warning"
         onClick={toggleEdit}
         className="mr-1"
-      >Edit sRole</CButton>
+      >Edit Role</CButton>
               </td>
               <td>
                <CButton
                color="danger"
-        onClick={fetch}
+        onClick={toggle}
         className="mr-1"
       >Delete</CButton>
                 </td>

@@ -48,10 +48,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     opacity: '0.9',
-    height: '700px',
-    paddingTop: '2em'
+    height: '1000px',
+    paddingTop: '7em'
   }
-
 
 }));
 
@@ -60,7 +59,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
 export default function Login() {
+  
   const classes = useStyles();
   const [usernameInput, setUsername] = useState('');
   const [passwordInput, setPassword] = useState('');

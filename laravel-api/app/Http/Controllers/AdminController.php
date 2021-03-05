@@ -7,11 +7,11 @@ use App\Role;
 use App\RoleUser;
 use App\User;
 use Gate;
+
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 
 
 class AdminController extends Controller
@@ -41,12 +41,12 @@ class AdminController extends Controller
     }
 
     //roles pakeitimas
-    public function updateRole(Request $request,$id)
+    public function updateRole(Request $request, $id)
     {
-        if (Gate::allows('admin-role')){
-                User::find($id)->roles()->sync([$request->role_id]);
-                return response()->json(["message" => "Role changed successfully"], 200);
-            }
+        if (Gate::allows('admin-role')) {
+            User::find($id)->roles()->sync([$request->role_id]);
+            return response()->json(["message" => "Role changed successfully"], 200);
+        }
 
         return response()->json(["message" => "You don't have perrmision to change role!"]);
 
@@ -54,23 +54,31 @@ class AdminController extends Controller
 
     // userio baninimas ir trinimas
 
-    public function ban(Request $request, $id)
+    public function banUser(Request $request, $id)
     {
-        if(Gate::denies('admin-role')){
-            return response()->json(["message" => "You are not Admin"], 200);
-        }
-        $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
-        foreach ($bannedList as $bannedUser)
-            if($bannedUser->user_id == $id) {
-                return response()->json(["message" => "User already banned"], 200);
+     if (Gate::allows('admin-role')) {
+            $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+
+            if ($request->input('is_banned') == 1) {
+                foreach ($bannedList as $bannedUser)
+                    if ($bannedUser->user_id == $id) {
+                        return response()->json(["message" => "User already banned"], 200);
+                    }
             }
-        BanDeleteUser::create([
-            'user_id' => $id,
-            'is_banned' => request('is_banned'),
-            'is_deleted' => 0
+
+            BanDeleteUser::create([
+                'user_id' => $id,
+                'is_banned' => $request->is_banned
             ]);
-        return response()->json(["message" => "User banned successfully"], 200);
+            return response()->json(["message" => "User banned successfully"], 200);
+
+        }
+
     }
+
+    
+       
+
 
     public function unban(Request $request, $id)
     {
@@ -84,26 +92,29 @@ class AdminController extends Controller
         return response()->json(["message" => "User unbanned successfully"], 200);
     }
 
-    public function delete(Request $request, $id)
+    
+    public function deleteUser(Request $request, $id)
     {
-        if(Gate::denies('admin-role')){
-            return response()->json(["message" => "You are not Admin"], 200);
+        if (Gate::allows('admin-role')) {
+            $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
+            foreach ($bannedList as $bannedUser)
+                if ($bannedUser->user_id == $id) {
+                    $role_user = RoleUser::where('user_id', $id);
+                    $role_user->delete();
+
+                    $users = User::all();
+                    $user = $users->find($id);
+                    $user->delete();
+                    return response()->json(["message" => "User deleted successfully"], 200);
+
+                }
+            return response()->json(["message" => "You can't delete unbanned user"], 200);
+
         }
-        $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
-        foreach ($bannedList as $bannedUser)
-            if($bannedUser->user_id == $id) {
-
-                $role_user = RoleUser::where('user_id', $id);
-                $role_user->delete();
-
-                $users = User::all();
-                $user = $users->find($id);
-                $user->delete();
-
-                return response()->json(["message" => "User deleted successfully"], 200);
-            }
-        return response()->json(["message" => "User is not banned, first u have ban"], 200);
-
     }
 
 }
+
+
+
+
