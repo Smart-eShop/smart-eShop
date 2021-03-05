@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth', ['except' => ['adminLogin', 'banOrDelete']]);
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['adminLogin']]);
+    }
 
     public function adminLogin(Request $request)
     {
@@ -49,11 +49,12 @@ class AdminController extends Controller
         return response()->json(["message" => "Role changed successfully"], 200);
     }
 
+
+
     // userio baninimas ir trinimas
-    public function banOrDelete(Request $request, $id, Role $role)
+    public function banOrDelete(Request $request, $id)
     {
-        $r = $role->role->first();
-        if(Gate::allows('ban', $r)){
+        if(Gate::denies('ban')){
             return response()->json(["message" => "You are not Admin"], 200);
         }
 //        if(!($request->user()->hasRole('Admin')))

@@ -34,7 +34,7 @@ class User extends Authenticatable
     }
 
     public function hasRole($role)
-    {//linas
+    {
         if($this->roles()->where('role', $role)->first()){
             return true;
         }
