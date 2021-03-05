@@ -35,12 +35,10 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        return $this->roles()->where('role', $role)->exists();
-        //return null !== $this->roles()->where('role', $role)->first();
-    }
-    public function hasRole($role)
-    {//testing
-        return null !== $this->roles()->where('role', $role)->first();
+        if($this->roles()->where('role', $role)->first()){
+            return true;
+        }
+        return false;
     }
 
     public function sendPasswordResetNotification($token)
