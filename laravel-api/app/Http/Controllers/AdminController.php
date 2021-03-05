@@ -60,7 +60,6 @@ class AdminController extends Controller
             return response()->json(["message" => "You are not Admin"], 200);
         }
 
-
         $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
 
         if($request->input('is_banned') == 1){
