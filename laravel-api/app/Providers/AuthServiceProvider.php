@@ -27,10 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Passport::routes();
 
-        Gate::define('ban', function ($user){
-           return $user->hasRole('Admin');
+        Gate::define('admin-role', function ($user){
+            return $user->hasRole('Admin');
         });
-
-
     }
 }

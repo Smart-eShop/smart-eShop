@@ -6,18 +6,21 @@ use App\BanDeleteUser;
 use App\Role;
 use App\RoleUser;
 use App\User;
-use Illuminate\Support\Facades\Gate;
+use Gate;
+// use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 
 class AdminController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['adminLogin']]);
+
     }
 
     public function adminLogin(Request $request)
@@ -37,28 +40,26 @@ class AdminController extends Controller
         return response()->json(['token' => $token, 'role' => 'Admin', 'userRole' => $userRole, 'access_token' => $accessToken]);
     }
 
-
     //roles pakeitimas
-    public function updateRole(Request $request, $id)
+    public function updateRole(Request $request,$id)
     {
-        if((!auth('api')->check()) || (!auth()->user()->hasRole('Admin'))){
-            //Auth::user()->role->id==1
-            return response()->json(["message" => "You don't have perrmision to change role!"]);
-        }
-        User::find($id)->roles()->sync([$request->role_id]);
-        return response()->json(["message" => "Role changed successfully"], 200);
+        if (Gate::allows('admin-role')){
+                User::find($id)->roles()->sync([$request->role_id]);
+                return response()->json(["message" => "Role changed successfully"], 200);
+            }
+
+        return response()->json(["message" => "You don't have perrmision to change role!"]);
+
     }
-
-
 
     // userio baninimas ir trinimas
     public function banOrDelete(Request $request, $id)
     {
-        if(Gate::denies('ban')){
+
+        if(Gate::denies('admin-role')){
             return response()->json(["message" => "You are not Admin"], 200);
         }
-//        if(!($request->user()->hasRole('Admin')))
-//                return response()->json(["message" => "You are not Admin"], 200);
+
 
         $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
 
