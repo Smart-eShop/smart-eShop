@@ -15,9 +15,8 @@ class CreateBanDeleteUsersTable extends Migration
     {
         Schema::create('ban_delete_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('is_banned');
-            $table->boolean('is_deleted');
             $table->timestamps();
         });
     }
