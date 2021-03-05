@@ -74,7 +74,8 @@ class AdminController extends Controller
                     ]);
             return response()->json(["message" => "User banned successfully"], 200);
 
-        } elseif ($request->input('is_deleted') == 1){
+        }
+        elseif ($request->input('is_deleted') == 1){
              DB::table('ban_delete_users')
                 ->where('user_id', $id)
                 ->update(['is_deleted' => 1]);

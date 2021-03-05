@@ -19,7 +19,8 @@ class ApiController extends Controller
             $data = DB::table('users')
                 ->leftJoin('role_users', 'users.id', '=', 'role_users.user_id')
                 ->leftJoin('roles', 'role_users.role_id', '=', 'roles.id')
-                ->select('users.id', 'users.name', 'users.email', 'users.first_name', 'users.last_name', 'users.created_at', 'roles.role')
+                ->leftJoin('ban_delete_users', 'ban_delete_users.user_id', '=', 'users.id')
+                ->select('users.id', 'users.name', 'users.email', 'users.first_name', 'users.last_name', 'users.created_at', 'roles.role', 'ban_delete_users.is_banned')
                 ->where('roles.role', '!=', 'Admin')
                 ->orderBy('users.id')
                 ->get();
@@ -27,7 +28,7 @@ class ApiController extends Controller
             return response()->json(['users' => $data], 200);
         }
 
-        return response()->json( ["message"=>'Not found!'], 404);
+        return response()->json(["error"=>404, "message"=>'Not found!'], 404);
 
     }
 }
