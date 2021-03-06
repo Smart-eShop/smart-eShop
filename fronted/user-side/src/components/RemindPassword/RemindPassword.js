@@ -42,6 +42,20 @@ const RemindPassword = () => {
         email: yupString().email("Invalid email address").required("Enter your email")
     });
 
+    const remindFetch = e => {
+        console.log("testas")
+        fetch(`https://eshopsmart.herokuapp.com/api/password/email?email=${emailSent}`, {
+            method: "POST",
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               }
+
+        })
+            .then(response => response.json())
+            .then(json => console.log(json));
+    }
+
 
     return (
         <div className={classes.root}>
@@ -60,7 +74,7 @@ const RemindPassword = () => {
                             <TextField name='email' label='Email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={values.email} />
                             <ErrorMessage name='email' render={msg => <div className="text-danger">{msg}</div>} />
                         </FormGroup>
-                        <Button type='submit' fullWidth variant='contained' disabled={isSubmitting} color='default'>
+                        <Button type='submit' onClick={remindFetch} fullWidth variant='contained'  color='default'>
                             Submit
                     </Button>
                         <Grid container>
