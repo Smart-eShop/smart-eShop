@@ -39,14 +39,14 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
-
-
+const AllCategories = React.lazy(() => import('./components/categories/AllCategories'));
 const UserRoles = React.lazy(() => import('./components/UserRoles'));
 const AdminLogin = React.lazy(() => import('./components/Login'));
 
 
 
 const routes = [
+  { path: '/theme/AllCategories', name: 'AllCategories', component: AllCategories },
   { path: '/theme/UserRoles', name: 'UserRoles', component: UserRoles },
 
 

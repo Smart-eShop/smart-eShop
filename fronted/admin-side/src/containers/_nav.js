@@ -35,6 +35,12 @@ const _nav =  [
     icon: 'cil-puzzle',
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Categories',
+    to: '/theme/AllCategories',
+    icon: 'cil-list',
+  },
+  {
     _tag: 'CSidebarNavTitle',
     _children: ['Components']
   },
