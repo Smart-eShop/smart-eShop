@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $users = User::with('roles')->get();
         $bannedUser = BanDeleteUser::all();
-dd($bannedUser);
+//dd($bannedUser);
 
         return view('welcome', compact('users'));
 

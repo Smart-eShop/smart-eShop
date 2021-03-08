@@ -47,16 +47,14 @@ class AdminController extends Controller
             User::find($id)->roles()->sync([$request->role_id]);
             return response()->json(["message" => "Role changed successfully"], 200);
         }
-
         return response()->json(["message" => "You don't have perrmision to change role!"]);
-
     }
 
     // userio baninimas ir trinimas
 
     public function banUser(Request $request, $id)
     {
-     if (Gate::allows('admin-role')) {
+        if (Gate::allows('admin-role')) {
             $bannedList = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
 
             if ($request->input('is_banned') == 1) {
@@ -65,24 +63,19 @@ class AdminController extends Controller
                         return response()->json(["message" => "User already banned"], 200);
                     }
             }
-
             BanDeleteUser::create([
                 'user_id' => $id,
                 'is_banned' => $request->is_banned
             ]);
             return response()->json(["message" => "User banned successfully"], 200);
-
         }
-
+        return response()->json(["message" => "You are not Admin"], 200);
     }
-
-    
-       
 
 
     public function unban(Request $request, $id)
     {
-        if(Gate::denies('admin-role')){
+        if (Gate::denies('admin-role')) {
             return response()->json(["message" => "You are not Admin"], 200);
         }
 
@@ -92,7 +85,7 @@ class AdminController extends Controller
         return response()->json(["message" => "User unbanned successfully"], 200);
     }
 
-    
+
     public function deleteUser(Request $request, $id)
     {
         if (Gate::allows('admin-role')) {
@@ -109,9 +102,10 @@ class AdminController extends Controller
 
                 }
             return response()->json(["message" => "You can't delete unbanned user"], 200);
-
         }
+        return response()->json(["message" => "You are not Admin"], 200);
     }
+
 
 }
 
