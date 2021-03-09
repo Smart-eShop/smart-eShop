@@ -27,31 +27,24 @@ class ItemController extends Controller
                 'quantity' => 'required'
             ]);
 
-//            $uploadFolder = 'items';
-//            $image = $request->file('img');
-//            $path = $image->store($uploadFolder, 'public');
-//            $uploadedImage = ([
-//                "image_name" => basename($path),
-//                "image_url" => Storage::disk('public')->url($path),
-//                "mime" => $image->getClientMimeType()
-//            ]);
+            $path = $request->file('img')->store('public/images');
+            $filename = str_replace('public/', "", $path);
 
-
-           $item = Item::create([
+            $item = Item::create([
                 'user_id' => Auth::id(),
                 'category_id' => request('category_id'),
-                'title'=>request('title'),
+                'title' => request('title'),
                 'description' => request('description'),
-                'keywords' =>request('keywords'),
-//               'img' => $uploadedImage,
-               'price' => request('price'),
+                'keywords' => request('keywords'),
+                'img' => $filename,
+                'price' => request('price'),
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
                 'weight' => request('weight'),
                 'size' => request('size')
             ]);
 
-            return response()->json(['message' => 'Item added successfully', 'item'=>$item],200);
+            return response()->json(['message' => 'Item added successfully', 'item' => $item], 200);
 
         }
         return response()->json(["message" => "You don't have permission to post an item!"], 200);
