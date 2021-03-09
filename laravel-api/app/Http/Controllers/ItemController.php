@@ -36,6 +36,9 @@ class ItemController extends Controller
 //                "mime" => $image->getClientMimeType()
 //            ]);
 
+            $path = $request->file('img')->store('public/images');
+            $filename = str_replace('public/', "", $path);
+
 
            $item = Item::create([
                 'user_id' => Auth::id(),
@@ -43,7 +46,7 @@ class ItemController extends Controller
                 'title'=>request('title'),
                 'description' => request('description'),
                 'keywords' =>request('keywords'),
-//               'img' => $uploadedImage,
+               'img' => $filename,
                'price' => request('price'),
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
