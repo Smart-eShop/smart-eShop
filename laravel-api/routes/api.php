@@ -34,7 +34,7 @@ Route::post('delete/user_id={user_id}', 'AdminController@deleteUser');
 //Seller functions
 Route::post('addItem', 'ItemController@createItem');
 Route::delete('item/delete/{item}', 'ItemController@delete');
-
+Route::post('import/items', 'ItemsImportController@createItems');
 
 //Api get
 Route::get('users','ApiController@getUsers');
@@ -51,6 +51,6 @@ Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 
 Route::get('recaptcha', 'ApiController@recaptchaKey');
 
-
+Route::post('import_excel/import', 'ItemsImportController@import');
 
 

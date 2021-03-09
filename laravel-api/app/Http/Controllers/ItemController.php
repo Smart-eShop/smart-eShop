@@ -38,11 +38,9 @@ class ItemController extends Controller
                 'category_id' => request('category_id'),
                 'title' => request('title'),
                 'description' => request('description'),
-
                 'keywords' => request('keywords'),
                 'img' => $filename,
                 'price' => request('price'),
-
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
                 'weight' => request('weight'),
