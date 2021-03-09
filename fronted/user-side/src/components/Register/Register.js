@@ -221,11 +221,7 @@ export default function Register() {
       ): null}
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="default" />}
-                  label="By clicking Sign Up, you agree to our"
-                />
-                <Link href="/terms-conditions">
+                <Link href="/terms-conditions"> <h2>By clicking Sign Up, you agree to our</h2>
    <span className={classes.terms}>Terms and Conditions</span>
   </Link>
               </Grid>
