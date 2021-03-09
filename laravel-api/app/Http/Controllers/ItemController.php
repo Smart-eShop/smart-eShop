@@ -6,6 +6,7 @@ use App\Item;
 use Illuminate\Http\Request;
 use Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
@@ -18,7 +19,7 @@ class ItemController extends Controller
 
     public function createItem(Request $request)
     {
-        if (Gate::allows('seller-role')) {
+        if (Gate::allows('admin-role')) {
             $validation = $request->validate([
                 'title' => ['required', 'min:5'],
                 'description' => ['required', 'max:700'],
@@ -97,11 +98,28 @@ class ItemController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Item $item
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Item $item)
     {
-        //
+        if(Gate::denies('admin-role'))
+            return response()->json(["message" => "You don't have permission to post an item!"], 200);
+
+//             DB::table('items')->where('id', $item->id)->update([
+//            'category_id' => request('category_id'),
+//            'title'=>request('title'),
+//            'description' => request('description'),
+//            'keywords' =>request('keywords'),
+////               'img' => $uploadedImage,
+//            'price' => request('price'),
+//            'discount' => request('discount'),
+//            'quantity' => request('quantity'),
+//            'weight' => request('weight'),
+//            'size' => request('size')
+//        ]);
+        Item::where('id', $item->id)->update($request->all());
+
+        return response()->json(['message' => 'Item updated successfully'],200);
     }
 
     /**
