@@ -14,8 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Image from '../Register/register-img.jpg';
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from 'yup';
-import {useFormik} from 'formik';
-import {ErrorMessage} from 'formik';
+import { useFormik } from 'formik';
+import { ErrorMessage } from 'formik';
 
 
 function onChange(value) {
@@ -54,16 +54,15 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
- header: {
-   marginBottom: "1em"
- },
- terms: {
-   fontSize: "20px"
- }
+  header: {
+    marginBottom: "1em"
+  },
+  terms: {
+    fontSize: "20px"
+  }
 }));
 
 export default function Register() {
-  const [humanKey, setHumanKey] = useState('');
   const classes = useStyles();
   const [usernameInput, setUsername] = useState('');
   const [firstNameInput, setFirstName] = useState('');
@@ -71,68 +70,44 @@ export default function Register() {
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
 
-// require("es6-promise").polyfill()
-// require("isomorphic-fetch")
-
-// const RECAPTCHA_SERVER_KEY = process.env.RECAPTCHA_SERVER_KEY
-
-// // Validate Human
-// const isHuman = fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-//   method: "post",
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-//   },
-//   body: `secret=${'6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a'}&response=${humanKey}`
-// })
-//   .then(res => res.json())
-//   .then(json => json.success)
-//   // .catch(err => {
-//   //   throw new Error(`Error in Google Siteverify API. ${err.message}`)
-//   // })
-//   // if (humanKey === null || !isHuman) {
-//   //   throw new Error(`YOU ARE NOT A HUMAN.`)
-//   // }
-//   // // The code below will run only after the reCAPTCHA is succesfully validated.
-//   // console.log(humanKey)
-
   const registerFetch = e => {
+    
     console.log("testas")
 
-    fetch(`https://eshopsmart.herokuapp.com/api/register?name=${usernameInput}&email=${emailInput}&first_name=${firstNameInput}&last_name=${lastNameInput}&password=${passwordInput}`,{
+    fetch(`https://eshopsmart.herokuapp.com/api/register?name=${usernameInput}&email=${emailInput}&first_name=${firstNameInput}&last_name=${lastNameInput}&password=${passwordInput}`, {
       method: "POST",
     }
-)
-    .then(response => response.json())
-    // .then(setHumanKey(humanKey))
-    .then(json => console.log(json));
+    )
+      .then(response => response.json())
+     
+      .then(json => console.log(json));
   }
 
-  const recaptchaRef = React.createRef();
+  // const recaptchaRef = React.createRef();
 
 
-  const {handleSubmit, handleChange, values, touched, errors, setFieldValue,  handleBlur} = useFormik({
+  const { handleSubmit, reset, handleChange, values, touched, errors, setFieldValue, handleBlur,  } = useFormik({
     initialValues: {
       username: '',
       firstName: '',
       lastName: '',
       email: '',
       password: '',
-    
+
     },
     validationSchema: Yup.object({
-      username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      firstName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      lastName: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      email:  Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().min(6, 'Password should be longer than 6 characters').required('Required'),
-      recaptcha: Yup.string().nullable().required("Required")
+      username: Yup.string().max(15, 'Username must be shorter than 15 characters').required('Required'),
+      firstName: Yup.string().max(20, 'First Name can not be longer than 20 characters').required('Required'),
+      lastName: Yup.string().max(20, 'Last Name can not be longer than 20 characters').required('Required'),
+      email: Yup.string().email('Invalid email').required('Required'),
+      password: Yup.string().min(8, 'Password should be longer than 8 characters').required('Required'),
+      // recaptcha: Yup.string().nullable().required("Required")
     }),
-    onSubmit: ({username, firstName, lastName, email, password}) => {
-      alert("Account successfully created!");
+    onSubmit: ({username, password, firstName, lastName, email}) => { 
+      alert("Account successfully created!")
     }
-  })
-
+  }
+  )
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -142,14 +117,14 @@ export default function Register() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          
-          <form className={classes.form} onSubmit={handleSubmit}>
+
+          <form className={classes.form}  onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="fname"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="fname"
                   variant="outlined"
                   value={usernameInput} onInput={e => setUsername(e.target.value)}
                   required
@@ -159,14 +134,14 @@ export default function Register() {
                   name="username"
                   autoComplete="username"
                 />
-                 {touched.username && errors.username ? (
-        <div>{errors.username}</div>
-      ): null}
+                {touched.username && errors.username ? (
+                  <div>{errors.username}</div>
+                ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
@@ -177,14 +152,14 @@ export default function Register() {
                   label="First Name"
                   autoFocus
                 />
-                 {touched.firstName && errors.firstName ? (
-        <div>{errors.firstName}</div>
-      ): null}
+                {touched.firstName && errors.firstName ? (
+                  <div>{errors.firstName}</div>
+                ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   variant="outlined"
                   value={lastNameInput} onInput={e => setLastName(e.target.value)}
                   required
@@ -194,14 +169,14 @@ export default function Register() {
                   name="lastName"
                   autoComplete="lname"
                 />
-                 {touched.lastName && errors.lastName ? (
-        <div>{errors.lastName}</div>
-      ): null}
+                {touched.lastName && errors.lastName ? (
+                  <div>{errors.lastName}</div>
+                ) : null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   variant="outlined"
                   value={emailInput} onInput={e => setEmail(e.target.value)}
                   required
@@ -211,14 +186,14 @@ export default function Register() {
                   name="email"
                   autoComplete="email"
                 />
-                 {touched.email && errors.email ? (
-        <div>{errors.email}</div>
-      ): null}
+                {touched.email && errors.email ? (
+                  <div>{errors.email}</div>
+                ) : null}
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                onChange={handleChange}
-                onBlur={handleBlur}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   variant="outlined"
                   value={passwordInput} onInput={e => setPassword(e.target.value)}
                   required
@@ -230,38 +205,34 @@ export default function Register() {
                   autoComplete="current-password"
                 />
                 {touched.password && errors.password ? (
-        <div>{errors.password}</div>
-      ): null}
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="default" />}
-                  label="By clicking Sign Up, you agree to our"
-                />
-                <Link href="/terms-conditions">
-   <span className={classes.terms}>Terms and Conditions</span>
-  </Link>
+                  <div>{errors.password}</div>
+                ) : null}
               </Grid>
             </Grid>
             <Grid container justify="center">
               <Grid item>
-                <ReCAPTCHA 
-                
-                ref={recaptchaRef}
-sitekey={'6LfAc3EaAAAAAJHaKUr4i-o69fbA73UifKzUMD8a'}
-// onChange={(e)=>setHumanKey(e.target.value)}
-// onChange={(response) => setFieldValue("recaptcha", response)}
-onChange={onChange}
-/>
+                <ReCAPTCHA
+className="mt-5"
+                  // ref={recaptchaRef}
+                  sitekey={'6Lfm83caAAAAAJAHan8UYBk7zIFi0VuEWJLz_86x'}
+                  onChange={onChange}
+                />
               </Grid>
             </Grid>
+            <Grid item xs={12}><h5 className="text-center mt-5">By clicking Sign Up, you agree to our  <Link href="/terms-conditions">
+              <span className={classes.terms}>Terms and Conditions</span>
+            </Link></h5>
+
+            </Grid>
             <Button
+            
               onClick={registerFetch}
               type="submit"
               fullWidth
               variant="contained"
               color="default"
               className={classes.submit}
+    //  href="/login"
             >
               Sign Up
           </Button>
