@@ -24,7 +24,8 @@ class ItemController extends Controller
                 'description' => ['required', 'max:700'],
                 'price' => ['required', 'regex:/^\d*(\.\d{2})?$/'],
                 'discount' => 'integer|between:0,99.99',
-                'quantity' => 'required'
+                'quantity' => 'required',
+                'img' => 'mimes:jpeg, jpg, png, gif|required|max:10000'
             ]);
 
             $path = $request->file('img')->store('public/images');
@@ -107,8 +108,12 @@ class ItemController extends Controller
      * @param \App\Item $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function delete(Item $item)
     {
-        //
+        if (Gate::allows('deleteItem', $item)) {
+            $item->delete();
+            return response()->json(['message' => 'Item deleted successfully!'], 200);
+        }
+        return response()->json(['message' => "You don't have a permission to delete this item!"], 200);
     }
 }

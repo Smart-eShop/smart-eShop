@@ -33,10 +33,11 @@ Route::post('delete/user_id={user_id}', 'AdminController@deleteUser');
 
 //Seller functions
 Route::post('addItem', 'ItemController@createItem');
+Route::delete('item/delete/{item}', 'ItemController@delete');
+
 
 //Api get
 Route::get('users','ApiController@getUsers');
-
 Route::get('item/{item}', 'ApiController@showFullItem');
 Route::get('items', 'ApiController@getAllItems');
 
