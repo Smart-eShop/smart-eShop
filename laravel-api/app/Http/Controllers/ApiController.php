@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Item;
 use App\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems']]);
+        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems', 'recaptchaKey', 'showAllCategories']]);
     }
 
     public function getUsers()
@@ -44,4 +45,19 @@ class ApiController extends Controller
 
         return response()->json(['items' => $items], 200);
     }
+
+    public function recaptchaKey(){
+
+        $secret = env('GOOGLE_RECAPTCHA_SECRET');
+        $site = env('GOOGLE_RECAPTCHA_KEY');
+
+        return response()->json(['GOOGLE_RECAPTCHA_SECRET' => $secret,'GOOGLE_RECAPTCHA_KEY' => $site], 200);
+    }
+
+    public function showAllCategories()
+    {
+        $categories = Category::all();
+        return response()->json(['Categories' => $categories], 200);
+    }
+
 }

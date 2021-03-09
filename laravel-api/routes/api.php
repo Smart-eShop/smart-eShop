@@ -34,12 +34,18 @@ Route::post('delete/user_id={user_id}', 'AdminController@deleteUser');
 //Seller functions
 Route::post('addItem', 'ItemController@createItem');
 Route::patch('item/update/{item}', 'ItemController@update');
+Route::delete('item/delete/{item}', 'ItemController@delete');
+
+
 
 //Api get
 Route::get('users','ApiController@getUsers');
-
 Route::get('item/{item}', 'ApiController@showFullItem');
 Route::get('items', 'ApiController@getAllItems');
+
+Route::get('recaptcha', 'ApiController@recaptchaKey');
+
+Route::get('categories', 'ApiCOntroller@showAllCategories');
 
 
 //Delivery methods
@@ -50,5 +56,8 @@ Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 
 
+//Category
+Route::post('create-category', 'CategoryController@createCategory');
+Route::post('delete-category/category={category}', 'CategoryController@deleteCategory');
 
 

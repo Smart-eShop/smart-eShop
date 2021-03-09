@@ -25,34 +25,32 @@ class ItemController extends Controller
                 'description' => ['required', 'max:700'],
                 'price' => ['required', 'regex:/^\d*(\.\d{2})?$/'],
                 'discount' => 'integer|between:0,99.99',
-                'quantity' => 'required'
+                'quantity' => 'required',
+                'img' => 'mimes:jpeg, jpg, png, gif|required|max:10000'
             ]);
 
-//            $uploadFolder = 'items';
-//            $image = $request->file('img');
-//            $path = $image->store($uploadFolder, 'public');
-//            $uploadedImage = ([
-//                "image_name" => basename($path),
-//                "image_url" => Storage::disk('public')->url($path),
-//                "mime" => $image->getClientMimeType()
-//            ]);
+            $path = $request->file('img')->store('public/images');
+            $filename = str_replace('public/', "", $path);
 
 
-           $item = Item::create([
+            $item = Item::create([
+
                 'user_id' => Auth::id(),
                 'category_id' => request('category_id'),
-                'title'=>request('title'),
+                'title' => request('title'),
                 'description' => request('description'),
-                'keywords' =>request('keywords'),
-//               'img' => $uploadedImage,
-               'price' => request('price'),
+
+                'keywords' => request('keywords'),
+                'img' => $filename,
+                'price' => request('price'),
+
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
                 'weight' => request('weight'),
                 'size' => request('size')
             ]);
 
-            return response()->json(['message' => 'Item added successfully', 'item'=>$item],200);
+            return response()->json(['message' => 'Item added successfully', 'item' => $item], 200);
 
         }
         return response()->json(["message" => "You don't have permission to post an item!"], 200);
@@ -128,8 +126,12 @@ class ItemController extends Controller
      * @param \App\Item $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function delete(Item $item)
     {
-        //
+        if (Gate::allows('deleteItem', $item)) {
+            $item->delete();
+            return response()->json(['message' => 'Item deleted successfully!'], 200);
+        }
+        return response()->json(['message' => "You don't have a permission to delete this item!"], 200);
     }
 }
