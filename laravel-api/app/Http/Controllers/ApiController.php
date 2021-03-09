@@ -12,7 +12,7 @@ class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems']]);
+        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems', 'recaptchaKey']]);
     }
 
     public function getUsers()
@@ -43,5 +43,13 @@ class ApiController extends Controller
         $items = Item::all();
 
         return response()->json(['items' => $items], 200);
+    }
+
+    public function recaptchaKey(){
+
+        $secret = env('GOOGLE_RECAPTCHA_SECRET');
+        $site = env('GOOGLE_RECAPTCHA_KEY');
+
+        return response()->json(['GOOGLE_RECAPTCHA_SECRET' => $secret,'GOOGLE_RECAPTCHA_KEY' => $site], 200);
     }
 }

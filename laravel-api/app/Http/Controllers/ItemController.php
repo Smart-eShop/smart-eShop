@@ -30,14 +30,18 @@ class ItemController extends Controller
             $path = $request->file('img')->store('public/images');
             $filename = str_replace('public/', "", $path);
 
+
             $item = Item::create([
+
                 'user_id' => Auth::id(),
                 'category_id' => request('category_id'),
                 'title' => request('title'),
                 'description' => request('description'),
+
                 'keywords' => request('keywords'),
                 'img' => $filename,
                 'price' => request('price'),
+
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
                 'weight' => request('weight'),

@@ -48,6 +48,8 @@ Route::get('delivery/edit/{delivery}', 'DeliveryController@edit');
 Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 
+Route::get('recaptcha', 'ApiController@recaptchaKey');
+
 
 
 
