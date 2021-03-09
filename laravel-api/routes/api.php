@@ -40,6 +40,10 @@ Route::get('users','ApiController@getUsers');
 Route::get('item/{item}', 'ApiController@showFullItem');
 Route::get('items', 'ApiController@getAllItems');
 
+Route::get('recaptcha', 'ApiController@recaptchaKey');
+
+Route::get('categories', 'ApiCOntroller@showAllCategories');
+
 
 //Delivery methods
 Route::post('delivery/store', 'DeliveryController@store');
@@ -48,8 +52,9 @@ Route::get('delivery/edit/{delivery}', 'DeliveryController@edit');
 Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 
-Route::get('recaptcha', 'ApiController@recaptchaKey');
 
-
+//Category
+Route::post('create-category', 'CategoryController@createCategory');
+Route::post('delete-category/category={category}', 'CategoryController@deleteCategory');
 
 
