@@ -33,7 +33,9 @@ Route::post('delete/user_id={user_id}', 'AdminController@deleteUser');
 
 //Seller functions
 Route::post('addItem', 'ItemController@createItem');
+Route::patch('item/update/{item}', 'ItemController@update');
 Route::delete('item/delete/{item}', 'ItemController@delete');
+
 
 
 //Api get
