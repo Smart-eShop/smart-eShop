@@ -17,7 +17,7 @@ class CreateDeliveriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('time');
-            $table->double('price',6,8);
+            $table->double('price',6,2);
             $table->longText('terms');
             $table->timestamps();
         });
