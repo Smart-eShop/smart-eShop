@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
@@ -11,8 +12,9 @@ class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems']]);
     }
+
     public function getUsers()
     {
         if (Gate::allows('admin-role')) {
@@ -28,7 +30,18 @@ class ApiController extends Controller
             return response()->json(['users' => $data], 200);
         }
 
-        return response()->json(["error"=>404, "message"=>'Not found!'], 404);
+        return response()->json(["error" => 404, "message" => 'Not found!'], 404);
 
+    }
+
+    public function showFullItem(Item $item)
+    {
+        return response()->json(['item' => $item], 200);
+    }
+
+    public function getAllItems(){
+        $items = Item::all();
+
+        return response()->json(['items' => $items], 200);
     }
 }
