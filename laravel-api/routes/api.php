@@ -36,7 +36,18 @@ Route::post('addItem', 'ItemController@createItem');
 
 //Api get
 Route::get('users','ApiController@getUsers');
+
 Route::get('item/{item}', 'ApiController@showFullItem');
 Route::get('items', 'ApiController@getAllItems');
+
+
+//Delivery methods
+Route::post('delivery/store', 'DeliveryController@store');
+Route::get('delivery/show', 'DeliveryController@show');
+Route::get('delivery/edit/{delivery}', 'DeliveryController@edit');
+Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
+Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
+
+
 
 
