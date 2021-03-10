@@ -19,7 +19,7 @@ class ItemController extends Controller
 
     public function createItem(Request $request)
     {
-        if (Gate::allows('admin-role')) {
+        if (Gate::allows('seller-role')) {
             $validation = $request->validate([
                 'title' => ['required', 'min:5'],
                 'description' => ['required', 'max:700'],
@@ -98,8 +98,8 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        if(Gate::denies('admin-role'))
-            return response()->json(["message" => "You don't have permission to post an item!"], 200);
+        if(Gate::denies('user-id',$item))
+            return response()->json(["message" => "You don't have permission to update an item!"], 200);
 
 //             DB::table('items')->where('id', $item->id)->update([
 //            'category_id' => request('category_id'),
@@ -126,7 +126,7 @@ class ItemController extends Controller
      */
     public function delete(Item $item)
     {
-        if (Gate::allows('deleteItem', $item)) {
+        if (Gate::allows('user-id', $item)) {
             $item->delete();
             return response()->json(['message' => 'Item deleted successfully!'], 200);
         }
