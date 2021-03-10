@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TheLayout from '../containers/TheLayout'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
 import {
   CButton,
   CCard,
@@ -29,7 +28,7 @@ const Login = () => {
 
 
 
-  async function loginFetch(e, credentials) {
+  async function loginFetch() {
     fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
       method: "POST",
       headers: {
@@ -114,8 +113,6 @@ const Login = () => {
     </div>
   )
 }
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+
 
 export default Login
