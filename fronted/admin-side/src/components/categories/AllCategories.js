@@ -8,15 +8,26 @@ import {
     CInputGroup,
     CRow,
     CCardHeader,
-    CCardBody,
-    CModalFooter,
-    CModalBody,
-    CModalHeader,
-    CModal
+    CCardBody
 } from '@coreui/react'
 
 
 const AllCategories = () => {
+    console.log("bandymas")
+    const categoryFetch = e =>{
+        fetch(`https://eshopsmart.herokuapp.com/api/create-category?category=${categoryInput}`,{
+            method: "POST",
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               } 
+        }
+        )
+        .then(response => response.json())
+        .then(json =>{
+            console.log(json)
+        })
+    };
 
     const [categoryInput, setCategory] = useState('');
 
@@ -33,7 +44,7 @@ const AllCategories = () => {
                     </CInputGroup>
                     <CRow>
                         <CCol xs="6">
-                            <CButton color="primary" className="px-4 mb-5">Submit</CButton>
+                            <CButton color="primary" className="px-4 mb-5" onClick={categoryFetch}>Submit</CButton>
                         </CCol>
                     </CRow>
                 </CForm>
