@@ -29,12 +29,21 @@ class ItemController extends Controller
                 'img' => 'mimes:jpeg, jpg, png, gif|required|max:10000'
             ]);
 
+//            $images = [];
+//            foreach ($request->file('img') as $key=>$image) {
+//                // $data_attribute = array('img'=>$image);
+//                $path = $image->store('public/images');
+//                // $image = \Storage::put('promotion_image', $file); // your image path
+//                $filename = $image->getClientOriginalName();
+//                $image = $image->move($path, $filename);
+//                if($image){
+//                    array_push($images, $image);
+//                }
+//            }
             $path = $request->file('img')->store('public/images');
             $filename = str_replace('public/', "", $path);
 
-
             $item = Item::create([
-
                 'user_id' => Auth::id(),
                 'category_id' => request('category_id'),
                 'title' => request('title'),
@@ -56,49 +65,9 @@ class ItemController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Item $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Item $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Item $item
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function update(Request $request, Item $item)
     {
-        if(Gate::denies('user-id',$item))
+        if (Gate::denies('user-id', $item))
             return response()->json(["message" => "You don't have permission to update an item!"], 200);
 
 //             DB::table('items')->where('id', $item->id)->update([
@@ -115,15 +84,9 @@ class ItemController extends Controller
 //        ]);
         Item::where('id', $item->id)->update($request->all());
 
-        return response()->json(['message' => 'Item updated successfully'],200);
+        return response()->json(['message' => 'Item updated successfully'], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Item $item
-     * @return \Illuminate\Http\Response
-     */
     public function delete(Item $item)
     {
         if (Gate::allows('user-id', $item)) {

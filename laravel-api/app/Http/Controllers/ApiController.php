@@ -41,9 +41,14 @@ class ApiController extends Controller
     }
 
     public function getAllItems(){
-        $items = Item::all();
 
-        return response()->json(['items' => $items], 200);
+        $data = DB::table('items')
+            ->join('users', 'users.id', '=', 'items.user_id')
+            ->join('categories', 'categories.id', '=', 'items.category_id')
+            ->select('items.*', 'users.name as user_username', 'categories.category_name')
+            ->get();
+
+        return response()->json(['items' => $data], 200);
     }
 
     public function recaptchaKey(){
