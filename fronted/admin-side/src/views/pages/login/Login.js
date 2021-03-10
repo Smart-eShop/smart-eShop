@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { Link, Redirect, Route, BrowserRouter as Router } from 'react-router-dom'
 import {
   CButton,
@@ -21,36 +22,27 @@ const Login = () => {
   const loginFetch = e => {
     fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
       method: "POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     "username": 'username',
-    //     "password": 'password',
-    //   }),
-    // }
-}
+    }
     )
-        
+
       .then(response => response.json())
       .then(json => {
         console.log(json)
-        if(json.role === "Admin"){
+        if (json.role === "Admin") {
           console.log("labas");
-          <Link to="/dashboard"></Link>
         }
         console.log(json.token)
       })
-    if (admin == true) { 
-  <p>labas</p>};
+    if (admin == true) {
+      <p>labas</p>
     };
-      // .then(json => console.log(json.role))};
-  
-  
+  };
+  // .then(json => console.log(json.role))};
+
+
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
-  
+
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -69,8 +61,8 @@ const Login = () => {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Email" autoComplete="email" 
-                      value={emailInput} onInput={e =>setEmail(e.target.value)}/>
+                      <CInput type="text" placeholder="Email" autoComplete="email"
+                        value={emailInput} onInput={e => setEmail(e.target.value)} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -79,7 +71,7 @@ const Login = () => {
                         </CInputGroupText>
                       </CInputGroupPrepend>
                       <CInput type="password" placeholder="Password" autoComplete="current-password"
-                      value={passwordInput} onInput={e =>setPassword(e.target.value)} />
+                        value={passwordInput} onInput={e => setPassword(e.target.value)} />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
@@ -109,7 +101,7 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
-  
+
     </div>
   )
 }
