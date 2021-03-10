@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Link, Redirect, Route, BrowserRouter as Router } from 'react-router-dom'
+import App from '../App'
+import TheLayout from '../containers/TheLayout'
+import Dashboard from '../views/dashboard/Dashboard';
+import { Link, HashRouter, Switch, Redirect, Route, useHistory, BrowserRouter as Router } from 'react-router-dom'
+import PropTypes from 'prop-types';
 import {
   CButton,
   CCard,
@@ -16,41 +20,40 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
+
+
+
 const Login = () => {
-  var admin = false;
-  const loginFetch = e => {
-    fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
-      method: "POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     "username": 'username',
-    //     "password": 'password',
-    //   }),
-    // }
-}
-    )
-        
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        if(json.role === "Admin"){
-          console.log("labas");
-          <Link to="/dashboard"></Link>
-        }
-        console.log(json.token)
-      })
-    if (admin == true) { 
-  <p>labas</p>};
-    };
-      // .then(json => console.log(json.role))};
-  
-  
+  const [redir, setRedir] = useState(false);
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
-  
+
+
+
+
+  async function loginFetch(e, credentials) {
+    fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(data => data.json())
+      .then(data => JSON.stringify(data.access_token))
+      .then(data => localStorage.setItem('access_token', data))
+      .then(setRedir(true))
+
+  }
+
+
+  if (redir) {
+    return (<TheLayout />)
+  }
+
+
+
+
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -60,7 +63,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm  >
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
                     <CInputGroup className="mb-3">
@@ -69,8 +72,8 @@ const Login = () => {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Email" autoComplete="email" 
-                      value={emailInput} onInput={e =>setEmail(e.target.value)}/>
+                      <CInput type="text" placeholder="Email" autoComplete="email"
+                        value={emailInput} onInput={e => setEmail(e.target.value)} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -79,11 +82,11 @@ const Login = () => {
                         </CInputGroupText>
                       </CInputGroupPrepend>
                       <CInput type="password" placeholder="Password" autoComplete="current-password"
-                      value={passwordInput} onInput={e =>setPassword(e.target.value)} />
+                        value={passwordInput} onInput={e => setPassword(e.target.value)} />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4" onClick={loginFetch}>Login</CButton>
+                        <CButton color="primary" onClick={loginFetch} type='submit' className="px-4">Login</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>
@@ -109,9 +112,12 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
-  
+
     </div>
   )
+}
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
 
 export default Login

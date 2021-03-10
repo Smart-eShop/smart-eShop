@@ -48,8 +48,6 @@ const AdminLogin = React.lazy(() => import('./components/Login'));
 
 const routes = [
   { path: '/theme/UserRoles', name: 'UserRoles', component: UserRoles },
-
-
   { path: '/login', exact: true, Name: 'Login', component: AdminLogin },
 
   { path: '/', exact: true, name: 'Home' },
