@@ -20,12 +20,12 @@ class CreateItemsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('keywords')->nullable();
-            $table->string('img')->nullable();
+            $table->string('img');
             $table->double('price', 7, 2);
             $table->integer('discount');
             $table->integer('quantity');
             $table->integer('weight')->nullable();
-            $table->integer('size')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
         });
     }
