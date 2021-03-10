@@ -25,7 +25,7 @@ class CreateItemsTable extends Migration
             $table->integer('discount');
             $table->integer('quantity');
             $table->integer('weight')->nullable();
-            $table->integer('size')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
         });
     }
