@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import App from '../App'
 import TheLayout from '../containers/TheLayout'
-import Dashboard from '../views/dashboard/Dashboard';
-import { Link, HashRouter, Switch, Redirect, Route, useHistory, BrowserRouter as Router } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {
   CButton,
