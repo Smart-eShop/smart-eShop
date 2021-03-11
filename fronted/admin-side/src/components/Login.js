@@ -44,9 +44,9 @@ const Login = () => {
   }
 
 
-`  if (redir) {
+if (redir) {
     return (<TheLayout />)
-  }`
+  }
 
 
 
