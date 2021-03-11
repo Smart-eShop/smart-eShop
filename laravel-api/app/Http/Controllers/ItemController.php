@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Item;
 use Illuminate\Http\Request;
 use Gate;
+use File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -26,30 +27,32 @@ class ItemController extends Controller
                 'price' => ['required', 'regex:/^\d*(\.\d{2})?$/'],
                 'discount' => 'integer|between:0,99.99',
                 'quantity' => 'required',
-                'img' => 'mimes:jpeg, jpg, png, gif|required|max:10000'
+                'img' => 'required|max:10000'
             ]);
 
-//            $images = [];
-//            foreach ($request->file('img') as $key=>$image) {
-//                // $data_attribute = array('img'=>$image);
-//                $path = $image->store('public/images');
-//                // $image = \Storage::put('promotion_image', $file); // your image path
-//                $filename = $image->getClientOriginalName();
-//                $image = $image->move($path, $filename);
-//                if($image){
-//                    array_push($images, $image);
-//                }
-//            }
-            $path = $request->file('img')->store('public/images');
-            $filename = str_replace('public/', "", $path);
+            $key = $request['keywords'];
+            $arr = explode(",", $key);
+            $keywords = json_encode($arr);
+
+            $photoInfo =array();
+            if ($request->hasFile('img')){
+                $photos = $request->file('img');
+                foreach ($photos as $photo){
+                    array_push($photoInfo,
+                        $photo->getClientOriginalName()
+                    );
+                    $photo->store('public/images');
+                }
+            }
+            $images = json_encode($photoInfo);
 
             $item = Item::create([
                 'user_id' => Auth::id(),
                 'category_id' => request('category_id'),
                 'title' => request('title'),
                 'description' => request('description'),
-                'keywords' => request('keywords'),
-                'img' => $filename,
+                'keywords' => $keywords,
+                 'img' => $images,
                 'price' => request('price'),
                 'discount' => request('discount'),
                 'quantity' => request('quantity'),
@@ -70,19 +73,27 @@ class ItemController extends Controller
         if (Gate::denies('user-id', $item))
             return response()->json(["message" => "You don't have permission to update an item!"], 200);
 
-//             DB::table('items')->where('id', $item->id)->update([
-//            'category_id' => request('category_id'),
-//            'title'=>request('title'),
-//            'description' => request('description'),
-//            'keywords' =>request('keywords'),
-////               'img' => $uploadedImage,
-//            'price' => request('price'),
-//            'discount' => request('discount'),
-//            'quantity' => request('quantity'),
-//            'weight' => request('weight'),
-//            'size' => request('size')
-//        ]);
-        Item::where('id', $item->id)->update($request->all());
+        $key = $request['keywords'];
+        $arr = explode(",", $key);
+        $keywords = json_encode($arr);
+
+        if ($request->file()) {
+            $photoInfo = array();
+            if ($request->hasFile('img')) {
+                $photos = $request->file('img');
+                foreach ($photos as $photo) {
+                    array_push($photoInfo,
+                        $photo->getClientOriginalName()
+                    );
+                    $photo->store('public/images');
+                }
+            }
+            $images = json_encode($photoInfo);
+            Item::where('id', $item->id)->update(['img'=>$images, 'keywords'=>$keywords]);
+        }
+
+        Item::where('id', $item->id)->update($request->only(['category_id', 'title', 'description', 'price', 'discount', 'quantity', 'weight', 'size']));
+
 
         return response()->json(['message' => 'Item updated successfully'], 200);
     }

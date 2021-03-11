@@ -33,7 +33,7 @@ Route::post('delete/user_id={user_id}', 'AdminController@deleteUser');
 
 //Seller functions
 Route::post('addItem', 'ItemController@createItem');
-Route::patch('item/update/{item}', 'ItemController@update');
+Route::post('item/update/{item}', 'ItemController@update');
 Route::delete('item/delete/{item}', 'ItemController@delete');
 Route::post('import/items', 'ItemsImportController@createItems');
 
@@ -45,7 +45,7 @@ Route::get('items', 'ApiController@getAllItems');
 
 Route::get('recaptcha', 'ApiController@recaptchaKey');
 
-Route::get('categories', 'ApiCOntroller@showAllCategories');
+Route::get('categories', 'ApiController@showAllCategories');
 
 
 //Delivery methods
