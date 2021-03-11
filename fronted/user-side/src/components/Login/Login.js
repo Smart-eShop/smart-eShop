@@ -50,16 +50,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     opacity: '0.9',
-    height: '1000px',
-    paddingTop: '7em'
+    height: '1054px',
+    paddingTop: '7em',
+
   }
 
 }));
-
-
-
-
-
 
 export default function Login() {
 
