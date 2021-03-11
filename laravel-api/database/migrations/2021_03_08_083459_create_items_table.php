@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('keywords')->nullable();
-            $table->string('img');
+            $table->longText('img');
             $table->double('price', 7, 2);
             $table->integer('discount');
             $table->integer('quantity');

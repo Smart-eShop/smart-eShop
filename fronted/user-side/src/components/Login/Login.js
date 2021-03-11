@@ -11,10 +11,11 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import Image from '../Login/login-bg.jpg';
 import Box from '@material-ui/core/Box';
+import Products from '../Products/Products';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,123 +62,122 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Login() {
-  
-  
-  
+
+
+
   const classes = useStyles();
+  const [redir, setRedir] = useState(false);
   const [usernameInput, setUsername] = useState('');
   const [passwordInput, setPassword] = useState('');
-  
-  
- const loginFetch = e => {
+
+
+  const loginFetch = e => {
     console.log("labas")
     fetch(`https://eshopsmart.herokuapp.com/api/login?name=${passwordInput}&password=${usernameInput}`, {
       method: "POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     "username": 'username',
-    //     "password": 'password',
-    //   }),
-    // }
-}
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
     )
-      .then(response => response.json())
-      .then(json => console.log(json));
+      .then(data => data.json())
+      .then(data => JSON.parse(JSON.stringify(data.access_token)))
+      .then(data => localStorage.setItem('access_token', data))
+      .then(setRedir(true))
+  }
+
+  const { handleSubmit, handleChange, touched, errors, handleBlur } = useFormik({
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
+      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+    }),
+    onSubmit: ({ username, password }) => {
+      alert("You have successfully logged in")
     }
+  })
 
-  
-  
 
-  const {handleSubmit, handleChange, touched, errors, handleBlur} = useFormik({
-        initialValues: {
-          username: '',
-          password: ''
-        },
-        validationSchema: Yup.object({
-          username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-          password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
-        }),
-        onSubmit: ({username, password}) => { 
-          alert("You have successfully logged in")
-        }
-      })
+  if (redir) {
+    return (<Products />)
+  }
 
-      return (
-        <Box className={classes.box}>
-        <Container component="main" maxWidth="xs" className={classes.container}>
-          <CssBaseline />
-          <div className={classes.paper}>
-          <Avatar className={classes.large}  />
-            <form className={classes.form} onSubmit={handleSubmit} >
-              <TextField
+  return (
+    <Box className={classes.box}>
+      <Container component="main" maxWidth="xs" className={classes.container}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.large} />
+          <form className={classes.form} onSubmit={handleSubmit} >
+            <TextField
               onChange={handleChange}
               onBlur={handleBlur}
-                variant="outlined"
-                margin="normal"
-                value={passwordInput} onInput={e =>setPassword(e.target.value)}
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-  
-              
-               {touched.username && errors.username ? (
-        <div>{errors.username}</div>
-      ): null}
-              <TextField              
+              variant="outlined"
+              margin="normal"
+              value={passwordInput} onInput={e => setPassword(e.target.value)}
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+
+
+            {touched.username && errors.username ? (
+              <div>{errors.username}</div>
+            ) : null}
+            <TextField
               onChange={handleChange}
               onBlur={handleBlur}
-                variant="outlined"
-                margin="normal"
-                value={usernameInput} onInput={e =>setUsername(e.target.value)}
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-               {touched.password && errors.password ? (
-        <div>{errors.password}</div>
-      ): null}
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-               <Grid item xs>
-                  <Link href="/remind-password" variant="body2">
-                    Forgot password?
+              variant="outlined"
+              margin="normal"
+              value={usernameInput} onInput={e => setUsername(e.target.value)}
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {touched.password && errors.password ? (
+              <div>{errors.password}</div>
+            ) : null}
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Grid item xs>
+              <Link href="/remind-password" variant="body2">
+                Forgot password?
                   </Link>
-                </Grid>
-              <Button
-                onClick={loginFetch}
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="default"
-                className={classes.submit}
-              >
-              
-                Sign In
+            </Grid>
+            <Button
+              onClick={loginFetch}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="default"
+              className={classes.submit}
+            >
+
+              Sign In
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+            <Grid container>
+              <Grid item>
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
               </Grid>
-            </form>
-          </div>
-        </Container>
-        </Box>
-      );
-    }
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    </Box>
+  );
+}
