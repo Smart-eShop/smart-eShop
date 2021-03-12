@@ -17,7 +17,8 @@ const TheLayout = React.lazy(() => import('./containers/TheLayout'));
 const Register = React.lazy(() => import('./views/pages/register/Register'));
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'));
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'));
-// const Login = React.lazy(() => import('./components/Login'));
+
+const AddProduct = React.lazy(()=> import('./components/AddProduct'));
 
 
 function setToken(userToken) {
@@ -39,11 +40,17 @@ function App() {
   if (!access_token) {
     return (
       <HashRouter>
-        <React.Suspense fallback={loading}>
-          <Switch>
-            <Login />
-          </Switch>
-        </React.Suspense>
+          <React.Suspense fallback={loading}>
+            <Switch>
+              <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
+              <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
+              <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
+              <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
+              <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />
+              <Route exact path="/addproduct" name="Add Product" render={props => <AddProduct {...props}/>} />
+            </Switch>
+          </React.Suspense>
+
       </HashRouter>
     )
   }
