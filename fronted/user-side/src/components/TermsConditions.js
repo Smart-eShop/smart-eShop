@@ -11,7 +11,7 @@ const TermsConditions = () => {
                 height: '90vh'
             }}
         >
-            <h1>Terms and Conditions</h1>
+            <h1>Apsipirkimo taisyklės</h1>
         </div>
     );
 };
