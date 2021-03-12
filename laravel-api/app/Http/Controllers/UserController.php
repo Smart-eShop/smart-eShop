@@ -15,12 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     protected function registerUser(Request $request)
     {
 
@@ -34,29 +29,7 @@ class UserController extends Controller
         $captchaId = $request->input('recaptcha');
         $responseCaptcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captchaId));
 
-
-//        $url = 'https://www.google.com/recaptcha/api/siteverify';
-//        $data = [
-//            'secret' => '{GOOGLE_RECAPTCHA_SECRET}',
-//            'response'=> request('recaptcha')
-//        ];
-//
-//        $options = [
-//            'http' => [
-//                'header' => 'Content-Type": "application/x-www-form-urlencoded',
-//                'method' => 'POST',
-//                'content' => http_build_query($data)
-//            ]
-//        ];
-//
-//        $context = stream_context_create($options);
-//        $result = file_get_contents($url, false, $context);
-//        $resultJson = json_decode($result);
-//
-//        if($resultJson->success == true) {
-
-
-        if($responseCaptcha->success == true) {
+//        if($responseCaptcha->success == true) {
             if ($validation->fails()) {
                 return response()->json(["error" => $validation->errors()]);
             } else {
@@ -75,11 +48,11 @@ class UserController extends Controller
                 return response()->json(['user' => $user, 'access_token' => $accessToken], 200);
             }
 
-            } else {
-                return response()->json(['error'=>[
-                    'recaptcha' => ['Recaptcha error']
-                ]]);
-            }
+//            } else {
+//                return response()->json(['error'=>[
+//                    'recaptcha' => ['Recaptcha error']
+//                ]]);
+//            }
 
         }
 
@@ -117,65 +90,4 @@ class UserController extends Controller
         return response()->json(['user_id' => $user_id, 'username' => $user_name, 'access_token' => $accessToken]);
     }
 
-
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
