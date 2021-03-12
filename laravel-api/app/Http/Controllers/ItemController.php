@@ -41,7 +41,8 @@ class ItemController extends Controller
                     array_push($photoInfo,
                         $photo->getClientOriginalName()
                     );
-                    $photo->store('public/images');
+                    //$photo->store('public/images');
+                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
                 }
             }
             $images = json_encode($photoInfo);
@@ -85,7 +86,8 @@ class ItemController extends Controller
                     array_push($photoInfo,
                         $photo->getClientOriginalName()
                     );
-                    $photo->store('public/images');
+                    //$photo->store('public/images');
+                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
                 }
             }
             $images = json_encode($photoInfo);
