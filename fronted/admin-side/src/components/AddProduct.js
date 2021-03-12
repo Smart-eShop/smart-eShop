@@ -45,7 +45,7 @@ const AddProduct = () => {
   const [discountInput, setDiscount] = useState('');
   const [quantityInput, setQuantity] = useState('');
   const [weightInput, setWeight] = useState('');
-  const [sizeInput, setsize] = useState('');
+  const [sizeInput, setSize] = useState('');
   // const [collapsed, setCollapsed] = React.useState(true)
   // const [showElements, setShowElements] = React.useState(true)
 
@@ -64,7 +64,6 @@ const AddProduct = () => {
               </CCol>
               <CCol xs="12" md="9">
                 <CInput id="text-input" name="text-input" placeholder="Text" value={titleInput} onInput={e =>setTitle(e.target.value)} />
-                <CFormText>This is a help text</CFormText>
               </CCol>
             </CFormGroup>
 
@@ -91,7 +90,7 @@ const AddProduct = () => {
               </CCol>
               <CCol xs="12" md="9">
                 <CInput type="tag" id="email-input" name="email-input" placeholder="Enter tags" autoComplete="tag"  value={keywordsInput} onInput={e =>setKeywords(e.target.value)}/>
-                <CFormText className="help-block">Please enter your email</CFormText>
+                
               </CCol>
             </CFormGroup>
             
@@ -115,8 +114,18 @@ const AddProduct = () => {
                 <CLabel htmlFor="text-input">Price</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Text"  value={priceInput} onInput={e =>setPrice(e.target.value)}/>
-                <CFormText>This is a help text</CFormText>
+                <CInput id="text-input" name="text-input" placeholder="Price"  value={priceInput} onInput={e =>setPrice(e.target.value)}/>
+                
+              </CCol>
+            </CFormGroup>
+
+            <CFormGroup row>
+              <CCol md="3">
+                <CLabel htmlFor="text-input">Discount</CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                <CInput id="text-input" name="text-input" placeholder="Discount"  value={discountInput} onInput={e =>setDiscount(e.target.value)}/>
+                
               </CCol>
             </CFormGroup>
 
@@ -126,19 +135,36 @@ const AddProduct = () => {
                 <CLabel htmlFor="text-input">Size</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Text"  value={sizeInput} onInput={e =>setsize(e.target.value)}/>
-                <CFormText>This is a help text</CFormText>
+                <CInput id="text-input" name="text-input" placeholder="Size"  value={sizeInput} onInput={e =>setSize(e.target.value)}/>
+                
               </CCol>
             </CFormGroup>
-            <CFormGroup row>
-            <CCol xs="3">
-                    <CLabel htmlFor="quantity">Quantity</CLabel>
-                    </CCol>
-                    <CCol xs="12" md='3'>
-                    <CInput id="quantity" placeholder="12"  value={quantityInput} onInput={e =>setQuantity(e.target.value)}/>
 
-                </CCol>
+            <CFormGroup row>
+              <CCol md="3">
+                <CLabel htmlFor="text-input">Quantity</CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                <CInput id="text-input" name="text-input" placeholder="Quantity"  value={quantityInput} onInput={e =>setQuantity(e.target.value)}/>
+                
+              </CCol>
             </CFormGroup>
+
+            <CFormGroup row>
+              <CCol md="3">
+                <CLabel htmlFor="text-input">Weight</CLabel>
+              </CCol>
+              <CCol xs="12" md="9">
+                <CInput id="text-input" name="text-input" placeholder="Weight"  value={weightInput} onInput={e =>setWeight(e.target.value)}/>
+                
+              </CCol>
+            </CFormGroup>
+        
+            
+            
+
+
+
             <CFormGroup row>
               <CCol md="3">
                 <CLabel>Multiple File input</CLabel>
@@ -169,7 +195,6 @@ const AddProduct = () => {
         </CCardBody>
         <CCardFooter>
           <CButton type="submit" size="sm" color="primary" onClick={AddProductFetch}><CIcon name="cil-scrubber" /> Submit</CButton>
-          <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
         </CCardFooter>
       </CCard>
   </CCol>
