@@ -48,7 +48,9 @@ class ApiController extends Controller
             ->select('items.*', 'users.name as user_username', 'categories.category_name')
             ->get();
 
+        $data = Item::with('category:id,category_name', 'user:id,name')->get();
         return response()->json(['items' => $data], 200);
+
     }
 
     public function recaptchaKey(){
