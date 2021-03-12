@@ -17,13 +17,28 @@ class ItemsImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
+
+        $key = $row['keywords'];
+        $arr = explode(",", $key);
+        $keywords = json_encode($arr);
+
+        $photos = $row['img'];
+        $arrPhotos = explode(",", $photos);
+
+        foreach ($arrPhotos as $photo) {
+            array_push($arrPhotos,
+                $photo
+            );
+
+        }
+        $images = json_encode($arrPhotos);
         return new Item([
             'user_id' => Auth::id(),
             'category_id' => $row['category_id'],
             'title' => $row['title'],
             'description' => $row['description'],
-            'keywords' => $row['keywords'],
-            'img' => $row['img'],
+            'keywords' => $keywords,
+            'img' => $images,
             'price' => $row['price'],
             'discount' => $row['discount'],
             'quantity' => $row['quantity'],
