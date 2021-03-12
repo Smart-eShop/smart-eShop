@@ -31,21 +31,20 @@ class ItemController extends Controller
             ]);
 
             $key = $request['keywords'];
-            $arr = explode(",", $key);
-            $keywords = json_encode($arr);
+            $keywords = explode(",", $key);
 
-            $photoInfo =array();
+            $images =array();
             if ($request->hasFile('img')){
                 $photos = $request->file('img');
                 foreach ($photos as $photo){
-                    array_push($photoInfo,
+                    array_push($images,
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
                     $photo->move(public_path('public/images'), $photo->getClientOriginalName());
                 }
             }
-            $images = json_encode($photoInfo);
+            //$imagess = json_encode($images);
 
             $item = Item::create([
                 'user_id' => Auth::id(),
@@ -75,22 +74,21 @@ class ItemController extends Controller
             return response()->json(["message" => "You don't have permission to update an item!"], 200);
 
         $key = $request['keywords'];
-        $arr = explode(",", $key);
-        $keywords = json_encode($arr);
+        $keywords = explode(",", $key);
 
         if ($request->file()) {
-            $photoInfo = array();
+            $images = array();
             if ($request->hasFile('img')) {
                 $photos = $request->file('img');
                 foreach ($photos as $photo) {
-                    array_push($photoInfo,
+                    array_push($images,
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
                     $photo->move(public_path('public/images'), $photo->getClientOriginalName());
                 }
             }
-            $images = json_encode($photoInfo);
+            //$images = json_encode($photoInfo);
             Item::where('id', $item->id)->update(['img'=>$images, 'keywords'=>$keywords]);
         }
 

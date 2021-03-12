@@ -19,19 +19,18 @@ class ItemsImport implements ToModel, WithHeadingRow
     {
 
         $key = $row['keywords'];
-        $arr = explode(",", $key);
-        $keywords = json_encode($arr);
+        $keywords = explode(",", $key);
 
         $photos = $row['img'];
-        $arrPhotos = explode(",", $photos);
+        $images = explode(",", $photos);
 
-        foreach ($arrPhotos as $photo) {
-            array_push($arrPhotos,
+        foreach ($images as $photo) {
+            array_push($images,
                 $photo
             );
 
         }
-        $images = json_encode($arrPhotos);
+
         return new Item([
             'user_id' => Auth::id(),
             'category_id' => $row['category_id'],

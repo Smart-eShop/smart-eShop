@@ -35,6 +35,10 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function items(){
+        return $this->hasMany(Item::class);
+    }
+
     public function hasRole($role)
     {
         if($this->roles()->where('role', $role)->first()){

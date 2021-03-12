@@ -19,8 +19,8 @@ class CreateItemsTable extends Migration
             $table->foreignId('category_id')->constrained();
             $table->string('title');
             $table->text('description');
-            $table->string('keywords')->nullable();
-            $table->longText('img');
+            $table->json('keywords')->nullable();
+            $table->json('img');
             $table->double('price', 7, 2);
             $table->integer('discount');
             $table->integer('quantity');
