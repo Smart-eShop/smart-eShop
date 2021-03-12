@@ -43,12 +43,14 @@ const User = React.lazy(() => import('./views/users/User'));
 
 const UserRoles = React.lazy(() => import('./components/UserRoles'));
 const AdminLogin = React.lazy(() => import('./components/Login'));
+const AddDelivery = React.lazy(() => import('./components/AddDelivery'));
 
 
 
 const routes = [
   { path: '/theme/UserRoles', name: 'UserRoles', component: UserRoles },
   { path: '/login', exact: true, Name: 'Login', component: AdminLogin },
+  { path: '/add-delivery', exact: true, Name: 'AddDelivery', component: AddDelivery },
 
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
