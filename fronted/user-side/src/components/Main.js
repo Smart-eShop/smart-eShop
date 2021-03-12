@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
+import ResetPassword from './RemindPassword/ResetPassword';
 
 
 function Main() {
@@ -24,6 +25,7 @@ function Main() {
       <Route path='/contact-us' exact component={Contact} />
       <Route path='/terms-conditions' exact component={TermsConditions} />
       <Route path='/remind-password' exact component={RemindPassword} />
+      <Route path='/reset-password' exact component={ResetPassword} />
     </Switch>
   </Router>
   );
