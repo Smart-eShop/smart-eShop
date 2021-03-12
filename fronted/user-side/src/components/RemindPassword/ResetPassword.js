@@ -38,6 +38,9 @@ export default function ResetPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [passwordChanged, setPasswordChanged] = useState(false);
     const [requestError, setRequestError] = useState(false);
+    const [emailInput, setEmail] = useState('');
+    const [passwordInput, setPassword] = useState('');
+    const [passwordConfirmInput, setPasswordConfirm] = useState('');
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -61,26 +64,35 @@ export default function ResetPassword() {
         }).required("Required"),
     });
 
-    const handleSubmit = (values, {setSubmitting}) => {
-        // const token = (new URLSearchParams(props.location.search)).get('token');
-        // const params = {token, ...values, password_confirmation: values.passwordConfirm};
-        // console.log("Submitting");
-        // axios.post("/password/reset", params)
-        //     .then(res => {
+    const handleSubmit = (props, values, {setSubmitting}) => {
+     const token = (new URLSearchParams(props.location.search)).get('token');
+         const params = {token, ...values, password_confirmation: values.passwordConfirm};
+
+        const confFetch = e => {
+            console.log('submitting');
+               fetch(`https://eshopsmart.herokuapp.com/api/password/reset?email=${emailInput}&password=${passwordInput}&password_confirmation=${passwordConfirmInput}`, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+        }
+        )
+            .then(res => {
                 
-        //         if(res.status === 200) {
-        //             setPasswordChanged(true)
-        //             setRequestError(false);
-        //         } else {
-        //             setRequestError(true);
-        //             setSubmitting(false)
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         setRequestError(true);
-        //         setSubmitting(false)
-        //     })
+                if(res.status === 200) {
+                    setPasswordChanged(true)
+                    setRequestError(false);
+                } else {
+                    setRequestError(true);
+                    setSubmitting(false)
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setRequestError(true);
+                setSubmitting(false)
+            })
+      
     }
     return (
         <div className={classes.root}>
@@ -95,11 +107,11 @@ export default function ResetPassword() {
             { ( {handleChange, values, handleBlur, isSubmitting}) => (
                 <Form >
                     <FormGroup>
-                        <TextField label='Enter your email' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={values.email} />
+                        <TextField label='Enter your email' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)}   />
                         <ErrorMessage name='email' render={msg => <div className='text-danger'>{msg}</div>}/>
                     </FormGroup>
                     <FormGroup>
-                        <TextField variant='outlined' label='New Password' name='password' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur} value={values.password} InputProps={{
+                        <TextField variant='outlined' label='New Password' name='password' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur}  value={passwordInput} onInput={e => setPassword(e.target.value)} InputProps={{
                             endAdornment: <InputAdornment position='end'>
                                 <IconButton
                                 aria-label="toggle password visibility"
@@ -110,7 +122,7 @@ export default function ResetPassword() {
                         <ErrorMessage name='password' render={msg => <div className='text-danger'>{msg}</div>} />
                     </FormGroup>
                     <FormGroup>
-                        <TextField variant='outlined' label='Repeat Password' name='passwordConfirm' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur} value={values.passwordConfirm} InputProps={{
+                        <TextField variant='outlined' label='Repeat Password' name='passwordConfirm' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordConfirmInput} onInput={e => setPassword(e.target.value)} InputProps={{
                             endAdornment: <InputAdornment position='end'>
                                 <IconButton
                                 aria-label="toggle password visibility"
@@ -121,7 +133,7 @@ export default function ResetPassword() {
                         <ErrorMessage name='passwordConfirm' render={msg => <div className='text-danger'>{msg}</div>} />
                     </FormGroup>
 
-                    <Button type='submit' variant='contained' disabled={isSubmitting} color='default'>
+                    <Button type='submit' variant='contained' disabled={isSubmitting} color='default' onClick={confFetch}>
                         Submit
                     </Button>
                 </Form>
@@ -129,5 +141,5 @@ export default function ResetPassword() {
             </Formik>
         </div>
     )
-};
-
+                        }
+                    }
