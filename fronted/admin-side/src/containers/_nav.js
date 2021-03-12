@@ -38,19 +38,19 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Categories',
     to: '/all-categories',
-    icon: 'cil-puzzle',
+    icon: 'cil-list',
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Add products',
     to: '/addproduct',
-    icon: 'cil-puzzle',
+    icon: 'cil-cart',
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Add delivery',
     to: '/add-delivery',
-    icon: 'cil-puzzle',
+    icon: 'cil-truck',
   },
   {
     _tag: 'CSidebarNavTitle',

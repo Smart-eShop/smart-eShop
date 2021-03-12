@@ -37,6 +37,8 @@ import {
   cifPl
 } from '@coreui/icons'
 import {
+  cilCart,
+  cilTruck,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,
@@ -135,6 +137,8 @@ export const icons = Object.assign({}, {
   logo,
   logoNegative
 }, {
+  cilTruck,
+  cilCart,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,
