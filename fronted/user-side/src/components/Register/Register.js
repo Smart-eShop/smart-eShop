@@ -16,6 +16,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { ErrorMessage } from 'formik';
+import Login from '../Login/Login';
 
 
 function onChange(value) {
@@ -69,6 +70,7 @@ export default function Register() {
   const [lastNameInput, setLastName] = useState('');
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
+  const [redir, setRedir] = useState(false);
 
   const registerFetch = e => {
     
@@ -80,7 +82,8 @@ export default function Register() {
     )
       .then(response => response.json())
      
-      .then(json => console.log(json));
+      .then(json => console.log(json))
+      .then(setRedir(true))
   }
 
   // const recaptchaRef = React.createRef();
@@ -106,8 +109,12 @@ export default function Register() {
     onSubmit: ({username, password, firstName, lastName, email}) => { 
       alert("Account successfully created!")
     }
+  
   }
   )
+  if (redir) {
+    return (<Login />)
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
