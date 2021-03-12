@@ -208,13 +208,7 @@ export default function Register() {
         <div>{errors.password}</div>
       ): null}
               </Grid>
-              <Grid item xs={12}>
-                <Link href="/terms-conditions"> <h2>By clicking Sign Up, you agree to our</h2>
-   <span className={classes.terms}>Terms and Conditions</span>
-  </Link>{touched.password && errors.password ? (
-        <div>{errors.password}</div>
-      ): null}
-              </Grid>
+            
             </Grid>
             <Grid container justify="center">
               <Grid item>
