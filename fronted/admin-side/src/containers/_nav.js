@@ -35,6 +35,24 @@ const _nav =  [
     icon: 'cil-puzzle',
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Categories',
+    to: '/all-categories',
+    icon: 'cil-puzzle',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Add products',
+    to: '/addproduct',
+    icon: 'cil-puzzle',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Add delivery',
+    to: '/add-delivery',
+    icon: 'cil-puzzle',
+  },
+  {
     _tag: 'CSidebarNavTitle',
     _children: ['Components']
   },

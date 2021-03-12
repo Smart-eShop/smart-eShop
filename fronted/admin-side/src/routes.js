@@ -40,20 +40,18 @@ const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
 
-
 const UserRoles = React.lazy(() => import('./components/UserRoles'));
 const AdminLogin = React.lazy(() => import('./components/Login'));
 
 const AddProduct = React.lazy(()=> import('./components/AddProduct'));
-
-
-
+const AddDelivery = React.lazy(()=> import('./components/AddDelivery'));
+const AllCategories = React.lazy(()=> import('./components/categories/AllCategories'));
 
 const routes = [
   { path: '/theme/UserRoles', name: 'UserRoles', component: UserRoles },
 
   { path:'/addproduct', exact: true, name:'AddProduct', component: AddProduct},
-
+  { path: '/all-categories', exact: true, Name: 'AllCategories', component: AllCategories },
   { path: '/login', exact: true, Name: 'Login', component: AdminLogin },
   { path: '/add-delivery', exact: true, Name: 'AddDelivery', component: AddDelivery },
 
