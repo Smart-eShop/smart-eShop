@@ -26,12 +26,10 @@ const AllCategories = () => {
 
 const printAllCategories = async() => {
     const url = 'https://eshopsmart.herokuapp.com/api/categories';
-    setLoading(true);
     const response = await fetch(url);
     const data = await response.json();
     console.log(data.Categories);
     setPrintCategories(data.Categories);
-    setLoading(false);
 }
 
 
@@ -40,7 +38,6 @@ useEffect(()=>{
 }, [])
 
  const [deleteMessage, setDeleteMessage] = useState('');
- const [loading, setLoading] = useState(false);
 
 const deleteCategory = async(id) => {
     const url = `https://eshopsmart.herokuapp.com/api/delete-category/category=${id}`;
@@ -57,6 +54,8 @@ const deleteCategory = async(id) => {
     if(data.message) {
 setDeleteMessage(data.message) 
     }
+
+    printAllCategories();
     
 }
 useEffect(()=>{
@@ -83,11 +82,13 @@ useEffect(()=>{
                     setRequestError(true);
                     setCategoryAdded(false);
                 }
+                printAllCategories();
             })
             .catch(err => {
                 setRequestError(true);
                 setCategoryAdded(false);
             })
+
     };
 
     const [categoryInput, setCategory] = useState('');
