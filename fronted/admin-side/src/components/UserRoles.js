@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CCard,
   CCardHeader,
@@ -13,23 +13,60 @@ import { DocsLink } from 'src/reusable'
 
 
 const UserRoles = () => {
+  const [list, setList] = useState({});
 
 
+  useEffect(() => {
+    let mounted = true;
+    const accessToken = localStorage.getItem('access_token');
 
-  fetch(`https://eshopsmart.herokuapp.com/api/users`, {
-    method: "GET",
-    headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMWVmZDhiNjczOTA4MGVhZjFjNmJjYTU5OWRjM2NjY2VlZmI3NTFiY2MzZDc5MTRiMWVjNTQ3MDEzNDg0NzgwMjlkZmI4ZGYyNGY4ODI3ODEiLCJpYXQiOiIxNjE1MTUzNjI4Ljc2MzcyMiIsIm5iZiI6IjE2MTUxNTM2MjguNzYzNzMxIiwiZXhwIjoiMTY0NjY4OTYyOC43NTMwMDEiLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.raI1yRurKJrRUDasNqPic0oq6lDv8oGEBdh6T0oO62eiibtMqjwdGW3cOGFRq3OVnbErx6My1Q6WgZyiGkEAPXqa1qc_yjv - iLTRbCnF3w3OxzUF7caHq1K_ - wenNBOtKSL - UzpoTQEBWfYgEknsWA8Gf3Y - UR7uTSYbJq0HMkmI72aujgOhHxAXIhFQSRJdvqVqeDjC4uwea4yeUkt - Q - Knz24rirWk4byctwDiVFOBgQwAL8kb4TwmB_nhrKTO3e4_1TZGlRImkBaWaqgr1Xv - FL6hHQ_BMz2BLlki1dN9GEujf8hOSKUpyHI5hyNw7f0WvhNdp9mIZmn - J3X78XJTGiRL2_7aT7pdF2aBhcD3VOWIDuhkOTVj - KEnYZzqXe5Uuh7wl2ZmQql4toKjM9ERYDmvGmL2DlBH7ceKMtLns5hZOV__U0uc8cHF5PNHBwQBjjqx9w9Phlvqs4tF - pwVlwG - T9G_8PUy1BDFXK4bX0ExIMDcODmBZzCxEreCFtlOylE221gQmd_xF9O3cNmKeX - 5LkNcmFPyBlsY_LenxluSpLR6leNcFuBKIqjsPD6TzIRzghu2HxE71WFf5llTmyCWK6D_eOoOsRzInGicbBSh9- fQGWEcBjlnOhbY0NXbS - nhmyY9Z0veNiCm6RNNkuxpErfhtU9mQcnDyrY',
-      'Content-Type': 'application/json'
-    },
-
-  }
-
-  )
-    .then(response => response.json())
-    .then(json => {
-      console.log(json)
+    fetch(`https://eshopsmart.herokuapp.com/api/users`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
     })
+      .then(users => users.json())
+      .then(users => setList(users))
+      .then(users => setList(users))
+      .then(console.log(list))
+
+    // .then(users => {
+    //   if (mounted) {
+    //     setList(users)
+    //   }
+    // })
+    return () => mounted = false;
+  }, [])
+
+
+
+
+
+  // const data = getdata();
+  // console.log(data);
+
+  //   <
+
+  // element.created_at
+
+  // element.email
+
+  // element.first_name
+
+  // element.id
+
+  // element.is_banned
+
+  // element.last_name
+
+  // element.name
+
+  // element.role
+
+
+
 
 
 
@@ -42,6 +79,7 @@ const UserRoles = () => {
   const toggleEdit = () => {
     setEdit(!modal);
   }
+
 
 
   return (
@@ -78,7 +116,7 @@ const UserRoles = () => {
             <CModalHeader closeButton>Do you really want to change user role?</CModalHeader>
             <CModalBody>
               <select id="roles">
-                <option value="Admin">Admin</option>
+                <option value="admin">Admin</option>
                 <option value="Seler">Seler</option>
                 <option value="User">User</option>
               </select>
@@ -93,9 +131,16 @@ const UserRoles = () => {
             </CModalFooter>
           </CModal>
           <p>Delete users, change roles.</p>
+
+          <ul>
+            {/* {list.map(item => <li>{item.id}</li>)} */}
+            {/* {list.forEach(element => <li>{element.id}</li>)} */}
+          </ul>
+
           <table className="table">
             <thead>
               <tr>
+
                 <th>User ID</th>
                 <th>User Name</th>
                 <th>Role</th>
@@ -109,6 +154,7 @@ const UserRoles = () => {
                 <td>
                   <span className="h5">1</span>
                 </td>
+
                 <td>
                   <span className="h5">Vartotojas</span>
                 </td>
