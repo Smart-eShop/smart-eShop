@@ -1,12 +1,12 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 
-const _nav =  [
+const _nav = [
   {
     _tag: 'CSidebarNavItem',
-    name: 'Dashboard',
+    name: 'Pagrindinis skydas',
     to: '/dashboard',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
     badge: {
       color: 'info',
       text: 'NEW',
@@ -14,41 +14,41 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavTitle',
-    _children: ['Theme']
+    _children: ['Tema']
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Colors',
+    name: 'Spalvos',
     to: '/theme/colors',
     icon: 'cil-drop',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Typography',
+    name: 'Tipografija',
     to: '/theme/typography',
     icon: 'cil-pencil',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Users',
+    name: 'Vartotojai',
     to: '/theme/UserRoles',
     icon: 'cil-puzzle',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Categories',
+    name: 'Kategorijos',
     to: '/all-categories',
     icon: 'cil-list',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Add products',
+    name: 'Pridėti prekes',
     to: '/addproduct',
     icon: 'cil-cart',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Add delivery',
+    name: 'Pridėti pristatymą',
     to: '/add-delivery',
     icon: 'cil-truck',
   },

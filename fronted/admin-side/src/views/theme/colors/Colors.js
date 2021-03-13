@@ -59,28 +59,28 @@ const Colors = () => {
         <CCardBody>
           <CRow>
             <ThemeColor className="bg-primary">
-              <h6>Prekės ženklo spalva ,,Primary"</h6>
+              <h6>Prekės ženklo spalva "Primary"</h6>
             </ThemeColor>
             <ThemeColor className="bg-secondary">
-              <h6>Prekės ženklo spalva ,,Secondary"</h6>
+              <h6>Prekės ženklo spalva "Secondary"</h6>
             </ThemeColor>
             <ThemeColor className="bg-success">
-              <h6>Prekės ženklo spalva ,,Success"</h6>
+              <h6>Prekės ženklo spalva "Success"</h6>
             </ThemeColor>
             <ThemeColor className="bg-danger">
-              <h6>Prekės ženklo spalva ,,Danger"</h6>
+              <h6>Prekės ženklo spalva "Danger"</h6>
             </ThemeColor>
             <ThemeColor className="bg-warning">
-              <h6>Prekės ženklo spalva ,,Warning"</h6>
+              <h6>Prekės ženklo spalva "Warning"</h6>
             </ThemeColor>
             <ThemeColor className="bg-info">
-              <h6>Prekės ženklo spalva ,,Info"</h6>
+              <h6>Prekės ženklo spalva "Info"</h6>
             </ThemeColor>
             <ThemeColor className="bg-light">
-              <h6>Prekės ženklo spalva ,,Light"</h6>
+              <h6>Prekės ženklo spalva "Light"</h6>
             </ThemeColor>
             <ThemeColor className="bg-dark">
-              <h6>Prekės ženklo spalva ,,Dark"</h6>
+              <h6>Prekės ženklo spalva "Dark"</h6>
             </ThemeColor>
           </CRow>
         </CCardBody>
