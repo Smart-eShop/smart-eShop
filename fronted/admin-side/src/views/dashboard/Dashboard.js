@@ -27,12 +27,12 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
             <CCol sm="5">
-              <h4 id="traffic" className="card-title mb-0">Trafsadsadfic</h4>
-              <div className="small text-muted">November 2017</div>
+              <h4 id="traffic" className="card-title mb-0">Vartotojų srautas</h4>
+              <div className="small text-muted">2017 m. Lapkričio mėn</div>
             </CCol>
             <CCol sm="7" className="d-none d-md-block">
               <CButton color="primary" className="float-right">
-                <CIcon name="cil-cloud-download"/>
+                <CIcon name="cil-cloud-download" />
               </CButton>
               <CButtonGroup className="float-right mr-3">
                 {
@@ -50,13 +50,13 @@ const Dashboard = () => {
               </CButtonGroup>
             </CCol>
           </CRow>
-          <MainChartExample style={{height: '300px', marginTop: '40px'}}/>
+          <MainChartExample style={{ height: '300px', marginTop: '40px' }} />
         </CCardBody>
         <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Visits</div>
-              <strong>29.703 Users (40%)</strong>
+              <div className="text-muted">Apsilankymai</div>
+              <strong>29.703 Vartotojai (40%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -65,8 +65,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Unique</div>
-              <strong>24.093 Users (20%)</strong>
+              <div className="text-muted">Unikalūs</div>
+              <strong>24.093 Vartotojai (20%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -75,8 +75,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Pageviews</div>
-              <strong>78.706 Views (60%)</strong>
+              <div className="text-muted">Puslapio peržiūros</div>
+              <strong>78.706 Peržiūros (60%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -85,8 +85,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">New Users</div>
-              <strong>22.123 Users (80%)</strong>
+              <div className="text-muted">Nauji vartotojai</div>
+              <strong>22.123 Vartotojai (80%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -95,8 +95,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Bounce Rate</div>
-              <strong>Average Rate (40.15%)</strong>
+              <div className="text-muted">Atmetimo rodiklis</div>
+              <strong>Vidutinis rodiklis (40.15%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -107,7 +107,7 @@ const Dashboard = () => {
         </CCardFooter>
       </CCard>
 
-      <WidgetsBrand withCharts/>
+      <WidgetsBrand withCharts />
 
       <CRow>
         <CCol>
@@ -122,14 +122,14 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm="6">
                       <CCallout color="info">
-                        <small className="text-muted">New Clients</small>
+                        <small className="text-muted">Nauji klientai</small>
                         <br />
                         <strong className="h4">9,123</strong>
                       </CCallout>
                     </CCol>
                     <CCol sm="6">
                       <CCallout color="danger">
-                        <small className="text-muted">Recurring Clients</small>
+                        <small className="text-muted">Sugrįžtantys klientai</small>
                         <br />
                         <strong className="h4">22,643</strong>
                       </CCallout>
@@ -141,7 +141,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                        Monday
+                        Pirmadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -152,7 +152,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Tuesday
+                        Antradienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -163,7 +163,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Wednesday
+                        Trečiadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -174,7 +174,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Thursday
+                        Ketvirtadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -185,7 +185,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Friday
+                        Penktadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -196,7 +196,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Saturday
+                        Šeštadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -207,7 +207,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
                       <span className="progress-group-text">
-                      Sunday
+                        Sekmadienis
                       </span>
                     </div>
                     <div className="progress-group-bars">
@@ -218,10 +218,10 @@ const Dashboard = () => {
                   <div className="legend text-center">
                     <small>
                       <sup className="px-1"><CBadge shape="pill" color="info">&nbsp;</CBadge></sup>
-                      New clients
+                      Nauji klientai
                       &nbsp;
                       <sup className="px-1"><CBadge shape="pill" color="danger">&nbsp;</CBadge></sup>
-                      Recurring clients
+                      Sugrįžtantys klientai
                     </small>
                   </div>
                 </CCol>
@@ -231,7 +231,7 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm="6">
                       <CCallout color="warning">
-                        <small className="text-muted">Pageviews</small>
+                        <small className="text-muted">Puslapio peržiūros</small>
                         <br />
                         <strong className="h4">78,623</strong>
                       </CCallout>
@@ -250,7 +250,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-4">
                     <div className="progress-group-header">
                       <CIcon className="progress-group-icon" name="cil-user" />
-                      <span className="title">Male</span>
+                      <span className="title">Vyrai</span>
                       <span className="ml-auto font-weight-bold">43%</span>
                     </div>
                     <div className="progress-group-bars">
@@ -260,7 +260,7 @@ const Dashboard = () => {
                   <div className="progress-group mb-5">
                     <div className="progress-group-header">
                       <CIcon className="progress-group-icon" name="cil-user-female" />
-                      <span className="title">Female</span>
+                      <span className="title">Moterys</span>
                       <span className="ml-auto font-weight-bold">37%</span>
                     </div>
                     <div className="progress-group-bars">
@@ -324,11 +324,11 @@ const Dashboard = () => {
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
-                    <th>User</th>
-                    <th className="text-center">Country</th>
-                    <th>Usage</th>
-                    <th className="text-center">Payment Method</th>
-                    <th>Activity</th>
+                    <th>Vartotojas</th>
+                    <th className="text-center">Šalis</th>
+                    <th>Naudojimas</th>
+                    <th className="text-center">Mokėjimo būdas</th>
+                    <th>Aktyvumas</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -342,7 +342,7 @@ const Dashboard = () => {
                     <td>
                       <div>Yiorgos Avraamu</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <span>Naujas</span> | Registruota: 2021 m. Kovo 12 d.
                       </div>
                     </td>
                     <td className="text-center">
@@ -354,7 +354,7 @@ const Dashboard = () => {
                           <strong>50%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Kovo 12, 2021 m. - kovo 13, 2021 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="success" value="50" />
@@ -363,8 +363,8 @@ const Dashboard = () => {
                       <CIcon height={25} name="cib-cc-mastercard" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>10 sec ago</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Prieš 10 sek</strong>
                     </td>
                   </tr>
                   <tr>
@@ -378,7 +378,7 @@ const Dashboard = () => {
                       <div>Avram Tarasios</div>
                       <div className="small text-muted">
 
-                        <span>Recurring</span> | Registered: Jan 1, 2015
+                        <span>Sugrįžtantis</span> | Registruota: Sausio 1, 2015 m.
                       </div>
                     </td>
                     <td className="text-center">
@@ -390,7 +390,7 @@ const Dashboard = () => {
                           <strong>10%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Sausio 11, 2015 m. - Sausio 10, 2015 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="info" value="10" />
@@ -399,8 +399,8 @@ const Dashboard = () => {
                       <CIcon height={25} name="cib-cc-visa" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>5 minutes ago</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Prieš 5 minutes</strong>
                     </td>
                   </tr>
                   <tr>
@@ -413,7 +413,7 @@ const Dashboard = () => {
                     <td>
                       <div>Quintin Ed</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <span>Naujas</span> | Registruota: Sausio 1, 2021 m.
                       </div>
                     </td>
                     <td className="text-center">
@@ -425,7 +425,7 @@ const Dashboard = () => {
                           <strong>74%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Vasario 1, 2021 m. - kovo 2 2021 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="warning" value="74" />
@@ -434,8 +434,8 @@ const Dashboard = () => {
                       <CIcon height={25} name="cib-stripe" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>1 hour ago</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Prieš 1 valandą</strong>
                     </td>
                   </tr>
                   <tr>
@@ -448,7 +448,7 @@ const Dashboard = () => {
                     <td>
                       <div>Enéas Kwadwo</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <span>Naujas</span> | Registruota: Sausio 1, 2021 m.
                       </div>
                     </td>
                     <td className="text-center">
@@ -460,7 +460,7 @@ const Dashboard = () => {
                           <strong>98%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Vasario 1, 2021 m. - kovo 2, 2021 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="danger" value="98" />
@@ -469,8 +469,8 @@ const Dashboard = () => {
                       <CIcon height={25} name="cib-paypal" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last month</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Praeitą mėnesį</strong>
                     </td>
                   </tr>
                   <tr>
@@ -483,7 +483,7 @@ const Dashboard = () => {
                     <td>
                       <div>Agapetus Tadeáš</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <span>Naujas</span> | Registruota: Sausio 1, 2021 m.
                       </div>
                     </td>
                     <td className="text-center">
@@ -495,17 +495,17 @@ const Dashboard = () => {
                           <strong>22%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Sausio 11, 2021 m. - Liepos 10, 2021 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="info" value="22" />
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cib-google-pay"/>
+                      <CIcon height={25} name="cib-google-pay" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last week</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Praeitą savaitę</strong>
                     </td>
                   </tr>
                   <tr>
@@ -518,7 +518,7 @@ const Dashboard = () => {
                     <td>
                       <div>Friderik Dávid</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <span>Naujas</span> | Registruota: Sausio 1, 2021 m.
                       </div>
                     </td>
                     <td className="text-center">
@@ -530,7 +530,7 @@ const Dashboard = () => {
                           <strong>43%</strong>
                         </div>
                         <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <small className="text-muted">Sausio 11, 2021 m. - Liepos 10, 2021 m.</small>
                         </div>
                       </div>
                       <CProgress className="progress-xs" color="success" value="43" />
@@ -539,8 +539,8 @@ const Dashboard = () => {
                       <CIcon height={25} name="cib-cc-amex" />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Yesterday</strong>
+                      <div className="small text-muted">Paskutinis prisijungimas</div>
+                      <strong>Vakar</strong>
                     </td>
                   </tr>
                 </tbody>

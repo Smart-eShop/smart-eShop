@@ -32,11 +32,11 @@ const CNavbars = () => {
       <CCard>
         <CCardHeader>
           CNavbar
-          <DocsLink name="CNavbar"/>
+          <DocsLink name="CNavbar" />
         </CCardHeader>
         <CCardBody>
           <CNavbar expandable="sm" color="info" >
-            <CToggler inNavbar onClick={() => setIsOpen(!isOpen)}/>
+            <CToggler inNavbar onClick={() => setIsOpen(!isOpen)} />
             <CNavbarBrand>
               NavbarBrand
             </CNavbarBrand>
@@ -110,7 +110,7 @@ const CNavbars = () => {
           <CNavbar toggleable="sm" light color="light">
             <CToggler
               inNavbar
-              onClick={()=>{ setNavbarText(!navbarText)}}
+              onClick={() => { setNavbarText(!navbarText) }}
             />
             <CNavbarBrand>NavbarBrand</CNavbarBrand>
             <CCollapse show={navbarText}>
@@ -128,7 +128,7 @@ const CNavbars = () => {
         </CCardHeader>
         <CCardBody>
           <CNavbar expandable="false" color="primary" >
-            <CToggler inNavbar onClick={()=>{setIsOpenDropdown(!isOpenDropdown)}} />
+            <CToggler inNavbar onClick={() => { setIsOpenDropdown(!isOpenDropdown) }} />
             <CCollapse show={isOpenDropdown} navbar>
               <CNavbarNav>
                 <CNavLink>Home</CNavLink>

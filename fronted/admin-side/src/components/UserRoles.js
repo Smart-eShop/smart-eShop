@@ -48,7 +48,7 @@ const UserRoles = () => {
     <>
       <CCard>
         <CCardHeader>
-          Users
+          Vartotojai
           <DocsLink href="https://coreui.io/docs/content/typography/" />
         </CCardHeader>
         <CCardBody>
@@ -58,16 +58,16 @@ const UserRoles = () => {
             show={modal}
             onClose={toggle}
           >
-            <CModalHeader closeButton>Do you really want to delete user?</CModalHeader>
+            <CModalHeader closeButton>Ar tikrai norite ištrinti vartotoją?</CModalHeader>
             {/* <CModalBody>
           Lorem ipsum dolor...
         </CModalBody> */}
             <CModalFooter>
-              <CButton color="danger">Delete</CButton>{' '}
+              <CButton color="danger">Ištrinti</CButton>{' '}
               <CButton
                 color="secondary"
                 onClick={toggle}
-              >Cancel
+              >Atšaukti
           </CButton>
             </CModalFooter>
           </CModal>
@@ -75,32 +75,32 @@ const UserRoles = () => {
             show={editModal}
             onClose={toggleEdit}
           >
-            <CModalHeader closeButton>Do you really want to change user role?</CModalHeader>
+            <CModalHeader closeButton>Ar tikrai norite pakeisti vartotojo vaidmenį?</CModalHeader>
             <CModalBody>
               <select id="roles">
-                <option value="Admin">Admin</option>
-                <option value="Seler">Seler</option>
-                <option value="User">User</option>
+                <option value="Admin">Administratorius</option>
+                <option value="Seler">Pardavėjas</option>
+                <option value="User">Vartotojas</option>
               </select>
             </CModalBody>
             <CModalFooter>
-              <CButton color="warning">Change</CButton>{' '}
+              <CButton color="warning">Keisti</CButton>{' '}
 
               <CButton
                 color="secondary"
                 onClick={toggleEdit}
-              >Cancel</CButton>
+              >Atšaukti</CButton>
             </CModalFooter>
           </CModal>
-          <p>Delete users, change roles.</p>
+          <p>Ištrinti vartotojus, pakeisti roles.</p>
           <table className="table">
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>User Name</th>
-                <th>Role</th>
-                <th>Edit Role</th>
-                <th>Delete</th>
+                <th>Vartotojo ID</th>
+                <th>Vartotojo vardas</th>
+                <th>Rolė</th>
+                <th>Pakeisti rolę</th>
+                <th>Ištrinti</th>
               </tr>
 
             </thead>
@@ -113,21 +113,21 @@ const UserRoles = () => {
                   <span className="h5">Vartotojas</span>
                 </td>
                 <td>
-                  <span className="h5">user</span>
+                  <span className="h5">Vartotojas</span>
                 </td>
                 <td>
                   <CButton
                     color="warning"
                     onClick={toggleEdit}
                     className="mr-1"
-                  >Edit Role</CButton>
+                  >Pakeisti rolę</CButton>
                 </td>
                 <td>
                   <CButton
                     color="danger"
                     onClick={toggle}
                     className="mr-1"
-                  >Delete</CButton>
+                  >Ištrinti</CButton>
                 </td>
               </tr>
             </tbody>
