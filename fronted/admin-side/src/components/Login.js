@@ -40,10 +40,11 @@ const Login = () => {
       .then(data => JSON.parse(JSON.stringify(data.access_token)))
       .then(data => localStorage.setItem('access_token', data))
       .then(setRedir(true))
+
   }
 
 
-if (redir) {
+  if (redir) {
     return (<TheLayout />)
   }
 
