@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
 import Login from './components/Login';
 
@@ -21,14 +21,10 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'));
 const AddProduct = React.lazy(()=> import('./components/AddProduct'));
 
 
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
 
-}
 
 function getToken() {
   const tokenString = localStorage.getItem('access_token');
-  // const userToken = JSON.parse(tokenString);
   return tokenString
 }
 
