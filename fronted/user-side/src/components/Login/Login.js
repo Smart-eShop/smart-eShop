@@ -19,7 +19,7 @@ import Products from '../Products/Products';
 
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  paper: 
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
