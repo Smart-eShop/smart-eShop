@@ -22,12 +22,15 @@ import CIcon from '@coreui/icons-react'
 
 const AddProduct = () => {
   console.log('Bandymas')
+  
+  const accessToken = localStorage.getItem('access_token');
+  
   const AddProductFetch = e => {
     fetch(`https://eshopsmart.herokuapp.com/api/addItem?title=${titleInput}&description=${descriptionInput}&keywords=${keywordsInput}&img=${imgInput}&price=${priceInput}&discount=${discountInput}&quantity=${quantityInput}&weight=${weightInput}&size=${sizeInput}`,{
       method: "POST",
       headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
        }
 
     }
