@@ -42,6 +42,12 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Products',
+    to: '/all-products',
+    icon: 'cil-basket',
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Add products',
     to: '/addproduct',
     icon: 'cil-cart',
