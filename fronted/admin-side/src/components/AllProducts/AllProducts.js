@@ -177,7 +177,7 @@ const ProductTable = () => {
 					  <p> Vartotojo id: {item.user_id} </p>
 					  <p className="text-muted">Raktiniai žodžiai: {(item.keywords == null)?"Nėra":item.keywords}</p>
 					  <CButton size="sm" color="info">
-						User Settings
+						Edit
 					  </CButton>
 					  <CButton  
 					  onClick={() => deleteProduct(item.id)}
