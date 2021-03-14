@@ -15,27 +15,42 @@ import {
   CInputFile,
   CLabel,
   CSelect,
-  CRow
+  CRow,
+  CAlert
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 
 const AddProduct = () => {
-  console.log('Bandymas')
+ const [productAdded, setProductAdded] = useState(false);
+ const [requestError, setRequestError] = useState(false);
+ const accessToken = localStorage.getItem('access_token');
   const AddProductFetch = e => {
     fetch(`https://eshopsmart.herokuapp.com/api/addItem?title=${titleInput}&description=${descriptionInput}&keywords=${keywordsInput}&img=${imgInput}&price=${priceInput}&discount=${discountInput}&quantity=${quantityInput}&weight=${weightInput}&size=${sizeInput}`,{
       method: "POST",
       headers : { 
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Authorization': `Bearer ${accessToken}`,
        }
 
     }
     )
     .then(response => response.json())
-    .then(json =>{
-      console.log(json)
-    })
+    .then(res =>{
+      console.log(res.message);
+        if (res.message === "Delivery method added to database successfully") { ///////cia nekeisti lietuviskai
+          setProductAdded(true);
+          setRequestError(false);
+        } else {
+          setRequestError(true);
+          setProductAdded(false);
+
+        }
+      })
+      .catch(err => {
+        setRequestError(true);
+        setProductAdded(false);
+      })
   };
   const [titleInput, setTitle] = useState('');
   const [descriptionInput, setDescription] = useState('');
@@ -46,38 +61,39 @@ const AddProduct = () => {
   const [quantityInput, setQuantity] = useState('');
   const [weightInput, setWeight] = useState('');
   const [sizeInput, setSize] = useState('');
-  // const [collapsed, setCollapsed] = React.useState(true)
-  // const [showElements, setShowElements] = React.useState(true)
+
 
   return(
     <CRow>
-    <CCol xs="12" md="6">
+    <CCol xs="12" md="12">
       <CCard>
         <CCardHeader>
-          Add product
+        {productAdded ? <CAlert color="primary">Produktas pridėtas!</CAlert> : null}
+            {requestError ? <CAlert color="warning" closeButton>Klaida!</CAlert> : null}
+          Pridėti naują produktą:
         </CCardHeader>
         <CCardBody>
           <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
           <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Product name</CLabel>
+                <CLabel htmlFor="text-input">Produkto pavadinimas:</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Text" value={titleInput} onInput={e =>setTitle(e.target.value)} />
+                <CInput id="text-input" name="text-input" placeholder="Pavadinimas" value={titleInput} onInput={e =>setTitle(e.target.value)} />
               </CCol>
             </CFormGroup>
 
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="textarea-input">Product description</CLabel>
+                <CLabel htmlFor="textarea-input">Produkto aprašymas:</CLabel>
               </CCol>
               <CCol xs="12" md="9">
                 <CTextarea 
                   name="textarea-input" 
                   id="textarea-input" 
                   rows="9"
-                  placeholder="Content..." 
+                  placeholder="Aprašymas..." 
                   value={descriptionInput} onInput={e =>setDescription(e.target.value)}
                 />
               </CCol>
@@ -86,15 +102,15 @@ const AddProduct = () => {
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="email-input">Enter keywords</CLabel>
+                <CLabel htmlFor="email-input">Žymės:</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput type="tag" id="email-input" name="email-input" placeholder="Enter tags" autoComplete="tag"  value={keywordsInput} onInput={e =>setKeywords(e.target.value)}/>
+                <CInput type="tag" id="email-input" name="email-input" placeholder="Žymes..." autoComplete="tag"  value={keywordsInput} onInput={e =>setKeywords(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
             
-            <CFormGroup row>
+            {/* <CFormGroup row>
               <CCol md="3">
                 <CLabel htmlFor="select">Select category</CLabel>
               </CCol>
@@ -106,25 +122,25 @@ const AddProduct = () => {
                   <option value="3">Option #3</option>
                 </CSelect>
               </CCol>
-            </CFormGroup>
+            </CFormGroup> */}
 
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Price</CLabel>
+                <CLabel htmlFor="text-input">Kaina</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Price"  value={priceInput} onInput={e =>setPrice(e.target.value)}/>
+                <CInput id="text-input" name="text-input" placeholder="Kaina"  value={priceInput} onInput={e =>setPrice(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Discount</CLabel>
+                <CLabel htmlFor="text-input">Nuolaida</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Discount"  value={discountInput} onInput={e =>setDiscount(e.target.value)}/>
+                <CInput id="text-input" name="text-input" placeholder="Nuolaida"  value={discountInput} onInput={e =>setDiscount(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
@@ -132,30 +148,30 @@ const AddProduct = () => {
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Size</CLabel>
+                <CLabel htmlFor="text-input">Dydis</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Size"  value={sizeInput} onInput={e =>setSize(e.target.value)}/>
+                <CInput id="text-input" name="text-input" placeholder="Dydis"  value={sizeInput} onInput={e =>setSize(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Quantity</CLabel>
+                <CLabel htmlFor="text-input">Kiekis</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Quantity"  value={quantityInput} onInput={e =>setQuantity(e.target.value)}/>
+                <CInput id="text-input" name="text-input" placeholder="Kiekis"  value={quantityInput} onInput={e =>setQuantity(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel htmlFor="text-input">Weight</CLabel>
+                <CLabel htmlFor="text-input">Svoris</CLabel>
               </CCol>
               <CCol xs="12" md="9">
-                <CInput id="text-input" name="text-input" placeholder="Weight"  value={weightInput} onInput={e =>setWeight(e.target.value)}/>
+                <CInput id="text-input" name="text-input" placeholder="Svoris"  value={weightInput} onInput={e =>setWeight(e.target.value)}/>
                 
               </CCol>
             </CFormGroup>
@@ -167,7 +183,7 @@ const AddProduct = () => {
 
             <CFormGroup row>
               <CCol md="3">
-                <CLabel>Multiple File input</CLabel>
+                <CLabel>Nuotraukos:</CLabel>
               </CCol>
               <CCol xs="12" md="9">
                 <CInputFile 
@@ -178,7 +194,7 @@ const AddProduct = () => {
                   value={imgInput} onInput={e =>setImg(e.target.value)}
                 />
                 <CLabel htmlFor="file-multiple-input" variant="custom-file">
-                  Choose Files...
+                  Pasirinkite failus...
                 </CLabel>
               </CCol>
             </CFormGroup>
@@ -194,7 +210,7 @@ const AddProduct = () => {
           </CForm>
         </CCardBody>
         <CCardFooter>
-          <CButton type="submit" size="sm" color="primary" onClick={AddProductFetch}><CIcon name="cil-scrubber" /> Submit</CButton>
+          <CButton type="submit" size="sm" color="primary" onClick={AddProductFetch}><CIcon name="cil-scrubber" /> Pridėti produktą</CButton>
         </CCardFooter>
       </CCard>
   </CCol>
