@@ -92,7 +92,7 @@ export default function Login() {
       password: Yup.string().min(6, 'Slaptažodis turi būti ilgesnis nei 6 simboliai').required()
     }),
     onSubmit: ({ username, password }) => {
-      alert("Jūs sėkmingai prisijungėtei")
+      alert("Jūs sėkmingai prisijungėte")
     }
   })
 
