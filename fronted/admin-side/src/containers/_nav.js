@@ -30,32 +30,38 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Users',
+    name: 'Vartotojai',
     to: '/theme/UserRoles',
     icon: 'cil-puzzle',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Categories',
+    name: 'Kategorijos',
     to: '/all-categories',
     icon: 'cil-list',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Products',
+    name: 'Produktai',
     to: '/all-products',
     icon: 'cil-basket',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Add products',
+    name: 'Pridėti produktą',
     to: '/addproduct',
     icon: 'cil-cart',
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Add delivery',
+    name: 'Pridėti pristatymą',
     to: '/add-delivery',
+    icon: 'cil-truck',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Visi pristatymai',
+    to: '/all-delivery',
     icon: 'cil-truck',
   },
   {
