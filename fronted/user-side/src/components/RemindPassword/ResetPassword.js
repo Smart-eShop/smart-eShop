@@ -1,24 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
 
-import {Formik, Form, ErrorMessage} from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Alert from '@material-ui/lab/Alert';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import * as Yup from 'yup';
-import {string as yupString, object as yupObject, ref as yupRef} from 'yup';
+import { string as yupString, object as yupObject, ref as yupRef } from 'yup';
+import { Input } from '@material-ui/core';
 
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
     root: {
         '& > *, & > form > *': {
             marginBottom: theme.spacing(3)
@@ -36,8 +37,6 @@ export default function ResetPassword() {
     const classes = useStyles();
 
     const [showPassword, setShowPassword] = useState(false);
-    const [passwordChanged, setPasswordChanged] = useState(false);
-    const [requestError, setRequestError] = useState(false);
     const [emailInput, setEmail] = useState('');
     const [passwordInput, setPassword] = useState('');
     const [passwordConfirmInput, setPasswordConfirm] = useState('');
@@ -54,92 +53,92 @@ export default function ResetPassword() {
 
     const validationSchema = yupObject({
         email: yupString().email("Invalid Email").required("Required"),
-        password: Yup.string().min(8, 'Password should be longer than 8 characters').required('Required'),
-        passwordConfirm: yupString().when("password", {
+        password: Yup.string().min(10, 'Slaptažodis turi būti sudarytas iš ne mažiau 8 simbolių').required('Required'),
+        passwordConfirm: yupString().when("salptažos", {
             is: val => (val && val.length > 0 ? true : false),
             then: yupString().oneOf(
-            [yupRef("password")],
-            "Passwords must match"
+                [yupRef("password")],
+                "Slaptažodžiai turi sutapti"
             )
-        }).required("Required"),
+        }).required("Privalomas laukas"),
     });
 
-    const handleSubmit = (props, values, {setSubmitting}) => {
-     const token = (new URLSearchParams(props.location.search)).get('token');
-         const params = {token, ...values, password_confirmation: values.passwordConfirm};
+    const loc = window.location.href;
+    console.log(loc);
+    const url = new URL(loc);
+    const access_token = new URLSearchParams(url.search).get('token');
+    console.log(access_token);
 
-        const confFetch = e => {
-            console.log('submitting');
-               fetch(`https://eshopsmart.herokuapp.com/api/password/reset?email=${emailInput}&password=${passwordInput}&password_confirmation=${passwordConfirmInput}`, {
+    const [resetMessage, setResetMessage] = useState('');
+
+    const confFetch = async () => {
+        const url = `https://eshopsmart.herokuapp.com/api/password/reset?email=${emailInput}&token=${access_token}&password=${passwordInput}&password_confirmation=${passwordConfirmInput}`;
+        const response = await fetch(url, {
             method: "POST",
             headers: {
-              'Content-Type': 'application/json'
-            },
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json();
+        console.log(data);
+
+        if (data.message) {
+            setResetMessage(data.message)
         }
-        )
-            .then(res => {
-                
-                if(res.status === 200) {
-                    setPasswordChanged(true)
-                    setRequestError(false);
-                } else {
-                    setRequestError(true);
-                    setSubmitting(false)
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                setRequestError(true);
-                setSubmitting(false)
-            })
-      
     }
+
+    useEffect(() => {
+        confFetch();
+    }, [])
+
     return (
         <div className={classes.root}>
             <h2>Reset Password</h2>
-            {passwordChanged? <Alert severity="success">Password successfully changed! <Link to='/login'>Go back to login page</Link></Alert>: null}
-            {requestError? <Alert severity="error">Error occurred! Check that you've entered your email address correctly</Alert>: null}
+            {resetMessage ? <Alert color="primary" closeButton>{resetMessage}</Alert> : null}
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={handleSubmit}
             >
-            { ( {handleChange, values, handleBlur, isSubmitting}) => (
-                <Form >
-                    <FormGroup>
-                        <TextField label='Enter your email' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)}   />
-                        <ErrorMessage name='email' render={msg => <div className='text-danger'>{msg}</div>}/>
-                    </FormGroup>
-                    <FormGroup>
-                        <TextField variant='outlined' label='New Password' name='password' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur}  value={passwordInput} onInput={e => setPassword(e.target.value)} InputProps={{
-                            endAdornment: <InputAdornment position='end'>
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}                   
-                                edge="end"
-                        >{showPassword ? <Visibility />: <VisibilityOff />}</IconButton>
-                            </InputAdornment>}}/>
-                        <ErrorMessage name='password' render={msg => <div className='text-danger'>{msg}</div>} />
-                    </FormGroup>
-                    <FormGroup>
-                        <TextField variant='outlined' label='Repeat Password' name='passwordConfirm' color='primary' type={showPassword? 'text': 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordConfirmInput} onInput={e => setPassword(e.target.value)} InputProps={{
-                            endAdornment: <InputAdornment position='end'>
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}           
-                                edge="end"
-                        >{showPassword ? <Visibility />: <VisibilityOff />}</IconButton>
-                            </InputAdornment>}}/>
-                        <ErrorMessage name='passwordConfirm' render={msg => <div className='text-danger'>{msg}</div>} />
-                    </FormGroup>
+                {({ handleChange, values, handleBlur, isSubmitting }) => (
+                    <Form >
+                        <FormGroup>
+                            <TextField label='Enter your email' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)} />
+                            <ErrorMessage name='email' render={msg => <div className='text-danger'>{msg}</div>} />
+                        </FormGroup>
 
-                    <Button type='submit' variant='contained' disabled={isSubmitting} color='default' onClick={confFetch}>
-                        Submit
+                        <FormGroup>
+                            <TextField variant='outlined' label='New Password' name='password' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordInput} onInput={e => setPassword(e.target.value)} InputProps={{
+                                endAdornment: <InputAdornment position='end'>
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        edge="end"
+                                    >{showPassword ? <Visibility /> : <VisibilityOff />}</IconButton>
+                                </InputAdornment>
+                            }} />
+                            <ErrorMessage name='password' render={msg => <div className='text-danger'>{msg}</div>} />
+                        </FormGroup>
+                        <FormGroup>
+                            <TextField variant='outlined' label='Repeat Password' name='passwordConfirm' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordConfirmInput} onInput={e => setPasswordConfirm(e.target.value)} InputProps={{
+                                endAdornment: <InputAdornment position='end'>
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        edge="end"
+                                    >{showPassword ? <Visibility /> : <VisibilityOff />}</IconButton>
+                                </InputAdornment>
+                            }} />
+                            <ErrorMessage name='passwordConfirm' render={msg => <div className='text-danger'>{msg}</div>} />
+                        </FormGroup>
+
+                        <Button type='submit' variant='contained' disabled={isSubmitting} color='default'
+                            onClick={confFetch}
+                        >
+                            Submit
                     </Button>
-                </Form>
-            )}    
+                    </Form>
+                )}
             </Formik>
         </div>
     )
-                        }
-                    }
+}
