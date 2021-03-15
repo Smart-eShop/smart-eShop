@@ -9,8 +9,6 @@ const TermsConditions = () => {
             style={{
                 boxSizing: 'border-box',
                 display: 'flex',
-                //justifyContent: 'center',
-                //alignItems: 'center',
                 height: '80vh',
                 marginTop: '100px',
                 overflow: 'auto',
