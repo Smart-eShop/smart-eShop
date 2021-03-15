@@ -49,7 +49,7 @@ const _nav =  [
   {
     _tag: 'CSidebarNavItem',
     name: 'Pridėti produktą',
-    to: '/addproduct',
+    to: '/add-product',
     icon: 'cil-cart',
   },
   {
