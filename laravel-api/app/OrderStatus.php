@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Delivery extends Model
+class OrderStatus extends Model
 {
-    protected $fillable = ['name', 'time', 'price', 'terms'];
+    protected $fillable = ['status_name'];
 
     public function orders(){
         return $this->hasMany(Order::class);

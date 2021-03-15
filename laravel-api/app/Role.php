@@ -11,7 +11,6 @@ class Role extends Model
     ];
 
     public function users(){
-
         return $this->belongsTo(User::class, 'role_users', 'role_id', 'user_id');
     }
 }
