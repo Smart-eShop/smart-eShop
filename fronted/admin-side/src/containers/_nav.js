@@ -60,6 +60,12 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Pridėti apmokėjimą',
+    to: '/add-payment',
+    icon: 'cil-euro',
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Visi pristatymai',
     to: '/all-delivery',
     icon: 'cil-truck',
