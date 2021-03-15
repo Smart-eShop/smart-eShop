@@ -9,7 +9,16 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
+
 const TheHeaderDropdown = () => {
+ 
+  
+  
+  function clerLocalStorage(){
+    localStorage.clear();
+    document.location.reload()
+  }
+  
   return (
     <CDropdown
       inNav
@@ -80,9 +89,9 @@ const TheHeaderDropdown = () => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
+        <CDropdownItem onClick={() => clerLocalStorage()} >
           <CIcon name="cil-lock-locked" className="mfe-2" />
-          Užrakinti paskyrą
+          Atsijungti
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

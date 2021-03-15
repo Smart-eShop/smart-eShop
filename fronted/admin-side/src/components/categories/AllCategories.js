@@ -24,23 +24,24 @@ const AllCategories = () => {
 
     const [printCategories, setPrintCategories] = useState([]);
 
-    const printAllCategories = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/categories';
-        setLoading(true);
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data.Categories);
-        setPrintCategories(data.Categories);
-        setLoading(false);
-    }
+
+const printAllCategories = async() => {
+    const url = 'https://eshopsmart.herokuapp.com/api/categories';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.Categories);
+    setPrintCategories(data.Categories);
+}
+
 
 
     useEffect(() => {
         printAllCategories();
     }, [])
 
-    const [deleteMessage, setDeleteMessage] = useState('');
-    const [loading, setLoading] = useState(false);
+
+ const [deleteMessage, setDeleteMessage] = useState('');
+
 
     const deleteCategory = async (id) => {
         const url = `https://eshopsmart.herokuapp.com/api/delete-category/category=${id}`;
@@ -59,9 +60,15 @@ const AllCategories = () => {
         }
 
     }
-    useEffect(() => {
-        deleteCategory();
-    }, [])
+
+
+    printAllCategories();
+    
+}
+useEffect(()=>{
+    deleteCategory();
+}, [])
+
 
     const categoryFetch = () => {
         fetch(`https://eshopsmart.herokuapp.com/api/create-category?category_name=${categoryInput}`, {
@@ -83,11 +90,13 @@ const AllCategories = () => {
                     setRequestError(true);
                     setCategoryAdded(false);
                 }
+                printAllCategories();
             })
             .catch(err => {
                 setRequestError(true);
                 setCategoryAdded(false);
             })
+
     };
 
     const [categoryInput, setCategory] = useState('');

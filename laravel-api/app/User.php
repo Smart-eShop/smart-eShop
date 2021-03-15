@@ -39,6 +39,10 @@ class User extends Authenticatable
         return $this->hasMany(Item::class);
     }
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
     public function hasRole($role)
     {
         if($this->roles()->where('role', $role)->first()){

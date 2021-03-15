@@ -42,14 +42,33 @@ const _nav = [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Pridėti prekes',
-    to: '/addproduct',
+
+    name: 'Produktai',
+    to: '/all-products',
+    icon: 'cil-basket',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Pridėti produktą',
+    to: '/add-product',
     icon: 'cil-cart',
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Pridėti pristatymą',
     to: '/add-delivery',
+    icon: 'cil-truck',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Pridėti apmokėjimą',
+    to: '/add-payment',
+    icon: 'cil-euro',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Visi pristatymai',
+    to: '/all-delivery',
     icon: 'cil-truck',
   },
   {
