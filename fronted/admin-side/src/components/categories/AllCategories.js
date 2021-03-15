@@ -24,6 +24,7 @@ const AllCategories = () => {
 
     const [printCategories, setPrintCategories] = useState([]);
 
+
 const printAllCategories = async() => {
     const url = 'https://eshopsmart.herokuapp.com/api/categories';
     const response = await fetch(url);
@@ -33,27 +34,33 @@ const printAllCategories = async() => {
 }
 
 
-useEffect(()=>{
-    printAllCategories();
-}, [])
+
+    useEffect(() => {
+        printAllCategories();
+    }, [])
+
 
  const [deleteMessage, setDeleteMessage] = useState('');
 
-const deleteCategory = async(id) => {
-    const url = `https://eshopsmart.herokuapp.com/api/delete-category/category=${id}`;
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    const data = await response.json();
-    console.log(data);
 
-    if(data.message) {
-setDeleteMessage(data.message) 
+    const deleteCategory = async (id) => {
+        const url = `https://eshopsmart.herokuapp.com/api/delete-category/category=${id}`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json();
+        console.log(data);
+
+        if (data.message) {
+            setDeleteMessage(data.message)
+        }
+
     }
+
 
     printAllCategories();
     
@@ -61,6 +68,7 @@ setDeleteMessage(data.message)
 useEffect(()=>{
     deleteCategory();
 }, [])
+
 
     const categoryFetch = () => {
         fetch(`https://eshopsmart.herokuapp.com/api/create-category?category_name=${categoryInput}`, {
@@ -75,7 +83,7 @@ useEffect(()=>{
             .then(res => {
 
                 console.log(res.message);
-                if (res.message === "Category is created successfully!") {
+                if (res.message === "Kategorija sėkmingai sukurta!") {
                     setCategoryAdded(true);
                     setRequestError(false);
                 } else {
@@ -101,49 +109,49 @@ useEffect(()=>{
                 <CForm>
                     {categoryAdded ? <CAlert color="primary" closeButton>Kategorija pridėta!</CAlert> : null}
                     {requestError ? <CAlert color="warning" closeButton>Klaida!</CAlert> : null}
-                    <h2>Add new category</h2>
+                    <h2>Pridėti naują kategoriją</h2>
                     <CInputGroup className="mb-3">
-                        <CInput type="text" placeholder="Category" autoComplete="category"
+                        <CInput type="text" placeholder="Kategorija" autoComplete="category"
                             value={categoryInput} onInput={e => setCategory(e.target.value)} />
                     </CInputGroup>
                     <CRow>
                         <CCol xs="6">
-                            <CButton color="primary" className="px-4 mb-5" onClick={categoryFetch}>Submit</CButton>
+                            <CButton color="primary" className="px-4 mb-5" onClick={categoryFetch}>Pateikti</CButton>
                         </CCol>
                     </CRow>
                 </CForm>
             </CRow>
             <CCard>
                 <CCardHeader>
-                    <h3>All Categories</h3>
+                    <h3>Visos kategorijos</h3>
                 </CCardHeader>
                 {deleteMessage ? <CAlert color="primary" closeButton>{deleteMessage}</CAlert> : null}
                 <CCardBody>
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Category ID</th>
-                                <th>Category</th>
-                                <th>Delete</th>
+                                <th>Kategorijos ID</th>
+                                <th>Kategorija</th>
+                                <th>Ištrinti</th>
                             </tr>
 
                         </thead>
                         <tbody>
-                            {printCategories.map((category)=>(
+                            {printCategories.map((category) => (
                                 <tr>
                                     <td>
-                                  {category.id}
+                                        {category.id}
                                     </td>
                                     <td>
-                                  {category.category_name}
-                                </td>
-                                <td>  
-                                    <CButton
-                                          onClick={() => deleteCategory(category.id)}
-                                        className="mr-1"
-                                    ><CIcon size={'lg'} name={'cilTrash'}></CIcon></CButton>
-                                   
-                                </td>
+                                        {category.category_name}
+                                    </td>
+                                    <td>
+                                        <CButton
+                                            onClick={() => deleteCategory(category.id)}
+                                            className="mr-1"
+                                        ><CIcon size={'lg'} name={'cilTrash'}></CIcon></CButton>
+
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

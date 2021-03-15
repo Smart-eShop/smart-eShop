@@ -24,26 +24,26 @@ const ThemeView = () => {
   return (
     <table className="table w-100" ref={ref}>
       <tbody>
-      <tr>
-        <td className="text-muted">HEX:</td>
-        <td className="font-weight-bold">{ rgbToHex(color) }</td>
-      </tr>
-      <tr>
-        <td className="text-muted">RGB:</td>
-        <td className="font-weight-bold">{ color }</td>
-      </tr>
+        <tr>
+          <td className="text-muted">HEX:</td>
+          <td className="font-weight-bold">{rgbToHex(color)}</td>
+        </tr>
+        <tr>
+          <td className="text-muted">RGB:</td>
+          <td className="font-weight-bold">{color}</td>
+        </tr>
       </tbody>
     </table>
   )
 }
 
-const ThemeColor = ({className, children}) => {
+const ThemeColor = ({ className, children }) => {
   const classes = classNames(className, 'theme-color w-75 rounded mb-3')
   return (
     <CCol xl="2" md="4" sm="6" xs="12" className="mb-4">
-      <div className={classes} style={{paddingTop: '75%'}}></div>
+      <div className={classes} style={{ paddingTop: '75%' }}></div>
       {children}
-      <ThemeView/>
+      <ThemeView />
     </CCol>
   )
 }
@@ -53,70 +53,70 @@ const Colors = () => {
     <>
       <CCard>
         <CCardHeader>
-          Theme colors
-          <DocsLink href="https://coreui.io/docs/utilities/colors/"/>
+          Temos spalvos
+          <DocsLink href="https://coreui.io/docs/utilities/colors/" />
         </CCardHeader>
         <CCardBody>
           <CRow>
             <ThemeColor className="bg-primary">
-              <h6>Brand Primary Color</h6>
+              <h6>Prekės ženklo spalva "Primary"</h6>
             </ThemeColor>
             <ThemeColor className="bg-secondary">
-              <h6>Brand Secondary Color</h6>
+              <h6>Prekės ženklo spalva "Secondary"</h6>
             </ThemeColor>
             <ThemeColor className="bg-success">
-              <h6>Brand Success Color</h6>
+              <h6>Prekės ženklo spalva "Success"</h6>
             </ThemeColor>
             <ThemeColor className="bg-danger">
-              <h6>Brand Danger Color</h6>
+              <h6>Prekės ženklo spalva "Danger"</h6>
             </ThemeColor>
             <ThemeColor className="bg-warning">
-              <h6>Brand Warning Color</h6>
+              <h6>Prekės ženklo spalva "Warning"</h6>
             </ThemeColor>
             <ThemeColor className="bg-info">
-              <h6>Brand Info Color</h6>
+              <h6>Prekės ženklo spalva "Info"</h6>
             </ThemeColor>
             <ThemeColor className="bg-light">
-              <h6>Brand Light Color</h6>
+              <h6>Prekės ženklo spalva "Light"</h6>
             </ThemeColor>
             <ThemeColor className="bg-dark">
-              <h6>Brand Dark Color</h6>
+              <h6>Prekės ženklo spalva "Dark"</h6>
             </ThemeColor>
           </CRow>
         </CCardBody>
       </CCard>
       <CCard>
         <CCardHeader>
-          Grays
+          Pilkos
         </CCardHeader>
         <CCardBody>
           <CRow className="mb-3">
             <ThemeColor className="bg-gray-100">
-              <h6>Gray 100 Color</h6>
+              <h6>Pilka 100 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-200">
-              <h6>Gray 200 Color</h6>
+              <h6>Pilka 200 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-300">
-              <h6>Gray 300 Color</h6>
+              <h6>Pilka 300 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-400">
-              <h6>Gray 400 Color</h6>
+              <h6>Pilka 400 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-500">
-              <h6>Gray 500 Color</h6>
+              <h6>Pilka 500 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-600">
-              <h6>Gray 600 Color</h6>
+              <h6>Pilka 600 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-700">
-              <h6>Gray 700 Color</h6>
+              <h6>Pilka 700 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-800">
-              <h6>Gray 800 Color</h6>
+              <h6>Pilka 800 Spalva</h6>
             </ThemeColor>
             <ThemeColor className="bg-gray-900">
-              <h6>Gray 900 Color</h6>
+              <h6>Pilka 900 Spalva</h6>
             </ThemeColor>
           </CRow>
         </CCardBody>

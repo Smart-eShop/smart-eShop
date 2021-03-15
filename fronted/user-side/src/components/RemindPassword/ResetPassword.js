@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
+
 
 
 import { Formik, Form, ErrorMessage } from 'formik';
@@ -16,7 +18,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import * as Yup from 'yup';
 import { string as yupString, object as yupObject, ref as yupRef } from 'yup';
+
 import { Input } from '@material-ui/core';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,6 +56,7 @@ export default function ResetPassword() {
     };
 
     const validationSchema = yupObject({
+
         email: yupString().email("Invalid Email").required("Required"),
         password: Yup.string().min(10, 'Slaptažodis turi būti sudarytas iš ne mažiau 8 simbolių').required('Required'),
         passwordConfirm: yupString().when("salptažos", {

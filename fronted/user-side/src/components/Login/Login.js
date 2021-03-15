@@ -88,11 +88,11 @@ export default function Login() {
       password: ''
     },
     validationSchema: Yup.object({
-      username: Yup.string().max(10, 'Username must be shorter than 10 characters').required('Required'),
-      password: Yup.string().min(6, 'Password should be longer than 6 characters').required()
+      username: Yup.string().max(10, 'Vartotojo vardas turi būti trumpesnis nei 10 simbolių').required('Privaloma *'),
+      password: Yup.string().min(6, 'Slaptažodis turi būti ilgesnis nei 6 simboliai').required()
     }),
     onSubmit: ({ username, password }) => {
-      alert("You have successfully logged in")
+      alert("Jūs sėkmingai prisijungėtei")
     }
   })
 
@@ -117,7 +117,7 @@ export default function Login() {
               required
               fullWidth
               id="username"
-              label="Username"
+              label="Vartotojo vardas"
               name="username"
               autoComplete="username"
               autoFocus
@@ -136,7 +136,7 @@ export default function Login() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Slaptažodis"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -146,11 +146,11 @@ export default function Login() {
             ) : null}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Prisiminti mane"
             />
             <Grid item xs>
               <Link href="/remind-password" variant="body2">
-                Forgot password?
+                Pamiršote slaptažodį?
                   </Link>
             </Grid>
             <Button
@@ -162,12 +162,12 @@ export default function Login() {
               className={classes.submit}
             >
 
-              Sign In
+              Prisijungti
               </Button>
             <Grid container>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Neturite paskyros? Registruotis"}
                 </Link>
               </Grid>
             </Grid>
