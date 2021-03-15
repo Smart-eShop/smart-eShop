@@ -43,7 +43,7 @@ const AddProduct = () => {
     .then(response => response.json())
     .then(res =>{
       console.log(res.message);
-        if (res.message === "Delivery method added to database successfully") { ///////cia nekeisti lietuviskai
+        if (res.message === "Item added successfully") { ///////cia nekeisti lietuviskai
           setProductAdded(true);
           setRequestError(false);
         } else {
