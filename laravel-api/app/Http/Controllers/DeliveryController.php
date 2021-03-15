@@ -17,9 +17,9 @@ class DeliveryController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::denies('admin-role')) {
+        if (Gate::denies('admin-role'))
             return response()->json(["message" => "You are not Admin"], 200);
-        }
+
         $validateData = $request->validate([
             'name' => 'required',
             'time' => 'required',
@@ -38,35 +38,35 @@ class DeliveryController extends Controller
 
     public function show(Delivery $delivery)
     {
-        if (Gate::denies('admin-role')) {
+        if (Gate::denies('admin-role'))
             return response()->json(["message" => "You are not Admin"], 200);
-        }
+
         $delivery = Delivery::all();
         return response()->json(["Delivery" => $delivery]);
     }
 
     public function edit(Delivery $delivery)
     {
-        if (Gate::denies('admin-role')) {
+        if (Gate::denies('admin-role'))
             return response()->json(["message" => "You are not Admin"], 200);
-        }
+
         return response()->json(["Delivery" => $delivery]);
     }
 
     public function update(Request $request, Delivery $delivery)
     {
-        if (Gate::denies('admin-role')) {
+        if (Gate::denies('admin-role'))
             return response()->json(["message" => "You are not Admin"], 200);
-        }
+
         Delivery::where('id', $delivery->id)->update($request->all());
         return response()->json(["message" => "Delivery method updated successfully"]);
     }
 
     public function destroy(Delivery $delivery)
     {
-        if (Gate::denies('admin-role')) {
+        if (Gate::denies('admin-role'))
             return response()->json(["message" => "You are not Admin"], 200);
-        }
+
         $delivery->delete();
         return response()->json(["message" => "Delivery method deleted successfully"]);
     }

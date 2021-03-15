@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Delivery extends Model
+class Payment extends Model
 {
-    protected $fillable = ['name', 'time', 'price', 'terms'];
+    protected $fillable = ['name', 'terms'];
 
     public function orders(){
         //
