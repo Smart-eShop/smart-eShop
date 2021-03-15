@@ -54,6 +54,10 @@ Route::get('delivery/show', 'DeliveryController@show');
 Route::get('delivery/edit/{delivery}', 'DeliveryController@edit');
 Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
+//Payment methods
+Route::post('payment/store', 'PaymentController@store');
+Route::post('payment/update/{payment}', 'PaymentController@update');
+Route::get('payment/delete/{payment}', 'PaymentController@destroy');
 
 
 Route::get('recaptcha', 'ApiController@recaptchaKey');

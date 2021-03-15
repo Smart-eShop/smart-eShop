@@ -1,137 +1,280 @@
-import React, { useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import {
   CCard,
-  CCardHeader,
   CCardBody,
   CButton,
-  CModalFooter,
-  CModalBody,
-  CModalHeader,
-  CModal
+  CBadge,
+  CDataTable,
+  CCollapse,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownItem,
+  CDropdownMenu
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
+
+const UserTable = () => {
+
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const accessToken = localStorage.getItem('access_token');
+
+  useEffect(() => {
+    fetch("https://eshopsmart.herokuapp.com/api/users", {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          console.log(result);
+          const userObj = result;
+          setUsers(userObj.users);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [accessToken])
+
+
+  function changeRole(id, role) {
+    fetch(`https://eshopsmart.herokuapp.com/api/updateRole/user_id=${id}?role_id=${role}`, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(data => data.json())
+      .then(data => console.log(data))
+
+  }
+
+  function banUser(id) {
+    fetch(`https://eshopsmart.herokuapp.com/api/ban/user_id=${id}?is_banned=1`, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(data => data.json())
+      .then(data => console.log(data))
+
+  }
+  function unBan(id) {
+    fetch(`https://eshopsmart.herokuapp.com/api/unban/user_id=${id}`, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(data => data.json())
+      .then(data => console.log(data))
+
+  }
+  function deleteUser(id) {
+    fetch(`https://eshopsmart.herokuapp.com/api/delete/user_id=${id}`, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+    })
+
+      .then(data => data.json())
+      .then(data => console.log(data))
+
+  }
+
+
+
+
+
+
+
+  const [details, setDetails] = useState([])
+  // const [items, setItems] = useState(usersData)
+
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index)
+    let newDetails = details.slice()
+    if (position !== -1) {
+      newDetails.splice(position, 1)
+    } else {
+      newDetails = [...details, index]
+    }
+    setDetails(newDetails)
+  }
+
+
+  const fields = [
+    { key: 'id', _style: { width: '10%' } },
+    { key: 'name', _style: { width: '10%' } },
+    { key: 'first_name', _style: { width: '10%' } },
+    { key: 'last_name', _style: { width: '10%' } },
+    { key: 'email', _style: { width: '10%' } },
+    { key: 'role', _style: { width: '10%' } },
+    { key: 'created_at', _style: { width: '10%' } },
+    { key: 'is_banned', _style: { width: '10%' } },
+    {
+      key: 'show_details',
+      label: '',
+      _style: { width: '1%' },
+      sorter: false,
+      filter: false
+    }
+  ]
+
+  const getBadge = (status) => {
+    switch (status) {
+      case 'Active': return 'success'
+      case 'Inactive': return 'secondary'
+      case 'Pending': return 'warning'
+      case 'Banned': return 'danger'
+      default: return 'primary'
+    }
+  }
+
+
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+
+    return <h1>Kraunama...</h1>;
+  } else if (isLoaded) {
+
+    return (
+
+      <>
+
+
+
+        <CDataTable
+          items={users}
+          fields={fields}
+          columnFilter
+          tableFilter
+          footer
+          itemsPerPageSelect
+          itemsPerPage={20}
+          hover
+          sorter
+          pagination
+          scopedSlots={{
+            'status':
+              (item) => (
+                <td>
+                  <CBadge color={getBadge(item.status)}>
+                    {item.status}
+                  </CBadge>
+                </td>
+              ),
+            'show_details':
+              (item, index) => {
+                return (
+                  <td className="py-2">
+                    <CButton
+                      color="primary"
+                      variant="outline"
+                      shape="square"
+                      size="sm"
+                      onClick={() => { toggleDetails(index) }}
+                    >
+                      {details.includes(index) ? 'Hide' : 'Show'}
+                    </CButton>
+                  </td>
+                )
+              },
+            'details':
+              (item, index) => {
+                return (
+                  <CCollapse show={details.includes(index)}>
+                    <CCardBody>
+                      <h4>
+                        {item.username}
+                      </h4>
+                      <p className="text-muted">User since: {item.created_at}</p>
+
+
+
+                      <CButton onClick={() => banUser(item.id, 1)} size="sm" color="danger" className="ml-1">
+                        Blokuoti
+                  </CButton>
+                      <CButton onClick={() => deleteUser(item.id)} size="sm" color="danger" className="ml-1">
+                        Ištrinti
+                  </CButton>
+
+                      <CDropdown className="mt-2">
+                        <CDropdownToggle caret color="info">
+                          Keisti statusą
+                        </CDropdownToggle>
+                        <CDropdownMenu>
+                          <CDropdownItem onClick={() => changeRole(item.id, 2)}
+                          >Pardavėjas</CDropdownItem>
+                          <CDropdownItem
+                            onClick={() => changeRole(item.id, 3)}
+                          >Pirkėjas</CDropdownItem>
+                          <CDropdownItem
+                            onClick={() => changeRole(item.id, 1)}
+                          >Adminas</CDropdownItem>
+                          <CDropdownItem
+                            divider />
+                          <CDropdownItem
+                            onClick={() => banUser(item.id, 1)}
+                          >Blokuoti vartotoją</CDropdownItem>
+                          <CDropdownItem
+                            onClick={() => unBan(item.id)}
+                          >Atblokuoti</CDropdownItem>
+                          <CDropdownItem
+                            onClick={() => deleteUser(item.id)}
+                          >Ištrinti vartotoją</CDropdownItem>
+                        </CDropdownMenu>
+                      </CDropdown>
+
+
+                    </CCardBody>
+                  </CCollapse>
+                )
+              }
+          }}
+        />
+      </>
+    )
+  } else {
+    return <h1>errror</h1>
+  }
+
+}
+
 
 
 const UserRoles = () => {
 
 
 
-  fetch(`https://eshopsmart.herokuapp.com/api/users`, {
-    method: "GET",
-    headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMWVmZDhiNjczOTA4MGVhZjFjNmJjYTU5OWRjM2NjY2VlZmI3NTFiY2MzZDc5MTRiMWVjNTQ3MDEzNDg0NzgwMjlkZmI4ZGYyNGY4ODI3ODEiLCJpYXQiOiIxNjE1MTUzNjI4Ljc2MzcyMiIsIm5iZiI6IjE2MTUxNTM2MjguNzYzNzMxIiwiZXhwIjoiMTY0NjY4OTYyOC43NTMwMDEiLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.raI1yRurKJrRUDasNqPic0oq6lDv8oGEBdh6T0oO62eiibtMqjwdGW3cOGFRq3OVnbErx6My1Q6WgZyiGkEAPXqa1qc_yjv - iLTRbCnF3w3OxzUF7caHq1K_ - wenNBOtKSL - UzpoTQEBWfYgEknsWA8Gf3Y - UR7uTSYbJq0HMkmI72aujgOhHxAXIhFQSRJdvqVqeDjC4uwea4yeUkt - Q - Knz24rirWk4byctwDiVFOBgQwAL8kb4TwmB_nhrKTO3e4_1TZGlRImkBaWaqgr1Xv - FL6hHQ_BMz2BLlki1dN9GEujf8hOSKUpyHI5hyNw7f0WvhNdp9mIZmn - J3X78XJTGiRL2_7aT7pdF2aBhcD3VOWIDuhkOTVj - KEnYZzqXe5Uuh7wl2ZmQql4toKjM9ERYDmvGmL2DlBH7ceKMtLns5hZOV__U0uc8cHF5PNHBwQBjjqx9w9Phlvqs4tF - pwVlwG - T9G_8PUy1BDFXK4bX0ExIMDcODmBZzCxEreCFtlOylE221gQmd_xF9O3cNmKeX - 5LkNcmFPyBlsY_LenxluSpLR6leNcFuBKIqjsPD6TzIRzghu2HxE71WFf5llTmyCWK6D_eOoOsRzInGicbBSh9- fQGWEcBjlnOhbY0NXbS - nhmyY9Z0veNiCm6RNNkuxpErfhtU9mQcnDyrY',
-      'Content-Type': 'application/json'
-    },
-
-  }
-
-  )
-    .then(response => response.json())
-    .then(json => {
-      console.log(json)
-    })
-
-
-
-
-  const [modal, setModal] = useState(false)
-  const [editModal, setEdit] = useState(false)
-  const toggle = () => {
-    setModal(!modal);
-  }
-  const toggleEdit = () => {
-    setEdit(!modal);
-  }
-
-
   return (
     <>
       <CCard>
-        <CCardHeader>
-          Users
-          <DocsLink href="https://coreui.io/docs/content/typography/" />
-        </CCardHeader>
         <CCardBody>
 
 
-          <CModal
-            show={modal}
-            onClose={toggle}
-          >
-            <CModalHeader closeButton>Do you really want to delete user?</CModalHeader>
-            {/* <CModalBody>
-          Lorem ipsum dolor...
-        </CModalBody> */}
-            <CModalFooter>
-              <CButton color="danger">Delete</CButton>{' '}
-              <CButton
-                color="secondary"
-                onClick={toggle}
-              >Cancel
-          </CButton>
-            </CModalFooter>
-          </CModal>
-          <CModal
-            show={editModal}
-            onClose={toggleEdit}
-          >
-            <CModalHeader closeButton>Do you really want to change user role?</CModalHeader>
-            <CModalBody>
-              <select id="roles">
-                <option value="Admin">Admin</option>
-                <option value="Seler">Seler</option>
-                <option value="User">User</option>
-              </select>
-            </CModalBody>
-            <CModalFooter>
-              <CButton color="warning">Change</CButton>{' '}
 
-              <CButton
-                color="secondary"
-                onClick={toggleEdit}
-              >Cancel</CButton>
-            </CModalFooter>
-          </CModal>
-          <p>Delete users, change roles.</p>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>User ID</th>
-                <th>User Name</th>
-                <th>Role</th>
-                <th>Edit Role</th>
-                <th>Delete</th>
-              </tr>
+          <UserTable />
 
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <span className="h5">1</span>
-                </td>
-                <td>
-                  <span className="h5">Vartotojas</span>
-                </td>
-                <td>
-                  <span className="h5">user</span>
-                </td>
-                <td>
-                  <CButton
-                    color="warning"
-                    onClick={toggleEdit}
-                    className="mr-1"
-                  >Edit Role</CButton>
-                </td>
-                <td>
-                  <CButton
-                    color="danger"
-                    onClick={toggle}
-                    className="mr-1"
-                  >Delete</CButton>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
         </CCardBody>
       </CCard>
     </>
