@@ -4,31 +4,25 @@ import {
   CButton,
   CCard,
   CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CCol,
-  CForm,
-  CFormGroup,
-  CFormText,
-  CTextarea,
-  CInput,
-  CInputFile,
-  CLabel,
-  CSelect,
-  CRow,
-  CAlert
+  CBadge,
+	CDataTable,
+	CCollapse,
+
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 
 
-const AllDelivery = () => {
-  const [deliveryAdded, setDeliveryAdded] = useState(false);
+const DeliveryTable = () => {
+
+  // const [deliveryAdded, setDeliveryAdded] = useState(false);
   const [requestError, setRequestError] = useState(false);
   const [delivery, setDelivery] = useState([]);
+  // const [deleteMessage, setDeleteMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
   const accessToken = localStorage.getItem('access_token');
-  // const [printDeliveries, setPrintDeliveries] = useState([]);
+ 
 
   useEffect(() => {
     fetch("https://eshopsmart.herokuapp.com/api/delivery/show", {
@@ -43,41 +37,73 @@ const AllDelivery = () => {
         (result) => {
           setLoading(true);
           console.log(result);
-          const show = result;
-          setDelivery(show.delivery);
+          const object = result;
+          setDelivery(object.items);
         },
-        (error) => {
+        (requestError) => {
           setLoading(true);
-          setRequestError(error);
+          setRequestError(requestError);
         }
       )
   }, [accessToken])
 
+  function deleteDelivery(id) {
+		fetch(`https://eshopsmart.herokuapp.com/api/delivery/delete/${id}`, {
+			
+		  method: "GET",
+		  headers: {
+			'Authorization': `Bearer ${accessToken}`,
+			'Content-Type': 'application/json'
+		  },
+		})
+	
+		  .then(data => data.json())
+		  .then(data => console.log(data))
+	
+	  }
 
-  const [deleteMessage, setDeleteMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+    const [details, setDetails] = useState([])
+	  // const [items, setItems] = useState(usersData)
+	
+	  const toggleDetails = (index) => {
+		const position = details.indexOf(index)
+		let newDetails = details.slice()
+		if (position !== -1) {
+		  newDetails.splice(position, 1)
+		} else {
+		  newDetails = [...details, index]
+		}
+		setDetails(newDetails)
+	  }
+	
+	
+	  const fields = [
+		{ key: 'id', _style: { width: '1%'} },
+		{ key: 'Pristatymo pavadinimas', _style: { width: '5%'} },
+		{ key: 'Pristatymo laikas', _style: { width: '5%'} },
+		{ key: 'Kaina', _style: { width: '5%'} },
+		{ key: 'Pristatymo sąlygos', _style: { width: '5%'} },
+		
+		
+		{
+		  key: 'show_details',
+		  label: '',
+		  _style: { width: '1%' },
+		  sorter: false,
+		  filter: false
+		}
+	  ]
+	
+	  const getBadge = (status)=>{
+		switch (status) {
+		  case 'Active': return 'success'
+		  case 'Inactive': return 'secondary'
+		  case 'Pending': return 'warning'
+		  case 'Banned': return 'danger'
+		  default: return 'primary'
+		}
+	  }
 
-  // const deleteDelivery = async () => {
-  //   const url = 'smart.test/api/delivery/delete';
-  //   setLoading(true);
-  //   const response = await fetch(url);
-
-  //   const data = await response.json();
-  //   console.log(data);
-
-  //   if (data.message) {
-  //     setDeleteMessage(data.message)
-  //   }
-  // }
-  // useEffect(() => {
-  //   deleteDelivery();
-  // }, [])
-
-
-  const [titleInput, setTitle] = useState('');
-  const [descriptionInput, setDescription] = useState('');
-  const [keywordsInput, setKeywords] = useState('');
-  const [priceInput, setPrice] = useState('');
 
   if(requestError){
     return <div>requestError:{requestError.message}</div>
@@ -86,60 +112,106 @@ const AllDelivery = () => {
   } else if (loading){
 
   return (
-    
-        <CCard>
-          <CCardHeader>
-            <h3>Visi pristatymo būdai:</h3>
-          </CCardHeader>
-          {deleteMessage ? <CAlert color="primary" closeButton>{deleteMessage}</CAlert> : null}
-          <CCardBody>
-            delivery ={delivery}
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Pavadinimas</th>
-                  <th>Pristatymo laikas</th>
-                  <th>Kaina</th>
-                  <th>Sąlygos</th>
-                  <th>Naikinti</th>
-                </tr>
-
-              </thead>
-              <tbody>
-              
-                <tr>
-                  <td>
-                    {/* {delivery.id} */}
-                  </td>
-                  <td>
-                    {/* {delivery.name} */}
-                  </td>
-                  <td>
-                    {/* {delivery.time} */}
-                  </td>
-                  <td>
-                    {/* {delivery.price} */}
-                  </td>
-                  <td>
-                    {/* {delivery.terms} */}
-                  </td>
-                  <td>
-                    {/* <CButton
-                      onClick={() => deleteDelivery(delivery.id)}
-                      className="mr-1"
-                    ><CIcon size={'lg'} name={'cilTrash'}></CIcon></CButton> */}
-
-                  </td>
-
-                </tr>
-                
-              </tbody>
-
-            </table>
-          </CCardBody>
-        </CCard>
-  )
+    <>
+		<CDataTable
+		  items={delivery}
+		  fields={fields}
+		  // columnFilter
+		  // tableFilter
+		  footer
+		  itemsPerPageSelect
+		  itemsPerPage={5}
+		  // hover
+		  // sorter
+		  pagination
+		  scopedSlots = {{
+			'status':
+			  (item)=>(
+				<td>
+				  <CBadge color={getBadge(item.status)}>
+					{item.status}
+				  </CBadge>
+				</td>
+			  ),
+			'show_details':
+			  (item, index)=>{
+				return (
+				  <td className="py-2">
+					<CButton
+					  color="primary"
+					  variant="outline"
+					  shape="square"
+					  size="sm"
+					  onClick={()=>{toggleDetails(index)}}
+					>
+					  {details.includes(index) ? 'Hide' : 'Show'}
+					</CButton>
+				  </td>
+				  )
+			  },
+			'details':
+				(item, index)=>{
+				  return (
+				  <CCollapse show={details.includes(index)}>
+					<CCardBody>
+					  <h4>
+						{item.name}
+					  </h4>
+					  <p className="text-muted">{item.time}</p>
+					  <p>{item.price}</p>
+					  <p>{item.terms}</p>
+					  {/* <p>Dydis: {item.size}</p>
+					  <p>Atnaujinta {item.updated_at}</p>
+					  <p>Vartotojo slapyvardis: {item.user_username}</p>
+					  <p> Vartotojo id: {item.user_id} </p>
+					  <p className="text-muted">Raktiniai žodžiai: {(item.keywords == null)?"Nėra":item.keywords}</p> */}
+					  <CButton size="sm" color="info">
+						Redaguoti
+					  </CButton>
+					  <CButton  
+					  onClick={() => deleteDelivery(item.id)}
+					  size="sm" color="danger" className="ml-1">
+						Ištrinti pristatymo būdą
+					  </CButton>
+					</CCardBody>
+				  </CCollapse>
+				)
+			  }
+		  }}
+		/>
+			</>
+		)
+	
+	
 }
 }
+	
+
+
+const AllDelivery = () => {
+	
+	
+	
+	
+	
+	
+	  return (
+		<>
+		  <CCard>
+			<CCardBody>
+	
+	
+	
+			
+	<DeliveryTable/>
+	
+			</CCardBody>
+		  </CCard>
+		</>
+	  )
+	}
+
+	
+	
+
 export default AllDelivery
