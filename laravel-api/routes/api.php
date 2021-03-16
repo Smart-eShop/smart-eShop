@@ -68,5 +68,7 @@ Route::post('import_excel/import', 'ItemsImportController@import');
 Route::post('create-category', 'CategoryController@createCategory');
 Route::post('delete-category/category={category}', 'CategoryController@deleteCategory');
 
+Route::post('update-address/{user}', 'OrderController@updateUserAddress');
+
 
 

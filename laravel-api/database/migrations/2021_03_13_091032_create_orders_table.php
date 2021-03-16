@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('item_id')->constrained();
             $table->foreignId('delivery_id')->constrained();
             $table->foreignId('order_status_id')->constrained();
-            $table->integer('payment_id'); //pakeisti o foreign po to
+            $table->foreignId('payment_id')->constrained();
             $table->timestamps();
         });
     }
