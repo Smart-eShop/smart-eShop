@@ -8,6 +8,7 @@ use Gate;
 use File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
@@ -60,15 +61,20 @@ class ItemController extends Controller
                 'size' => request('size')
             ]);
 
-            return response()->json(['message' => 'Item added successfully', 'item' => $item], 200);
+
+            return response()->json(['message' => Lang::get('messages_en.added'), 'item' => $item], 200);
+
         }
-        return response()->json(["message" => "You don't have permission to post an item!"], 200);
+        return response()->json(["message" => Lang::get('messages_en.no_permission_item')], 200);
+
+
+
     }
 
     public function update(Request $request, Item $item)
     {
         if (Gate::denies('user-id', $item))
-            return response()->json(["message" => "You don't have permission to update an item!"], 200);
+            return response()->json(["message" => Lang::get('messages_en.no_permission_item')], 200);
 
         $key = $request['keywords'];
         $keywords = explode(",", $key);
@@ -92,15 +98,15 @@ class ItemController extends Controller
         Item::where('id', $item->id)->update($request->only(['category_id', 'title', 'description', 'price', 'discount', 'quantity', 'weight', 'size']));
 
 
-        return response()->json(['message' => 'Item updated successfully'], 200);
+        return response()->json(['message' => Lang::get('messages_en.updated')], 200);
     }
 
     public function delete(Item $item)
     {
         if (Gate::allows('user-id', $item)) {
             $item->delete();
-            return response()->json(['message' => 'Item deleted successfully!'], 200);
+            return response()->json(['message' => Lang::get('messages_en.deleted')], 200);
         }
-        return response()->json(['message' => "You don't have a permission to delete this item!"], 200);
+        return response()->json(['message' => Lang::get('messages_en.no_permission_item')], 200);
     }
 }

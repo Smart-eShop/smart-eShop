@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Gate;
@@ -22,7 +23,7 @@ class CategoryController extends Controller
         ]);
 
         if (Gate::denies('admin-role')){
-            return response()->json(['message'=>'Only Admin can create a category!']);
+            return response()->json(['message'=> Lang::get('messages_en.not_admin')]);
         } elseif ($validation->fails()){
             return response()->json(["error" => $validation->errors()]);
         }
@@ -31,17 +32,17 @@ class CategoryController extends Controller
             'category_name' => $request->category_name
         ]);
 
-        return response()->json(['message'=>'Category is created successfully!', 'category'=>$category],200);
+        return response()->json(['message'=>Lang::get('messages_en.added'), 'category'=>$category],200);
     }
 
     public function deleteCategory($id)
     {
         if (Gate::denies('admin-role')) {
-            return response()->json(['message' => 'Only Admin can delete a category!']);
+            return response()->json(['message' => Lang::get('messages_en.not_admin')]);
         }
         $category = Category::find($id);
         $category->delete();
 
-        return response()->json(["message" => "Category deleted successfully!"], 200);
+        return response()->json(["message" => Lang::get('messages_en.deleted')], 200);
     }
 }
