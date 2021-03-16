@@ -23,6 +23,8 @@ class Item extends Model
     }
 
     public function orders(){
-        return $this->hasMany(Order::class);
+
+        return $this->belongsToMany(Order::class, 'item_orders', 'item_id', 'order_id')
+            ->withTimestamps();
     }
 }
