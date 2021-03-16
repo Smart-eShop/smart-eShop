@@ -42,7 +42,7 @@ class ItemController extends Controller
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
-                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
+                    $photo->move(public_path('images'), $photo->getClientOriginalName());
                 }
             }
             //$imagess = json_encode($images);
@@ -61,10 +61,12 @@ class ItemController extends Controller
                 'size' => request('size')
             ]);
 
+
             return response()->json(['message' => Lang::get('messages_en.added'), 'item' => $item], 200);
 
         }
         return response()->json(["message" => Lang::get('messages_en.no_permission_item')], 200);
+
 
 
     }
@@ -86,7 +88,7 @@ class ItemController extends Controller
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
-                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
+                    $photo->move(public_path('images'), $photo->getClientOriginalName());
                 }
             }
             //$images = json_encode($photoInfo);

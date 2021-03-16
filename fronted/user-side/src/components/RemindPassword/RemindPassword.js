@@ -37,7 +37,7 @@ export default function RemindPassword() {
     };
 
     const validationSchema = yupObject({
-        email: yupString().email("Invalid email").required("Required")
+        email: yupString().email("Neteisingas el. pašto adresas").required("Privaloma *")
     });
 
     const passwFetch = e => {
@@ -53,7 +53,7 @@ export default function RemindPassword() {
             .then(res => {
 
                 console.log(res.message);
-                if (res.message === "We have emailed your password reset link!") {
+                if (res.message === "Išsiuntėme jūsų slaptažodžio nustatymo nuorodą el. Paštu!") {
                     setEmailSent(true);
                     setRequestError(false);
                 } else {
@@ -70,10 +70,10 @@ export default function RemindPassword() {
     }
     return (
         <div className={classes.root}>
-            <h2>Forgot Password</h2>
-            <h5>Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.</h5>
-            {emailSent ? <Alert severity="success">We have emailed your password reset link!</Alert> : null}
-            {requestError ? <Alert severity="error">We can't find a user with that email address.</Alert> : null}
+            <h2>Forgot Password?</h2>
+            <h5>Įveskite savo vartotojo vardą arba el. Pašto adresą. Gausite nuorodą, kaip sukurti naują slaptažodį.</h5>
+            {emailSent ? <Alert severity="success">Išsiuntėme jūsų slaptažodžio nustatymo nuorodą el. Paštu!</Alert> : null}
+            {requestError ? <Alert severity="error">Negalime rasti vartotojo su tuo el. Pašto adresu.</Alert> : null}
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -82,11 +82,11 @@ export default function RemindPassword() {
                 {({ handleChange, handleBlur, isSubmitting, handleSubmit }) => (
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
-                            <TextField name='email' label='Email Address' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)} fullWidth />
+                            <TextField name='email' label='Elektroninio pašto adresas' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)} fullWidth />
                             {/* <ErrorMessage name='email' render={msg => <div className="text-danger">{msg}</div>} /> */}
                         </FormGroup>
                         <Button type='submit' fullwidth variant='contained' disabled={isSubmitting} color='default' className={classes.submit} onClick={passwFetch}>
-                            Submit
+                            Pateikti
                     </Button>
                     </Form>
                 )}

@@ -25,7 +25,7 @@ class DeliveryController extends Controller
         $validateData = $request->validate([
             'name' => 'required',
             'time' => 'required',
-            'price' => 'required',
+            'price' => ['required', 'regex:/^\d*(\.\d{2})?$/'],
             'terms' => 'required'
         ]);
         Delivery::create([

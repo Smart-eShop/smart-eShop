@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import{ makeStyles }from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Image from '../Register/register-img.jpg';
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from 'yup';
@@ -73,7 +73,7 @@ export default function Register() {
   const [redir, setRedir] = useState(false);
 
   const registerFetch = e => {
-    
+
     console.log("testas")
 
     fetch(`https://eshopsmart.herokuapp.com/api/register?name=${usernameInput}&email=${emailInput}&first_name=${firstNameInput}&last_name=${lastNameInput}&password=${passwordInput}`, {
@@ -81,7 +81,7 @@ export default function Register() {
     }
     )
       .then(response => response.json())
-     
+
       .then(json => console.log(json))
       .then(setRedir(true))
   }
@@ -89,7 +89,7 @@ export default function Register() {
   // const recaptchaRef = React.createRef();
 
 
-  const { handleSubmit, reset, handleChange, values, touched, errors, setFieldValue, handleBlur,  } = useFormik({
+  const { handleSubmit, reset, handleChange, values, touched, errors, setFieldValue, handleBlur, } = useFormik({
     initialValues: {
       username: '',
       firstName: '',
@@ -99,17 +99,17 @@ export default function Register() {
 
     },
     validationSchema: Yup.object({
-      username: Yup.string().max(15, 'Username must be shorter than 15 characters').required('Required'),
-      firstName: Yup.string().max(20, 'First Name can not be longer than 20 characters').required('Required'),
-      lastName: Yup.string().max(20, 'Last Name can not be longer than 20 characters').required('Required'),
-      email: Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().min(8, 'Password should be longer than 8 characters').required('Required'),
+      username: Yup.string().max(15, 'Vartotojo vardas turi būti trumpesnis nei 15 simbolių').required('Privaloma *'),
+      firstName: Yup.string().max(20, 'Vardas negali būti ilgesnis nei 20 simbolių').required('Privaloma *'),
+      lastName: Yup.string().max(20, 'Pavardė negali būti ilgesnė nei 20 simbolių').required('Privaloma *'),
+      email: Yup.string().email('Neteisingas el. pašto adresas').required('Privaloma *'),
+      password: Yup.string().min(8, 'Slaptažodis turi būti ilgesnis nei 8 simboliai').required('Privaloma *'),
       // recaptcha: Yup.string().nullable().required("Required")
     }),
-    onSubmit: ({username, password, firstName, lastName, email}) => { 
-      alert("Account successfully created!")
+    onSubmit: ({ username, password, firstName, lastName, email }) => {
+      alert("Anketa sėkmingai sukurta!")
     }
-  
+
   }
   )
   if (redir) {
@@ -125,7 +125,7 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
 
-          <form className={classes.form}  onSubmit={handleSubmit}>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -137,7 +137,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="username"
-                  label="Username"
+                  label="Vartotojo vardas"
                   name="username"
                   autoComplete="username"
                 />
@@ -156,7 +156,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Vardas"
                   autoFocus
                 />
                 {touched.firstName && errors.firstName ? (
@@ -172,7 +172,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Pavardė"
                   name="lastName"
                   autoComplete="lname"
                 />
@@ -189,7 +189,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="El.Paštas"
                   name="email"
                   autoComplete="email"
                 />
@@ -206,48 +206,48 @@ export default function Register() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Slaptažodis"
                   type="password"
                   id="password"
                   autoComplete="current-password"
                 />
                 {touched.password && errors.password ? (
-        <div>{errors.password}</div>
-      ): null}
+                  <div>{errors.password}</div>
+                ) : null}
               </Grid>
-            
+
             </Grid>
             <Grid container justify="center">
               <Grid item>
                 <ReCAPTCHA
-className="mt-5"
+                  className="mt-5"
                   // ref={recaptchaRef}
                   sitekey={'6Lfm83caAAAAAJAHan8UYBk7zIFi0VuEWJLz_86x'}
                   onChange={onChange}
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}><h5 className="text-center mt-5">By clicking Sign Up, you agree to our  <Link href="/terms-conditions">
-              <span className={classes.terms}>Terms and Conditions</span>
+            <Grid item xs={12}><h5 className="text-center mt-5">Spustelėdami Prisiregistruoti, sutinkate su mūsų <Link href="/terms-conditions">
+              <span className={classes.terms}>Apsipirkimo taisyklėmis</span>
             </Link></h5>
 
             </Grid>
             <Button
-            
+
               onClick={registerFetch}
               type="submit"
               fullWidth
               variant="contained"
               color="default"
               className={classes.submit}
-    //  href="/login"
+            //  href="/login"
             >
-              Sign Up
+              Prisiregistruoti
           </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
-                  Already have an account? Sign in
+                  Jau turite paskyrą? Prisijungti
               </Link>
               </Grid>
             </Grid>

@@ -9,7 +9,16 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
+
 const TheHeaderDropdown = () => {
+ 
+  
+  
+  function clerLocalStorage(){
+    localStorage.clear();
+    document.location.reload()
+  }
+  
   return (
     <CDropdown
       inNav
@@ -32,26 +41,26 @@ const TheHeaderDropdown = () => {
           color="light"
           className="text-center"
         >
-          <strong>Account</strong>
+          <strong>Paskyra</strong>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-bell" className="mfe-2" />
-          Updates
+          Atnaujinimai
           <CBadge color="info" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-envelope-open" className="mfe-2" />
-          Messages
+          Žinutės
           <CBadge color="success" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-task" className="mfe-2" />
-          Tasks
+          Užduotys
           <CBadge color="danger" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-comment-square" className="mfe-2" />
-          Comments
+          Komentarai
           <CBadge color="warning" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem
@@ -60,29 +69,29 @@ const TheHeaderDropdown = () => {
           color="light"
           className="text-center"
         >
-          <strong>Settings</strong>
+          <strong>Nustatymai</strong>
         </CDropdownItem>
         <CDropdownItem>
-          <CIcon name="cil-user" className="mfe-2" />Profile
+          <CIcon name="cil-user" className="mfe-2" />Profilis
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-settings" className="mfe-2" />
-          Settings
+          Nustatymai
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-credit-card" className="mfe-2" />
-          Payments
+          Mokėjimai
           <CBadge color="secondary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-file" className="mfe-2" />
-          Projects
+          Projektai
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
+        <CDropdownItem onClick={() => clerLocalStorage()} >
           <CIcon name="cil-lock-locked" className="mfe-2" />
-          Lock Account
+          Atsijungti
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
