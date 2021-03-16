@@ -64,7 +64,7 @@ const printAllCategories = async() => {
 
     printAllCategories();
     
-}
+
 useEffect(()=>{
     deleteCategory();
 }, [])
@@ -83,7 +83,7 @@ useEffect(()=>{
             .then(res => {
 
                 console.log(res.message);
-                if (res.message === "Kategorija sėkmingai sukurta!") {
+                if (res.message === "Category is created successfully!") {
                     setCategoryAdded(true);
                     setRequestError(false);
                 } else {
@@ -101,7 +101,6 @@ useEffect(()=>{
 
     const [categoryInput, setCategory] = useState('');
     // const [delCatInput, setDelCatInput] = useState('');
-    // printAllCategories();
 
     return (
         <>
@@ -159,7 +158,5 @@ useEffect(()=>{
                 </CCardBody>
             </CCard>
         </>
-    )
-}
-
+    )}
 export default AllCategories
