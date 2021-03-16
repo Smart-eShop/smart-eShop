@@ -68,5 +68,10 @@ Route::post('import_excel/import', 'ItemsImportController@import');
 Route::post('create-category', 'CategoryController@createCategory');
 Route::post('delete-category/category={category}', 'CategoryController@deleteCategory');
 
+//Orders
+Route::post('order/store', 'OrderController@createOrder');
+Route::get('orders', 'OrderController@getAllOrdersTest');
+Route::get('order/{order}', 'ApiController@showOneOrder');
+Route::post('order/update-order-status/{order}', 'OrderController@updateOrderStatus');
 
 
