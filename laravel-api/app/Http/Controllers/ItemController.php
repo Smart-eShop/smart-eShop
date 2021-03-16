@@ -41,7 +41,7 @@ class ItemController extends Controller
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
-                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
+                    $photo->move(public_path('images'), $photo->getClientOriginalName());
                 }
             }
             //$imagess = json_encode($images);
@@ -61,11 +61,8 @@ class ItemController extends Controller
             ]);
 
             return response()->json(['message' => 'Item added successfully', 'item' => $item], 200);
-
         }
         return response()->json(["message" => "You don't have permission to post an item!"], 200);
-
-
     }
 
     public function update(Request $request, Item $item)
@@ -85,7 +82,7 @@ class ItemController extends Controller
                         $photo->getClientOriginalName()
                     );
                     //$photo->store('public/images');
-                    $photo->move(public_path('public/images'), $photo->getClientOriginalName());
+                    $photo->move(public_path('images'), $photo->getClientOriginalName());
                 }
             }
             //$images = json_encode($photoInfo);

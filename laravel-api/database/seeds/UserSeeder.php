@@ -34,7 +34,9 @@ class UserSeeder extends Seeder
                 'email' => $faker->email,
                 'first_name'=> $faker->firstName,
                 'last_name'=> $faker->lastName,
-                'address'=> $faker->address,
+                'street_number'=> $faker->streetAddress,
+                'city' => $faker->city,
+                'postcode' => $faker->postcode,
                 'password' => bcrypt('secret'),
             ]);
             $fakeUser->save();
