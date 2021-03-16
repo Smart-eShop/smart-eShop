@@ -17,7 +17,8 @@ class Order extends Model
     }
 
     public function items(){
-        return $this->belongsToMany(Item::class);
+        return $this->belongsToMany(Item::class, 'item_orders',  'order_id','item_id')
+            ->withTimestamps();
     }
 
     public function delivery(){
