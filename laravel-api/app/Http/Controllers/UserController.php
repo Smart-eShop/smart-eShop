@@ -10,6 +10,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -64,9 +65,9 @@ class UserController extends Controller
         ]);
 
         if(!auth()->attempt($loginData)){
-            return response()->json(['message' => 'Invalid login details!']);
+            return response()->json(['message' => Lang::get('messages_en.invalid_login')]);
         } elseif (auth()->user()->hasRole('Admin')){
-            return response()->json(['message' => 'If you are administrator, you should login via login/admin!']);
+            return response()->json(['message' => Lang::get('messages_en.if_you_are_admin')]);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
@@ -84,7 +85,7 @@ class UserController extends Controller
         $banned2 = BanDeleteUser::where('is_banned', '=', 1)->get('user_id');
         foreach ($banned2 as $bannedUser)
             if($user_id == $bannedUser->user_id)
-                return response()->json(["message" => "User is banned"], 200);
+                return response()->json(["message" => Lang::get('messages_en.user_is_banned')], 200);
 
 
         return response()->json(['user_id' => $user_id, 'username' => $user_name, 'access_token' => $accessToken]);

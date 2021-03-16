@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Delivery;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Lang;
 
 class DeliveryController extends Controller
 {
@@ -17,8 +18,9 @@ class DeliveryController extends Controller
 
     public function store(Request $request)
     {
+
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_en.not_admin')], 200);
 
         $validateData = $request->validate([
             'name' => 'required',
@@ -33,13 +35,13 @@ class DeliveryController extends Controller
             'terms' => request('terms')
         ]);
 
-        return response()->json(["message" => "Delivery method added to database successfully"]);
+        return response()->json(["message" => Lang::get('messages_en.added')]);
     }
 
     public function show(Delivery $delivery)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_en.not_admin')], 200);
 
         $delivery = Delivery::all();
         return response()->json(["Delivery" => $delivery]);
@@ -48,7 +50,7 @@ class DeliveryController extends Controller
     public function edit(Delivery $delivery)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_en.not_admin')], 200);
 
         return response()->json(["Delivery" => $delivery]);
     }
@@ -56,18 +58,18 @@ class DeliveryController extends Controller
     public function update(Request $request, Delivery $delivery)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_en.not_admin')], 200);
 
         Delivery::where('id', $delivery->id)->update($request->all());
-        return response()->json(["message" => "Delivery method updated successfully"]);
+        return response()->json(["message" => Lang::get('messages_en.updated')]);
     }
 
     public function destroy(Delivery $delivery)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_en.not_admin')], 200);
 
         $delivery->delete();
-        return response()->json(["message" => "Delivery method deleted successfully"]);
+        return response()->json(["message" => Lang::get('messages_en.deleted')]);
     }
 }
