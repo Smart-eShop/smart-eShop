@@ -61,9 +61,11 @@ const Login = () => {
       .then(data => localStorage.setItem('access_token', data))
       .then(setRedir(true))
   }
+
   
   
   
+
   if (redir) {
     return (<TheLayout />)
   }
@@ -81,15 +83,17 @@ const Login = () => {
               <CCard className="p-3">
                 <CCardBody>
                   <CForm  >
-                    <h1>Login admin</h1>
-                    <p className="text-muted">Sign In to your account</p>
+
+                    <h1>Prisijungimas</h1>
+                    <p className="text-muted">Prisijunkite prie savo paskyros</p>
+
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Email" autoComplete="email"
+                      <CInput type="text" placeholder="El.Paštas" autoComplete="email"
                         value={emailInput} onInput={e => setEmail(e.target.value)} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -98,15 +102,15 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password"
+                      <CInput type="password" placeholder="Slaptažodis" autoComplete="current-password"
                         value={passwordInput} onInput={e => setPassword(e.target.value)} />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" onClick={loginFetch} type='submit' className="px-4">Login</CButton>
+                        <CButton color="primary" onClick={loginFetch} type='submit' className="px-4">Prisijungti</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                        <CButton color="link" className="px-0">Pamiršote slaptažodį?</CButton>
                       </CCol>
                     </CRow>
                   </CForm>
@@ -159,12 +163,12 @@ const Login = () => {
                 
                 {/* <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>Registruotis</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                       labore et dolore magna aliqua.</p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}
-                      >Register Now!</CButton>
+                      >Registruokis dabar!</CButton>
                     </Link>
                   </div>
                 </CCardBody> */}

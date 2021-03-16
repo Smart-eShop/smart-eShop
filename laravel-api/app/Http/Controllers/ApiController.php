@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Item;
+use App\Order;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
@@ -40,7 +41,8 @@ class ApiController extends Controller
         return response()->json(['item' => $item], 200);
     }
 
-    public function getAllItems(){
+    public function getAllItems()
+    {
 
         $data = DB::table('items')
             ->join('users', 'users.id', '=', 'items.user_id')
@@ -53,18 +55,27 @@ class ApiController extends Controller
 
     }
 
-    public function recaptchaKey(){
+    public function recaptchaKey()
+    {
 
         $secret = env('GOOGLE_RECAPTCHA_SECRET');
         $site = env('GOOGLE_RECAPTCHA_KEY');
 
-        return response()->json(['GOOGLE_RECAPTCHA_SECRET' => $secret,'GOOGLE_RECAPTCHA_KEY' => $site], 200);
+        return response()->json(['GOOGLE_RECAPTCHA_SECRET' => $secret, 'GOOGLE_RECAPTCHA_KEY' => $site], 200);
     }
 
     public function showAllCategories()
     {
         $categories = Category::all();
         return response()->json(['Categories' => $categories], 200);
+    }
+
+    public function showOneOrder(Order $order)
+    {
+        if (Gate::allows('user-id', $order) || Gate::allows('order-user-id', $order)) {
+            return response()->json(['order' => $order], 200);
+        }
+        return response()->json(['message' => "You don't have permission to see other's orders"]);
     }
 
 }

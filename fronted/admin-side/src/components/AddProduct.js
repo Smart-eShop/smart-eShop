@@ -30,8 +30,9 @@ const AddProduct = () => {
  const accessToken = localStorage.getItem('access_token');
 
   const AddProductFetch = e => {
-    fetch(`https://eshopsmart.herokuapp.com/api/addItem?title=${titleInput}&description=${descriptionInput}&keywords=${keywordsInput}&img=${imgInput}&price=${priceInput}&discount=${discountInput}&quantity=${quantityInput}&weight=${weightInput}&size=${sizeInput}`,{
+    fetch(`https://eshopsmart.herokuapp.com/api/addItem?title=${titleInput}&description=${descriptionInput}&keywords=${keywordsInput}&img=${imgInput}&price=${priceInput}&discount=${discountInput}&quantity=${quantityInput}&weight=${weightInput}&size=${sizeInput}`, {
       method: "POST",
+
       headers : { 
 
         'Authorization': `Bearer ${accessToken}`,
@@ -55,6 +56,7 @@ const AddProduct = () => {
       .catch(err => {
         setRequestError(true);
         setProductAdded(false);
+
       })
   };
   const [titleInput, setTitle] = useState('');
@@ -68,7 +70,7 @@ const AddProduct = () => {
   const [sizeInput, setSize] = useState('');
 
 
-  return(
+  return (
     <CRow>
     <CCol xs="12" md="12">
       <CCard>
@@ -220,6 +222,7 @@ const AddProduct = () => {
       </CCard>
   </CCol>
   </CRow>
+
   )
-  }
-  export default AddProduct
+}
+export default AddProduct
