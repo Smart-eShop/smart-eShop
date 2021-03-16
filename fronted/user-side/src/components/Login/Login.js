@@ -96,7 +96,6 @@ export default function Login() {
     }
   })
 
-
   if (redir) {
     return (<Products />)
   }

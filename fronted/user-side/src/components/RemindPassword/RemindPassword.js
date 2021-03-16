@@ -70,8 +70,8 @@ export default function RemindPassword() {
     }
     return (
         <div className={classes.root}>
-            <h2>Forgot Password?</h2>
-            <h5>Įveskite savo vartotojo vardą arba el. Pašto adresą. Gausite nuorodą, kaip sukurti naują slaptažodį.</h5>
+            <h2>Pamiršote slaptažodį?</h2>
+            <h5>Įveskite savo vartotojo vardą arba el. pašto adresą. Gausite nuorodą, kaip sukurti naują slaptažodį.</h5>
             {emailSent ? <Alert severity="success">Išsiuntėme jūsų slaptažodžio nustatymo nuorodą el. Paštu!</Alert> : null}
             {requestError ? <Alert severity="error">Negalime rasti vartotojo su tuo el. Pašto adresu.</Alert> : null}
             <Formik

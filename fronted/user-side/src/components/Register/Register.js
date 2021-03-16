@@ -227,8 +227,8 @@ export default function Register() {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}><h5 className="text-center mt-5">Spustelėdami Prisiregistruoti, sutinkate su mūsų <Link href="/terms-conditions">
-              <span className={classes.terms}>Apsipirkimo taisyklėmis</span>
+            <Grid item xs={12}><h5 className="text-center mt-5">Registruodamiesi sutinkate su mūsų <Link href="/terms-conditions">
+              <span className={classes.terms}> Apsipirkimo taisyklėmis</span>
             </Link></h5>
 
             </Grid>
@@ -242,7 +242,7 @@ export default function Register() {
               className={classes.submit}
             //  href="/login"
             >
-              Prisiregistruoti
+              Registruotis
           </Button>
             <Grid container justify="flex-end">
               <Grid item>

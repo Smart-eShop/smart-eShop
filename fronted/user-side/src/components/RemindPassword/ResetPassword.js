@@ -98,7 +98,7 @@ export default function ResetPassword() {
 
     return (
         <div className={classes.root}>
-            <h2>Reset Password</h2>
+            <h2>Atkurkite slaptažodį</h2>
             {resetMessage ? <Alert color="primary" closeButton>{resetMessage}</Alert> : null}
             <Formik
                 initialValues={initialValues}
@@ -107,12 +107,12 @@ export default function ResetPassword() {
                 {({ handleChange, values, handleBlur, isSubmitting }) => (
                     <Form >
                         <FormGroup>
-                            <TextField label='Enter your email' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)} />
+                            <TextField label='Įveskite el. pašto adresą' name='email' color='primary' variant='outlined' onChange={handleChange} onBlur={handleBlur} value={emailInput} onInput={e => setEmail(e.target.value)} />
                             <ErrorMessage name='email' render={msg => <div className='text-danger'>{msg}</div>} />
                         </FormGroup>
 
                         <FormGroup>
-                            <TextField variant='outlined' label='New Password' name='password' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordInput} onInput={e => setPassword(e.target.value)} InputProps={{
+                            <TextField variant='outlined' label='Naujas slaptažodis' name='password' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordInput} onInput={e => setPassword(e.target.value)} InputProps={{
                                 endAdornment: <InputAdornment position='end'>
                                     <IconButton
                                         aria-label="toggle password visibility"
@@ -124,7 +124,7 @@ export default function ResetPassword() {
                             <ErrorMessage name='password' render={msg => <div className='text-danger'>{msg}</div>} />
                         </FormGroup>
                         <FormGroup>
-                            <TextField variant='outlined' label='Repeat Password' name='passwordConfirm' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordConfirmInput} onInput={e => setPasswordConfirm(e.target.value)} InputProps={{
+                            <TextField variant='outlined' label='Pakartokite slaptažodį' name='passwordConfirm' color='primary' type={showPassword ? 'text' : 'password'} onChange={handleChange} onBlur={handleBlur} value={passwordConfirmInput} onInput={e => setPasswordConfirm(e.target.value)} InputProps={{
                                 endAdornment: <InputAdornment position='end'>
                                     <IconButton
                                         aria-label="toggle password visibility"
@@ -139,7 +139,7 @@ export default function ResetPassword() {
                         <Button type='submit' variant='contained' disabled={isSubmitting} color='default'
                             onClick={confFetch}
                         >
-                            Submit
+                            Patvirtinti
                     </Button>
                     </Form>
                 )}
