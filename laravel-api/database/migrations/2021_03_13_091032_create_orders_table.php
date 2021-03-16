@@ -16,10 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('item_id')->constrained();
+            $table->json('item_id');
             $table->foreignId('delivery_id')->constrained();
             $table->foreignId('order_status_id')->constrained();
-            $table->integer('payment_id'); //pakeisti o foreign po to
+            $table->foreignId('payment_id')->constrained();
             $table->timestamps();
         });
     }
