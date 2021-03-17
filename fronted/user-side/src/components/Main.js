@@ -15,39 +15,34 @@ import ResetPassword from './RemindPassword/ResetPassword';
 
 
 function Main() {
-  const [item, setItem] = useState({});
-  const printSingleItem = async (id) => {
-    //  pakeisti vietoje sk i id!!!!!!! ${id}  
-    //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
-    const url = `https://eshopsmart.herokuapp.com/api/item/${id}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.item);
-    setItem(data.item);
-
-
-  }
-  useEffect(() => {
-    printSingleItem();
-  }, [])
-
   const [items, setItems] = useState([]);
+  const [item, setItem] = useState({});
   const printItems = async () => {
-    //  pakeisti vietoje sk i id!!!!!!! ${id}  
-    //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
-    const url = 'https://eshopsmart.herokuapp.com/api/items';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.items);
-    setItems(data.items);
-
+      //  pakeisti vietoje sk i id!!!!!!! ${id}  
+      //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
+      const url = 'https://eshopsmart.herokuapp.com/api/items';
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data.items);
+      setItems(data.items);
   }
   useEffect(() => {
     printItems();
-  }, [])
-
-
-
+}, []);
+  
+  const printSingleItem = async (id) => {
+      //  pakeisti vietoje sk i id!!!!!!! ${id}  
+      //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
+      const url = `https://eshopsmart.herokuapp.com/api/item/${id}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data.item);
+      setItem(data.item);
+  }
+  useEffect(() => {
+      printSingleItem();
+  }, []);
+ 
 
   return (
     <>
