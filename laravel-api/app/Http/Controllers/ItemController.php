@@ -62,10 +62,10 @@ class ItemController extends Controller
             ]);
 
 
-            return response()->json(['message' => Lang::get('messages_en.added'), 'item' => $item], 200);
+            return response()->json(['message' => Lang::get('messages_lt.added'), 'item' => $item], 200);
 
         }
-        return response()->json(["message" => Lang::get('messages_en.no_permission_item')], 200);
+        return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
 
 
 
@@ -74,7 +74,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         if (Gate::denies('user-id', $item))
-            return response()->json(["message" => Lang::get('messages_en.no_permission_item')], 200);
+            return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
 
         $key = $request['keywords'];
         $keywords = explode(",", $key);
@@ -98,15 +98,15 @@ class ItemController extends Controller
         Item::where('id', $item->id)->update($request->only(['category_id', 'title', 'description', 'price', 'discount', 'quantity', 'weight', 'size']));
 
 
-        return response()->json(['message' => Lang::get('messages_en.updated')], 200);
+        return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
     }
 
     public function delete(Item $item)
     {
         if (Gate::allows('user-id', $item)) {
             $item->delete();
-            return response()->json(['message' => Lang::get('messages_en.deleted')], 200);
+            return response()->json(['message' => Lang::get('messages_lt.deleted')], 200);
         }
-        return response()->json(['message' => Lang::get('messages_en.no_permission_item')], 200);
+        return response()->json(['message' => Lang::get('messages_lt.no_permission_item')], 200);
     }
 }
