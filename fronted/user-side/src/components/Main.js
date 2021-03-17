@@ -39,9 +39,12 @@ function Main() {
       console.log(data.item);
       setItem(data.item);
   }
+      // console.log(item);
   useEffect(() => {
+    console.log("lalala");
       printSingleItem();
-  }, []);
+      console.log(item);
+  }, [item]);
  
 
   return (
@@ -58,10 +61,11 @@ function Main() {
           <Route path="/products" exact>
             <Products printSingleItem={printSingleItem} items={items} />
           </Route>
-          {item ?
-            <Route path="/product-details" exact>
+          {(typeof item.title != "undefined") ?
+        
               <ShowProduct item={item} />
-            </Route> : false}
+          
+            :false }
           <Route path="/about" exact>
             <About />
           </Route>

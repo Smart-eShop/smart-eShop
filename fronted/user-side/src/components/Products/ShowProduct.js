@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ShowProduct({item}) {
+    console.log(item);
  const classes = useStyles();
 
   return (
