@@ -11,6 +11,7 @@ import Navbar from './Navbar/Navbar';
 import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
+import FrontPage from './FrontPage/FrontPage';
 
 
 function Main() {
@@ -18,6 +19,7 @@ function Main() {
     <Router>
     <Navbar />
     <Switch>
+    <Route path='/' exact component={FrontPage} />
       <Route path='/login' exact component={Login} />
       <Route path='/register' exact component={Register} />
       <Route path='/products' exact component={Products} />
