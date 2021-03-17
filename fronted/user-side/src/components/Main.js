@@ -12,6 +12,7 @@ import Navbar from './Navbar/Navbar';
 import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
+import FrontPage from './FrontPage/FrontPage';
 
 
 function Main() {
@@ -52,6 +53,9 @@ function Main() {
       <Router>
         <Navbar />
         <Switch>
+        <Route path="/" exact>
+            <FrontPage />
+          </Route>
           <Route path="/login" exact>
             <Login />
           </Route>
