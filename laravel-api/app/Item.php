@@ -25,6 +25,6 @@ class Item extends Model
     public function orders(){
 
         return $this->belongsToMany(Order::class, 'item_orders', 'item_id', 'order_id')
-            ->withTimestamps();
+            ->withPivot(['quantity'])->withTimestamps();
     }
 }
