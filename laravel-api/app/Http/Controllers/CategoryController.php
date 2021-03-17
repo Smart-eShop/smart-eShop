@@ -23,7 +23,7 @@ class CategoryController extends Controller
         ]);
 
         if (Gate::denies('admin-role')){
-            return response()->json(['message'=> Lang::get('messages_en.not_admin')]);
+            return response()->json(['message'=> Lang::get('messages_lt.not_admin')]);
         } elseif ($validation->fails()){
             return response()->json(["error" => $validation->errors()]);
         }
@@ -32,17 +32,17 @@ class CategoryController extends Controller
             'category_name' => $request->category_name
         ]);
 
-        return response()->json(['message'=>Lang::get('messages_en.added'), 'category'=>$category],200);
+        return response()->json(['message'=>Lang::get('messages_lt.added'), 'category'=>$category],200);
     }
 
     public function deleteCategory($id)
     {
         if (Gate::denies('admin-role')) {
-            return response()->json(['message' => Lang::get('messages_en.not_admin')]);
+            return response()->json(['message' => Lang::get('messages_lt.not_admin')]);
         }
         $category = Category::find($id);
         $category->delete();
 
-        return response()->json(["message" => Lang::get('messages_en.deleted')], 200);
+        return response()->json(["message" => Lang::get('messages_lt.deleted')], 200);
     }
 }
