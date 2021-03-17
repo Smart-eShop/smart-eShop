@@ -1,21 +1,21 @@
 <?php
 return [
-    "not_admin" => "You are not Admin",
-    "added" => "Added successfully",
-    "updated" => "Updated successfully",
-    "deleted" => "Deleted successfully",
-    "incorrect_data" => "Incorrect login data!",
-    "no_permission_login" => "You don't have permission to login!",
-    "role_changed" => "Role changed successfully",
-    "no_permission_change_role" => "You don't have permission to change role!",
-    "banned_already" => "User already banned",
-    "banned" => "User banned successfully",
-    "unbanned" => "User unbanned successfully",
-    "delete_unbanned" => "You can't delete unbanned user",
-    "no_permission_item" => "You don't have permission",
-    "added_excel" => "Excel data imported successfully!",
-    "invalid_login" => "Invalid login details!",
+    "not_admin" => "Tu nesi adminas",
+    "added" => "Pridėta sėkmingai",
+    "updated" => "Atnaujinta sėkmingai",
+    "deleted" => "Pašalintas sėkmingai",
+    "incorrect_data" => "Neteisingi prisijungimo duomenys",
+    "no_permission_login" => "Jūs neturite teisės prisijungti",
+    "role_changed" => "Role pakeista sėkmingai",
+    "no_permission_change_role" => "Jūs neturite teisės keisti rolės",
+    "banned_already" => "Vartotojas jau užblokuotas",
+    "banned" => "Vartotojas užbokuotas sėkmingai",
+    "unbanned" => "Vartotojas atbokuotas sėkmingai",
+    "delete_unbanned" => "Jūs negalite ištrinti neužblokuoto vartotojo",
+    "no_permission_item" => "Jūs neturite teisių",
+    "added_excel" => "Excel duomenys importuoti sėkmingai",
+    "invalid_login" => "Neteisingi prisijungimo duomenys",
     "if_you_are_admin" => "If you are administrator, you should login via login/admin!",
-    "user_is_banned" => "User is banned"
+    "user_is_banned" => "Vartotojas yra užblokuotas"
 
 ];

@@ -6,10 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'item_id', 'delivery_id', 'order_status_id', 'payment_id'];
-
-    protected $casts = [
-        'item_id' => 'array',
+    protected $fillable = [
+        'invoice_number',
+        'user_id',
+        'total_item',
+        'delivery_id',
+        'order_status_id',
+        'payment_id',
+        'billing_first_name',
+        'billing_last_name',
+        'billing_email',
+        'billing_street_number',
+        'billing_city',
+        'billing_postcode',
+        'total_price_without_tax',
+        'total_taxes',
+        'total_price'
     ];
 
     public function user(){
@@ -18,7 +30,7 @@ class Order extends Model
 
     public function items(){
         return $this->belongsToMany(Item::class, 'item_orders',  'order_id','item_id')
-            ->withTimestamps();
+            ->withPivot(['quantity'])->withTimestamps();
     }
 
     public function delivery(){
@@ -31,9 +43,5 @@ class Order extends Model
 
     public function orderStatus(){
         return $this->belongsTo(OrderStatus::class);
-    }
-
-    public function payment(){
-        return $this->belongsTo(Payment::class);
     }
 }

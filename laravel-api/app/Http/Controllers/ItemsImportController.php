@@ -30,8 +30,8 @@ class ItemsImportController extends Controller
 
             Excel::import(new ItemsImport, $file);
 
-            return response()->json(['message' => Lang::get('messages_en.added_excel')], 200);
+            return response()->json(['message' => Lang::get('messages_lt.added_excel')], 200);
         }
-        return response()->json(['message' => Lang::get('messages_en.no_permission_item')], 200);
+        return response()->json(['message' => Lang::get('messages_lt.no_permission_item')], 200);
     }
 }
