@@ -64,7 +64,7 @@ const printAllCategories = async() => {
 
     printAllCategories();
     
-}
+
 useEffect(()=>{
     deleteCategory();
 }, [])

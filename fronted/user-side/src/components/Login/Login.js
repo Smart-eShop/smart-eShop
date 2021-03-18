@@ -16,7 +16,7 @@ import Alert from '@material-ui/lab/Alert';
 import Image from '../Login/login-bg.jpg';
 import Box from '@material-ui/core/Box';
 import Products from '../Products/Products';
-
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -98,7 +98,7 @@ export default function Login() {
 
 
   if (redir) {
-    return (<Products />)
+    return (<RouterLink path='/products' />)
   }
 
   return (
