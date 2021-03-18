@@ -43,7 +43,7 @@ const AddDelivery = () => {
 
       .then(res => {
         console.log(res.message);
-        if (res.message === "Item added successfully") { ///////cia nekeisti lietuviskai
+        if (res.message === "Delivery method added to database successfully") { ///////cia nekeisti lietuviskai
           setDeliveryAdded(true);
           setRequestError(false);
         } else {

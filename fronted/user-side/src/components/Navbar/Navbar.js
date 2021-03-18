@@ -145,7 +145,7 @@ export default function Navbar() {
       variant="link"
       style={{ fontSize: 100, color: "#fafafa" }}
       startIcon={<Home />}
-      href="/home"
+      href="/"
     />
   );
 

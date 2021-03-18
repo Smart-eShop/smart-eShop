@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Image from '../Register/register-img.jpg';
+import Image from '../Register/register-img.png';
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -25,15 +25,15 @@ function onChange(value) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: '150vh',
   },
   image: {
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    // backgroundSize: 'cover',
+    // backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -227,8 +227,8 @@ export default function Register() {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}><h5 className="text-center mt-5">Spustelėdami Prisiregistruoti, sutinkate su mūsų <Link href="/terms-conditions">
-              <span className={classes.terms}>Apsipirkimo taisyklėmis</span>
+            <Grid item xs={12}><h5 className="text-center mt-5">Registruodamiesi sutinkate su mūsų <Link href="/terms-conditions">
+              <span className={classes.terms}> Apsipirkimo taisyklėmis</span>
             </Link></h5>
 
             </Grid>
@@ -242,7 +242,7 @@ export default function Register() {
               className={classes.submit}
             //  href="/login"
             >
-              Prisiregistruoti
+              Registruotis
           </Button>
             <Grid container justify="flex-end">
               <Grid item>

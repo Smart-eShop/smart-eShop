@@ -13,4 +13,6 @@ class Delivery extends Model
         return $this->hasMany(Order::class);
 
     }
+
+
 }

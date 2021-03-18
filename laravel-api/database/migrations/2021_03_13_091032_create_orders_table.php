@@ -11,15 +11,27 @@ class CreateOrdersTable extends Migration
      *
      * @return void
      */
+
+
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->integer('invoice_number');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('item_id')->constrained();
+            $table->integer('total_item');
             $table->foreignId('delivery_id')->constrained();
             $table->foreignId('order_status_id')->constrained();
-            $table->integer('payment_id'); //pakeisti o foreign po to
+            $table->foreignId('payment_id')->constrained();
+            $table->string('billing_first_name');
+            $table->string('billing_last_name');
+            $table->string('billing_email');
+            $table->string('billing_street_number');
+            $table->string('billing_city');
+            $table->string('billing_postcode');
+            $table->double('total_price_without_tax',10,2);
+            $table->double('total_taxes',10,2);
+            $table->double('total_price', 10, 2);
             $table->timestamps();
         });
     }

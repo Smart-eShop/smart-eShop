@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Payment;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Lang;
 
 class PaymentController extends Controller
 {
@@ -43,7 +44,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
 
         $validateData = $request->validate([
             'name' => 'required',
@@ -53,7 +54,7 @@ class PaymentController extends Controller
             'name' => request('name'),
             'terms' => request('terms')
         ]);
-        return response()->json(["message" => "Payment method added to database successfully"]);
+        return response()->json(["message" => Lang::get('messages_lt.added')]);
     }
 
     /**
@@ -88,10 +89,10 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
 
         Payment::where('id', $payment->id)->update($request->all());
-        return response()->json(["message" => "Payment method updated successfully"]);
+        return response()->json(["message" => Lang::get('messages_lt.updated')]);
     }
 
     /**
@@ -103,10 +104,10 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         if (Gate::denies('admin-role'))
-            return response()->json(["message" => "You are not Admin"], 200);
+            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
 
         $payment->delete();
-        return response()->json(["message" => "Payment method deleted successfully"]);
+        return response()->json(["message" => Lang::get('messages_lt.deleted')]);
 
     }
 }

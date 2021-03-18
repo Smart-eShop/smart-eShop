@@ -9,6 +9,7 @@ use Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Gate;
+use Illuminate\Support\Facades\Lang;
 
 class ItemsImportController extends Controller
 {
@@ -29,8 +30,8 @@ class ItemsImportController extends Controller
 
             Excel::import(new ItemsImport, $file);
 
-            return response()->json(['message' => 'Excel data imported successfully!'], 200);
+            return response()->json(['message' => Lang::get('messages_lt.added_excel')], 200);
         }
-        return response()->json(['message' => "You don't have permission import Excel data!"], 200);
+        return response()->json(['message' => Lang::get('messages_lt.no_permission_item')], 200);
     }
 }
