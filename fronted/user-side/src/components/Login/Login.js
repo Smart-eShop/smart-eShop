@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Alert from '@material-ui/lab/Alert';
-import Image from '../Login/login-bg.jpg';
+import Image from '../Login/login-bg2.png';
 import Box from '@material-ui/core/Box';
 import Products from '../Products/Products';
 
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    opacity: '0.9',
+    // opacity: '0.9',
     height: '1054px',
     paddingTop: '7em',
 
