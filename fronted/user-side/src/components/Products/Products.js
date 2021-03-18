@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import CardHeader from '@material-ui/core/CardHeader';
 import { shadows } from '@material-ui/system';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles(theme => ({
@@ -94,6 +96,25 @@ export default function Products({printSingleItem, items}) {
 <React.Fragment>
 <Container className={classes.cardGrid} maxWidth="lg">
 <Typography variant='h3' align="center"  className={classes.pageTtitle} gutterBottom>Prekių katalogas</Typography>
+<div style={{ width: 300 }}>
+    
+      <Autocomplete
+        freeSolo
+        id="Paieška"
+        disableClearable
+        options={items.map((item) => item.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Prekių paieška"
+            margin="normal"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, type: 'search' }}
+          />
+        )}
+      />
+    </div>
+
   {/* End hero unit */}
   <Grid container spacing={4}>
   {items.map((item) => (
