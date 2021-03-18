@@ -26,6 +26,7 @@ export default function ShowProduct({item}) {
         <Grid key={item.id} item xs={12} md={5} >
             <Grid container item direction='column' align="center" className="p-4 bg-danger mt-5">
                 <Grid item className="text">
+                 {/* {item.img.map()} */}
                     <h1 className="text-dark">{item.title}</h1>                                
                     <h1>{item.description}</h1>
                 </Grid>

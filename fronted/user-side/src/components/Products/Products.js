@@ -91,6 +91,7 @@ export default function Products({printSingleItem, items}) {
 //            printSingleItem();
 //        }, [])
 
+    const url = 'https://eshopsmart.herokuapp.com/images/';
 
   return (
 <React.Fragment>
@@ -120,9 +121,7 @@ export default function Products({printSingleItem, items}) {
   {items.map((item) => (
       <Grid item key={item} xs={12} sm={6} md={4}>
         <Card className={classes.item}>
-          <CardMedia
-            className={classes.cardMedia}
-            title="Image title">{item.img} </CardMedia>
+          <img src={url +item.img[1]} />
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h5" component="h1">
               {item.title}
