@@ -36,7 +36,7 @@ function Main() {
       //  pakeisti vietoje sk i id!!!!!!! ${id}  
       //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
       const url = `https://eshopsmart.herokuapp.com/api/item/${id}`;
-      const response = await fetch(url);
+      const response = await fetch(url + id );
       const data = await response.json();
       console.log(data.item);
       setItem(data.item);
@@ -66,11 +66,12 @@ function Main() {
           <Route path="/products" exact>
             <Products printSingleItem={printSingleItem} items={items} />
           </Route>
+          {/* <Route path="/product-details/:id" component={ShowProduct}/> */}
           {(typeof item.title != "undefined") ?
-        
+         <Route path="/poduct-details/:id" exact>
               <ShowProduct item={item} />
-          
-            :false }
+           </Route>
+             :false } 
           <Route path="/about" exact>
             <About />
           </Route>
