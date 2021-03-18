@@ -85,12 +85,12 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="#inherit">
+                  <Button variant="contained" color="inherit" href="/products">
                     Prekių paieška
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="#inherit">
+                  <Button variant="contained" color="inherit" href="/about">
                     Apie mus
                   </Button>
                 </Grid>
