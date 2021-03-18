@@ -87,9 +87,7 @@ const ProductTable = () => {
 		{ key: 'id', _style: { width: '1%' } },
 		{ key: 'title', _style: { width: '5%' } },
 		{ key: 'price', _style: { width: '5%' } },
-		{ key: 'category' },
-		{ key: 'quantity', _style: { width: '5%' } },
-		{ key: 'category_name', _style: { width: '5%' } },
+		{ key: 'quantity', _style: { width: '5%', } },
 		{ key: 'discount', _style: { width: '5%' } },
 		{ key: 'weight', _style: { width: '5%' } },
 
