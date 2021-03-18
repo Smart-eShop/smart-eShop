@@ -9,6 +9,7 @@ import ShowProduct from './Products/ShowProduct';
 import "../neumorphism.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
+import Footer from './Footer/Footer';
 import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
@@ -86,6 +87,7 @@ function Main() {
             <ResetPassword />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </>
 
