@@ -14,6 +14,7 @@ import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
+import ProductsCategory from './Category/ProductsCategory';
 
 
 function Main() {
@@ -76,6 +77,9 @@ function Main() {
           </Route>
           <Route path="/contact-us" exact>
             <Contact />
+          </Route>
+          <Route path="/category" exact>
+            <ProductsCategory />
           </Route>
           <Route path="/terms-conditions" exact>
             <TermsConditions />
