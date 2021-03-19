@@ -67,11 +67,14 @@ function Main() {
             <Products printSingleItem={printSingleItem} items={items} />
           </Route>
           {/* <Route path="/product-details/:id" component={ShowProduct}/> */}
-          {(typeof item.title != "undefined") ?
+          {/* {(typeof item.title != "undefined") ?
          <Route path="/poduct-details/:id" exact>
               <ShowProduct item={item} />
            </Route>
-             :false } 
+             :false }  */}
+              <Route path="/product-details/:id" exact>
+            <ShowProduct item={item} />
+          </Route>
           <Route path="/about" exact>
             <About />
           </Route>
