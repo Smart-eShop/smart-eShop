@@ -46,6 +46,7 @@ const AddProduct = React.lazy(()=> import('./components/AddProduct'));
 const AddDelivery = React.lazy(()=> import('./components/AddDelivery'));
 const AllDelivery = React.lazy(()=> import('./components/AllDelivery'));
 const AddPayment = React.lazy(()=> import('./components/AddPayment'));
+const AllPayments = React.lazy(()=> import('./components/AllPayments'));
 const AllCategories = React.lazy(()=> import('./components/categories/AllCategories'));
 const AllProducts = React.lazy(()=> import('./components/AllProducts/AllProducts'));
 
@@ -58,6 +59,7 @@ const routes = [
   { path: '/add-delivery', exact: true, Name: 'AddDelivery', component: AddDelivery },
   { path: '/add-payment', exact: true, Name: 'AddPayment', component: AddPayment },
   { path: '/all-delivery', exact: true, Name: 'AllDelivery', component: AllDelivery },
+  { path: '/all-payments', exact: true, Name: 'AllPayments', component: AllPayments },
   { path: '/all-products', Name: 'AllProducts', component: AllProducts },
   
 
