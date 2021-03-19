@@ -11,8 +11,8 @@ import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles(theme => ({
-    pageTtitle: {
-        margin: '50px',
+    pageTitle: {
+        margin: '80px',
     },
     cardGrid: {
         paddingTop: theme.spacing(8),
@@ -24,13 +24,16 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
     },
     cardMedia: {
-        paddingTop: '40%', // 16:9
+        paddingTop: '40%', 
     },
     cardContent: {
         flexGrow: 1,
     },
     discount: {
         color: '#e64a19',
+    },
+    image: {
+        width: '100%',
     }
 }));
 
@@ -64,7 +67,7 @@ export default function Products({setItem, items, item}) {
     return (
         <React.Fragment>
             <Container className={classes.cardGrid} maxWidth="lg">
-                <Typography variant='h3' align="center" className={classes.pageTtitle} gutterBottom>Prekių
+                <Typography variant='h3' align="center" className={classes.pageTitle} gutterBottom>Prekių
                     katalogas</Typography>
                 {/* End hero unit */}
                 <Grid container spacing={4}>
@@ -72,9 +75,9 @@ export default function Products({setItem, items, item}) {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.item}>
                                 <img
-                                    src={imgUrl + item.img[1]}/>
+                                    src={imgUrl + item.img[1]} className={classes.image}/>
                                 <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant="h5" component="h1">
+                                    <Typography gutterBottom variant="h5" component="h5">
                                         {item.title}
                                     </Typography>
                                     <Typography>
@@ -85,11 +88,11 @@ export default function Products({setItem, items, item}) {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <a className="btn btn-primary" href={`/product-details/${item.id}`} color="primary"
+                                    <Button className="btn btn-primary" href={`/product-details/${item.id}`} color="primary"
                                        onClick={() => printSingleItem(item.id)}>
                                         Peržiūrėti
-                                    </a>
-                                    <Button size="small" color="primary">
+                                    </Button>
+                                    <Button className="btn btn-primary" color="primary">
                                         Pirkti
                                     </Button>
                                 </CardActions>
