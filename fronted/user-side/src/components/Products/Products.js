@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 export default function Products({setItem, items, item}) {
     const classes = useStyles();
     const printSingleItem = async (id) => {
