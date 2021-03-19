@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ShowProduct from '../Products/ShowProduct';
+import ShowProduct from './ShowProduct';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
@@ -41,55 +41,26 @@ margin: '50px',
       }
 }));
 
-export default function Products({printSingleItem, items}) {
+export default function Products({setItem, items}) {
  const classes = useStyles();
-
-//  const [printImg, setPrintImg] = useState([]);
-
-
-//  const printImages = async() => {
-//      const url = 'https://eshopsmart.herokuapp.com/images/';
-//      const response = await fetch(url);
-//      const data = await response.json();
-//      console.log(data.Images);
-//      setPrintImg(data.Images);
-//  }
- 
-//      useEffect(() => {
-//          printImages();
-//      }, [])
- 
-// const [items, setItems] = useState([]);
-//  const printItems = async() => {
-//     //  pakeisti vietoje sk i id!!!!!!! ${id}  
-//     //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
-//     const url = 'https://eshopsmart.herokuapp.com/api/items';
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     console.log(data.items);
-//     setItems(data.items);
-  
-// }
-//     useEffect(() => {
-//         printItems();
-//     }, [])
-
-//     const [item, setItem] = useState({});
-//     const printSingleItem = async(id) => {
-//        //  pakeisti vietoje sk i id!!!!!!! ${id}  
-//        //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
-//        const url = 'https://eshopsmart.herokuapp.com/api/item/';
-//        const response = await fetch(url + id);
-//        const data = await response.json();
-//        console.log(data.item);
-//        setItem(data.item);
-     
-//    }
-//        useEffect(() => {
-//            printSingleItem();
-//        }, [])
-
-
+    const printSingleItem = async (id) => {
+        try {
+            const url = `https://eshopsmart.herokuapp.com/api/item/`;
+            const response = await fetch(url + id, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            console.log(data.item);
+            // console.log(response)
+            setItem(data.item);
+        } catch (error) {
+            console.log(error);
+            console.log('Blogai');
+        }
+    }
   return (
 <React.Fragment>
 <Container className={classes.cardGrid} maxWidth="lg">
@@ -97,7 +68,7 @@ export default function Products({printSingleItem, items}) {
   {/* End hero unit */}
   <Grid container spacing={4}>
   {items.map((item) => (
-      <Grid item key={item} xs={12} sm={6} md={4}>
+      <Grid item key={item.id} xs={12} sm={6} md={4}>
         <Card className={classes.item}>
           <CardMedia
             className={classes.cardMedia}
@@ -114,9 +85,9 @@ export default function Products({printSingleItem, items}) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary" onClick={()=>printSingleItem(item.id)}>
+            <a href={`/product-details/${item.id}`} color="primary" onClick={()=>printSingleItem(item.id)}>
               Peržiūrėti
-            </Button>
+            </a>
             <Button size="small" color="primary">
               Pirkti
             </Button>
