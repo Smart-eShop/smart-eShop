@@ -37,8 +37,8 @@ const headersData = [
     label: "Prisijungti",
     href: "/login",
   }, {
-    label: "preke",
-    href:"/baobas"
+    label: "Prekės",
+    href:"/products"
   }
 ];
 
