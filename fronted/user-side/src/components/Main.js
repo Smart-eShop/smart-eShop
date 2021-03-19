@@ -15,7 +15,7 @@ import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
 
 
-function Main() {
+const Main = () => {
     const [items, setItems] = useState([]);
     const [item, setItem] = useState({});
     const printItems = async () => {
@@ -28,33 +28,6 @@ function Main() {
     useEffect(() => {
         printItems();
     }, []);
-
-    // const printSingleItem = async (id) => {
-    //     try {
-    //         //  pakeisti vietoje sk i id!!!!!!! ${id}
-    //         //ant korteles on click paduoda funkcija mano ir i skliaust iraso ka ismapins id
-    //         const url = `https://eshopsmart.herokuapp.com/api/item/`;
-    //         const response = await fetch(url + id, {
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             }
-    //         });
-    //         const data = await response.json();
-    //         console.log(data.item);
-    //         // console.log(response)
-    //         setItem(data.item);
-    //     } catch (error) {
-    //         console.log(error);
-    //         console.log('Blogai');
-    //     }
-    // }
-    // console.log(item);
-    // useEffect(() => {
-    //     console.log("lalala");
-    //     printSingleItem(item.id);
-    //     console.log(item);
-    // }, []);
 
     return (
         <>
@@ -71,10 +44,10 @@ function Main() {
                         <Register/>
                     </Route>
                     <Route path="/products" exact>
-                        <Products setItem={setItem} items={items}/>
+                        <Products setItem={setItem} items={items} item={item}/>
                     </Route>
                     {(typeof item != "undefined") ?
-                        <Route path="/product-details/:id" >
+                        <Route path="/product-details/:id">
                             <ShowProduct item={item}/>
                         </Route>
                         : false}
