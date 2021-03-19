@@ -102,7 +102,7 @@ export default function Products({printSingleItem, items}) {
         freeSolo
         id="Paieška"
         disableClearable
-        options={items.map((item) => item.title)}
+        options={items?.map((item) => item.title)}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -117,7 +117,7 @@ export default function Products({printSingleItem, items}) {
 
   {/* End hero unit */}
   <Grid container spacing={4}>
-  {items.map((item) => (
+  {items?.map((item) => (
       <Grid item key={item} xs={12} sm={6} md={4}>
         <Card className={classes.item}>
           <CardMedia

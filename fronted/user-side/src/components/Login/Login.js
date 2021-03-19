@@ -77,9 +77,21 @@ export default function Login() {
     }
     )
       .then(data => data.json())
-      .then(data => JSON.parse(JSON.stringify(data.access_token)))
+      .then(data => {
+        if (data.access_token) {
+          return data.access_token;
+        } else {
+          throw new Error('incorrect login')
+        }
+      })
       .then(data => localStorage.setItem('access_token', data))
-      .then(setRedir(true))
+      .then(() => {
+        const token = localStorage.getItem('access_token');
+        if (token){
+          setRedir(true)
+        }
+      })
+      .catch(error => console.error(error.message))
   }
 
   const { handleSubmit, handleChange, touched, errors, handleBlur } = useFormik({
