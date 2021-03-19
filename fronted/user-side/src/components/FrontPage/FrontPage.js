@@ -86,7 +86,7 @@ export default function Album() {
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   <Button variant="contained" color="inherit" href="/products">
-                    Prekių paieška
+                    Prekių katalogas
                   </Button>
                 </Grid>
                 <Grid item>

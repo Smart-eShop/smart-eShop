@@ -1,3 +1,5 @@
+
+
 import {
   AppBar,
   Toolbar,
@@ -12,19 +14,24 @@ import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Home from '@material-ui/icons/Home';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
 
 const headersData = [
-  {
-    label: "Apie mus",
-    href: "/about",
-  },
+  // {
+  //   label: "Apie mus",
+  //   href: "/about",
+  // },
   {
     label: "Kontaktai",
     href: "/contact-us",
   },
   {
-    label: "Prekės",
-    href: "/products",
+    label: "Prekių kategorijos",
+    href: "/category",
   },
   {
     label: "Prisijungti",
@@ -58,6 +65,22 @@ const useStyles = makeStyles(() => ({
 
 export default function Navbar() {
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleChange = (event) => {
+        setAuth(event.target.checked);
+      };
+    
+      const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+
 
   const [state, setState] = useState({
     mobileView: false,
@@ -81,8 +104,42 @@ export default function Navbar() {
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
+        
         {smartEShop}
+
         <div>{getMenuButtons()}</div>
+        {auth && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
+                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
+              </Menu>
+            </div>
+          )}
+          
       </Toolbar>
     );
   };
@@ -106,7 +163,7 @@ export default function Navbar() {
         >
           <MenuIcon />
         </IconButton>
-
+        
         <Drawer
           {...{
             anchor: "left",
@@ -118,6 +175,37 @@ export default function Navbar() {
         </Drawer>
 
         <div>{smartEShop}</div>
+        {auth && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
+                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
+              </Menu>
+            </div>
+          )}
       </Toolbar>
     );
   };
@@ -170,6 +258,12 @@ export default function Navbar() {
   return (
     <header>
       <AppBar className={header}>
+      <FormGroup>
+    <FormControlLabel
+          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
+          label={auth ? 'Logout' : 'Login'}
+        />
+      </FormGroup>
         {mobileView ? displayMobile() : displayDesktop()}
       </AppBar>
     </header>
