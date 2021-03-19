@@ -72,7 +72,7 @@ Route::post('delete-category/category={category}', 'CategoryController@deleteCat
 Route::post('update-address/{user}', 'OrderController@updateUserAddress');
 
 //Orders
-Route::post('order/store', 'OrderController@createOrder');
+Route::post('order/store', 'OrderController@store');
 Route::get('orders', 'OrderController@getAllOrdersTest');
 Route::get('order/{order}', 'ApiController@showOneOrder');
 Route::post('order/update-order-status/{order}', 'OrderController@updateOrderStatus');

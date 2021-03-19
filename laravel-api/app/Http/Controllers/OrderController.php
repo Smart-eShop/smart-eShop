@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth:api', ['except' => 'getAllOrdersTest']);
+         $this->middleware('auth:api', ['except' => 'getAllOrdersTest', 'store']);
     }
 
     public function updateUserAddress(Request $request, User $user){
@@ -76,11 +76,27 @@ class OrderController extends Controller
     }
 
 // pasiziurejimui cia tik
-    public function getAllOrdersTest()
+    public function getAllOrdersTest(Order $order)
     {
-        $orders = Order::all();
+//        $orders = Order::all();
+//        $item = $orders->items()->get();
+//        $users = User::all();
+//        $user = $users->orders()->get();
 
-        return response()->json($orders);
+        return response()->json($order);
     }
+
+    //bandom sukurti orderi
+    public function store(Request $request){
+        $order = Order::create($request->all());
+
+//        $item = $request->input('item_id');
+//        $qty = $request->input('qty');
+
+                $order->items()->sync($request->input('item_id'), $order->id, $request->input('quantity'));
+
+        return response()->json(["message" => 'Order successfully created', 'order' => $order], 200);
+    }
+
 
 }
