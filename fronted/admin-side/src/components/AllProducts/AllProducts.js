@@ -85,11 +85,12 @@ const ProductTable = () => {
 
 	const fields = [
 		{ key: 'id', _style: { width: '1%' } },
-		{ key: 'title', _style: { width: '5%' } },
-		{ key: 'price', _style: { width: '5%' } },
-		{ key: 'quantity', _style: { width: '5%', } },
-		{ key: 'discount', _style: { width: '5%' } },
-		{ key: 'weight', _style: { width: '5%' } },
+		{ key: 'title', label: "Pavadinimas", _style: { width: '5%' } },
+		{ key: 'price', label: "Kaina", _style: { width: '5%' } },
+		{ key: 'quantity', label: "Kiekis", _style: { width: '5%', } },
+		{ key: 'discount', label: "Nuolaida", _style: { width: '5%' } },
+		{ key: 'weight', label: "Svoris", _style: { width: '5%' } },
+		{ key: 'category_name', label: "Kategorija", _style: { width: '5%' } },
 
 		{
 			key: 'show_details',
@@ -133,13 +134,9 @@ const ProductTable = () => {
 					sorter
 					pagination
 					scopedSlots={{
-						'status':
+						'category_name':
 							(item) => (
-								<td>
-									<CBadge color={getBadge(item.status)}>
-										{item.status}
-									</CBadge>
-								</td>
+								<td>{item.category.category_name}</td>
 							),
 						'show_details':
 							(item, index) => {

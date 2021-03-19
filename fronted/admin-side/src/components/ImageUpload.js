@@ -1,46 +1,88 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 
 
 function ImageUpload() {
     const [image, setImage] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const uploadImage = async e => {
-        const accessToken = localStorage.getItem('access_token');
+
+    const data = new FormData()
+    data.append('category_id', 1);
+    data.append('title', 'asdasdsadasdsadsda');
+    data.append('description', 'descriptionInput');
+    data.append('keywords', 'keywordsInput');
+
+
+
+    data.append('price', 12);
+    data.append('discount', 12);
+    data.append('quantity', 12);
+    data.append('weight', 12);
+    data.append('size', 'xl');
+
+
+    const upload = (e) => {
+
         const files = e.target.files
         console.log(files);
-        const data = new FormData()
-        data.append('category_id', 1);
-        data.append('title', 'asdasdsadasdsadsda');
-        data.append('description', 'descriptionInput');
-        data.append('keywords', 'keywordsInput');
-
         data.append('img', files[0])
 
-        data.append('price', 12);
-        data.append('discount', 12);
-        data.append('quantity', 12);
-        data.append('weight', 12);
-        data.append('size', 'xl');
+    }
+
+    const uploadImage = async e => {
+
+        e.preventDefault();
+        const accessToken = localStorage.getItem('access_token');
+
+
+
+
+
+
+
+
+        for (var pair of data.entries()) {
+            console.log(pair[0] + ', ' + console.log(pair[1]));
+        }
 
 
 
 
 
         setLoading(true)
-        const res = await fetch(
-            '	https://eshopsmart.herokuapp.com/api/addItem',
-            {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-                body: data
-            }
-        )
-        const file = await res.json()
+        axios({
+            method: "post",
+            url: 'https://eshopsmart.herokuapp.com/api/addItem',
+            data: data,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+            .then(function (response) {
+                //handle success
+                console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
 
-        setImage(file.secure_url)
+
+        // const res = await fetch(
+        //     '	https://eshopsmart.herokuapp.com/api/addItem',
+        //     {
+        //         method: 'POST',
+        //         headers: {
+        //             'Authorization': `Bearer ${accessToken}`,
+        //         },
+        //         body: data
+        //     }
+        // )
+        // const file = await res.json()
+
+        // setImage(file.secure_url)
         setLoading(false)
     }
 
@@ -51,8 +93,10 @@ function ImageUpload() {
                 type="file"
                 name="file"
                 placeholder="Upload an image"
-                onChange={uploadImage}
+                onChange={upload}
+
             />
+            <button onClick={uploadImage}>siusti</button>
             {loading ? (
                 <h3>Loading...</h3>
             ) : (
