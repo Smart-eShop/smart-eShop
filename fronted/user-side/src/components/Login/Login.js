@@ -15,7 +15,7 @@ import { useFormik } from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import Image from '../Login/login-bg2.png';
 import Box from '@material-ui/core/Box';
-import Products from '../Products/Products';
+import FrontPage from '../FrontPage/FrontPage';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +97,7 @@ export default function Login() {
   })
 
   if (redir) {
-    return (<Products />)
+    return (<FrontPage />)
   }
 
   return (

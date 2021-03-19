@@ -69,17 +69,34 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  function getToken() {
+    const tokenString = localStorage.getItem('access_token');
+    return tokenString
+  }
+
+
   const handleChange = (event) => {
-        setAuth(event.target.checked);
-      };
-    
-      const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-    
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
+    const access_token = getToken();
+
+    if (!access_token) {
+      setAuth(event.target.checked);
+    }
+  };
+
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+
+  function clerLocalStorage() {
+    localStorage.clear();
+    document.location.reload()
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+
+  };
 
 
   const [state, setState] = useState({
@@ -104,42 +121,42 @@ export default function Navbar() {
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
-        
+
         {smartEShop}
 
         <div>{getMenuButtons()}</div>
         {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
-                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
-              </Menu>
-            </div>
-          )}
-          
+          <div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
+              <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
+            </Menu>
+          </div>
+        )}
+
       </Toolbar>
     );
   };
@@ -163,7 +180,7 @@ export default function Navbar() {
         >
           <MenuIcon />
         </IconButton>
-        
+
         <Drawer
           {...{
             anchor: "left",
@@ -176,36 +193,36 @@ export default function Navbar() {
 
         <div>{smartEShop}</div>
         {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
-                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
-              </Menu>
-            </div>
-          )}
+          <div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Mano užsaasdsdkymai</MenuItem>
+              <MenuItem onClick={() => clerLocalStorage()}>Atsisjungti</MenuItem>
+            </Menu>
+          </div>
+        )}
       </Toolbar>
     );
   };
@@ -258,12 +275,12 @@ export default function Navbar() {
   return (
     <header>
       <AppBar className={header}>
-      <FormGroup>
-    <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
+        <FormGroup>
+          {/* <FormControlLabel
+            control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
+            label={auth ? 'Logout' : 'Login'}
+          /> */}
+        </FormGroup>
         {mobileView ? displayMobile() : displayDesktop()}
       </AppBar>
     </header>
