@@ -16,6 +16,9 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
+
+
+
 const AddPayment = () => {
 
     const [paymentInput, setPayment] = useState('');
@@ -25,9 +28,40 @@ const AddPayment = () => {
     const [paymentAdded, setPaymentAdded] = useState(false);
     const [requestError, setRequestError] = useState(false);
 
-    const paymentFetch =() => {
 
-    }
+    const AddPaymentFetch = e => {
+      fetch(`https://eshopsmart.herokuapp.com/api/payment/store?name=${paymentInput}&terms=${paymentDescInput}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+    
+          'Authorization': `Bearer ${accessToken}`,
+    
+        }
+    
+      }
+      )
+        .then(response => response.json())
+    
+        .then(res => {
+          console.log(res.message);
+          if (res.message === "Payment method added to database successfully") { ///////cia nekeisti lietuviskai
+            setPaymentAdded(true);
+            setRequestError(false);
+          } else {
+            setRequestError(true);
+            setPaymentAdded(false);
+    
+          }
+        })
+        .catch(err => {
+          setRequestError(true);
+          setPaymentAdded(false);
+    
+        })
+    };
+
+    
 
 
 return (
@@ -70,51 +104,12 @@ return (
             </CForm>
           </CCardBody>
           <CCardFooter>
-            <CButton type="submit" size="sm" color="primary" onClick={paymentFetch}><CIcon name="cil-scrubber" /> Sukurti naują</CButton>
+            <CButton type="submit" size="sm" color="primary" onClick={AddPaymentFetch}><CIcon name="cil-scrubber" /> Sukurti naują</CButton>
           </CCardFooter>
         </CCard>
       </CCol>
     </CRow>
        
-
-        <CCard>
-            <CCardHeader>
-                <h3>Visi apmokėjimo būdai:</h3>
-            </CCardHeader>
-            {deleteMessage ? <CAlert color="primary" closeButton>{deleteMessage}</CAlert> : null}
-            <CCardBody>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Apmokėjimo ID</th>
-                            <th>Pavadinimas</th>
-                            <th>Aprašymas</th>
-                            <th>Naikinti</th>
-                        </tr>
-
-                    </thead>
-                    {/* <tbody>
-                        {printCategories.map((category)=>(
-                            <tr>
-                                <td>
-                              {category.id}
-                                </td>
-                                <td>
-                              {category.category_name}
-                            </td>
-                            <td>  
-                                <CButton
-                                      onClick={() => deleteCategory(category.id)}
-                                    className="mr-1"
-                                ><CIcon size={'lg'} name={'cilTrash'}></CIcon></CButton>
-                               
-                            </td>
-                            </tr>
-                        ))}
-                    </tbody> */}
-                </table>
-            </CCardBody>
-        </CCard>
     </>
 )
 }
