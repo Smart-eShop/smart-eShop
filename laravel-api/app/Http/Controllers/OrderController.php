@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Cart;
 use App\Order;
 use App\Item;
 use App\User;
@@ -18,7 +19,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth:api', ['except' => 'getAllOrdersTest', 'store']);
+         $this->middleware('auth:api', ['except' => 'getAllOrdersTest']);
     }
 
     public function updateUserAddress(Request $request, User $user){
@@ -76,27 +77,58 @@ class OrderController extends Controller
     }
 
 // pasiziurejimui cia tik
-    public function getAllOrdersTest(Order $order)
+    public function getAllOrdersTest()
     {
-//        $orders = Order::all();
+        $orders = Order::all();
 //        $item = $orders->items()->get();
 //        $users = User::all();
 //        $user = $users->orders()->get();
 
-        return response()->json($order);
+        return response()->json($orders);
     }
 
     //bandom sukurti orderi
-    public function store(Request $request){
-        $order = Order::create($request->all());
+//    public function store(Request $request){
+//        $order = Order::create($request->all());
+//
+////        $item = $request->input('item_id');
+////        $qty = $request->input('qty');
+//
+//                $order->items()->sync($request->input('item_id'), $order->id, $request->input('quantity'));
+//
+//        return response()->json(["message" => 'Order successfully created', 'order' => $order], 200);
+//    }
 
-//        $item = $request->input('item_id');
-//        $qty = $request->input('qty');
+//kuriam orderi su cart is seesion
+    public function store(Request $request)
+    {
+        $oldCart = $request->session()->get('cart');
+        $cart = new Cart($oldCart);
 
-                $order->items()->sync($request->input('item_id'), $order->id, $request->input('quantity'));
+        $order = new Order();
 
-        return response()->json(["message" => 'Order successfully created', 'order' => $order], 200);
+        $order->invoice_number = 1;
+        $order->user_id = Auth::id();
+        $order->total_item = $cart->totalQty;
+        $order->delivery_id = $request->input('delivery_id');
+        $order->order_status_id = 1;
+        $order->payment_id = $request->input('payment_id');
+        $order->cart = serialize($cart);
+        $order->billing_first_name = $request->input('billing_first_name');
+        $order->billing_last_name = $request->input('billing_last_name');
+        $order->billing_email = $request->input('billing_email');
+        $order->billing_street_number = $request->input('billing_street_number');
+        $order->billing_city = $request->input('billing_city');
+        $order->billing_postcode = $request->input('billing_postcode');
+        $order->total_price_without_tax = $request->input('total_price_without_tax');
+        $order->total_taxes = $request->input('total_taxes');
+        $order->total_price = $cart->totalPrice;
+         Auth::user()->orders()->save($order);
+
+         return response()->json(["order" => $order]);
     }
+
+
 
 
 }

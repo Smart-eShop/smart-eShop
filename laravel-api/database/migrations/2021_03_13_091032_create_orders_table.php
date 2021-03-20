@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('delivery_id')->constrained();
             $table->foreignId('order_status_id')->constrained();
             $table->foreignId('payment_id')->constrained();
+            $table->text('cart');
             $table->string('billing_first_name');
             $table->string('billing_last_name');
             $table->string('billing_email');

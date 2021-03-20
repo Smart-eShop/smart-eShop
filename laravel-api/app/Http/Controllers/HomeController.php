@@ -21,7 +21,7 @@ class HomeController extends Controller
 //dd(Order::find(1)->items()->get());
 
 
-        return view('welcome', compact('users'));
+        return view('welcome');
 
     }
 }

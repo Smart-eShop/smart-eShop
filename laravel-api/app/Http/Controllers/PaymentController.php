@@ -61,11 +61,15 @@ class PaymentController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Payment $payment)
+    public function showAll()
     {
-        //
+        if (Gate::denies('admin-role'))
+            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
+
+        $payment = Payment::all();
+        return response()->json(["payment" => $payment]);
     }
 
     /**
