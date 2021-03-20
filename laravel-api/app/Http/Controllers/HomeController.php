@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\BanDeleteUser;
+use App\ItemOrder;
+use App\Order;
 use App\Role;
 use App\RoleUser;
 
@@ -13,13 +15,13 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request, $id=1)
     {
-        $users = User::with('roles')->get();
-        $bannedUser = BanDeleteUser::all();
-//dd($bannedUser);
 
-        return view('welcome', compact('users'));
+//dd(Order::find(1)->items()->get());
+
+
+        return view('welcome');
 
     }
 }

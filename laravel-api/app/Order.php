@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Order extends Model
 {
@@ -13,6 +14,7 @@ class Order extends Model
         'delivery_id',
         'order_status_id',
         'payment_id',
+        'cart',
         'billing_first_name',
         'billing_last_name',
         'billing_email',
