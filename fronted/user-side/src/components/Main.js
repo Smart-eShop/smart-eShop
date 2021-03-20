@@ -20,32 +20,16 @@ const Main = () => {
             <Router>
                 <Navbar/>
                 <Switch>
-                    <Route path="/" exact>
-                        <FrontPage/>
-                    </Route>
-                    <Route path="/login" exact>
-                        <Login/>
-                    </Route>
-                    <Route path="/register" exact>
-                        <Register/>
-                    </Route>
+                    <Route path="/" exact component={FrontPage} />
+                    <Route path="/login" exact component={Login} />
+                    <Route path="/register" exact component={Register} />
                     <Route path="/products" exact component={Products}/>
                     <Route path="/products/:id" component={ShowProduct}/>
-                    <Route path="/about" exact>
-                        <About/>
-                    </Route>
-                    <Route path="/contact-us" exact>
-                        <Contact/>
-                    </Route>
-                    <Route path="/terms-conditions" exact>
-                        <TermsConditions/>
-                    </Route>
-                    <Route path="/remind-password" exact>
-                        <RemindPassword/>
-                    </Route>
-                    <Route path="/reset-password" exact>
-                        <ResetPassword/>
-                    </Route>
+                    <Route path="/about" exact component={About} />
+                    <Route path="/contact-us" exact component={Contact} />
+                    <Route path="/terms-conditions" exact component={TermsConditions} />
+                    <Route path="/remind-password" exact component={RemindPassword} />
+                    <Route path="/reset-password" exact component={ResetPassword} />
                 </Switch>
             </Router>
         </>
