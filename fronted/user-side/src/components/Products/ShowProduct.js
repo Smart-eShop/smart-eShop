@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+import Carousel from 'react-material-ui-carousel'
 
 
 
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    cardMedia: {
-        paddingTop: '56.25%', // 16:9
-    },
+    // cardMedia: {
+    //     paddingTop: '56.25%', // 16:9
+    // },
     cardContent: {
         flexGrow: 1,
     },
@@ -67,6 +68,8 @@ const ShowProduct = ({ match }) => {
     //     return <p>{a}</p> 
     // })
 
+    console.log(item.img);
+
     return (
         <>
 
@@ -74,11 +77,24 @@ const ShowProduct = ({ match }) => {
                 <Grid key={item.id} container spacing={3}>
                     <Grid item xs={12} md={6} >
                         <Paper className={classes.paper}>
-                            <Card className={classes.card}>
+                        <Card className={classes.card}>
+                            {(item.img?.length) ?
+                                <Carousel>
+                                    {
+                                        item.img.map(a => ( 
+                         
+                                        <img src={imgUrl + a}   className={classes.cardMedia}/>))}
+                                </Carousel>
+                                 : false} 
+
+                            {/* <Card className={classes.card}>
                                 {console.log(item.img)}
-                                {/* <img width="100" src={imgUrl + item.img[1]} alt="" /> */}
-                                {/* {b} */}
-                            </Card>
+
+                                {item.img.map( a => <img width="100" src={imgUrl + a} />
+                                )}
+                            
+                            </Card> */}
+                             </Card>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} md={6}>
