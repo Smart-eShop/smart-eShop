@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import {Link} from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,30 +36,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Products({setItem, items, item}) {
+const  Products = () => {
     const classes = useStyles();
-    const printSingleItem = async (id) => {
-        try {
-            const url = `https://eshopsmart.herokuapp.com/api/item/`;
-            const response = await fetch(url + id, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            });
-            const data = await response.json();
-            console.log(data.item);
-            // console.log(response)
-            setItem(data.item);
-        } catch (error) {
-            console.log(error);
-            console.log('Blogai');
-        }
+    const [items, setItems] = useState([]);
+
+    const printItems = async () => {
+        const url = 'https://eshopsmart.herokuapp.com/api/items';
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.items);
+        setItems(data.items);
     }
+
     useEffect(() => {
-        console.log("lalala");
-        printSingleItem(item.id);
-        console.log(item);
+        printItems();
     }, []);
 
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
@@ -73,7 +64,7 @@ export default function Products({setItem, items, item}) {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.item}>
                                 <img
-                                    src={imgUrl + item.img[1]}/>
+                                    src={imgUrl + item.img[0]}/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
@@ -86,10 +77,7 @@ export default function Products({setItem, items, item}) {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <a className="btn btn-primary" href={`/product-details/${item.id}`} color="primary"
-                                       onClick={() => printSingleItem(item.id)}>
-                                        Peržiūrėti
-                                    </a>
+                                    <Link to={`/products/${item.id}`}>Peržiūrėti</Link>
                                     <Button size="small" color="primary">
                                         Pirkti
                                     </Button>
@@ -102,3 +90,4 @@ export default function Products({setItem, items, item}) {
         </React.Fragment>
     );
 }
+export default Products;
