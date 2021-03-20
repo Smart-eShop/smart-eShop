@@ -9,29 +9,13 @@ import ShowProduct from './Products/ShowProduct';
 import "../neumorphism.css";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
-import Footer from './Footer/Footer';
 import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
-import ProductsCategory from './Category/ProductsCategory';
-
 
 const Main = () => {
-    const [items, setItems] = useState([]);
-    const [item, setItem] = useState({});
-    const printItems = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/items';
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data.items);
-        setItems(data.items);
-    }
-    useEffect(() => {
-        printItems();
-    }, []);
-
-    return (
+       return (
         <>
             <Router>
                 <Navbar/>
@@ -45,14 +29,8 @@ const Main = () => {
                     <Route path="/register" exact>
                         <Register/>
                     </Route>
-                    <Route path="/products" exact>
-                        <Products setItem={setItem} items={items} item={item}/>
-                    </Route>
-                    {(typeof item != "undefined") ?
-                        <Route path="/product-details/:id">
-                            <ShowProduct item={item}/>
-                        </Route>
-                        : false}
+                    <Route path="/products" exact component={Products}/>
+                    <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact>
                         <About/>
                     </Route>
