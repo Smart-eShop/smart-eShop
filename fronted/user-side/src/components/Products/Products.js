@@ -13,7 +13,8 @@ import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     pageTtitle: {
-        margin: '50px',
+        marginTop: '100px',
+        marginBottom: '50px',
     },
     cardGrid: {
         paddingTop: theme.spacing(8),
@@ -64,7 +65,7 @@ const  Products = () => {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.item}>
                                 <img
-                                    src={imgUrl + item.img[0]}/>
+                                    src={imgUrl + item.img[1]}/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
@@ -77,7 +78,10 @@ const  Products = () => {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Link to={`/products/${item.id}`}>Peržiūrėti</Link>
+                                    {/* <Link to={`/products/${item.id}`}>Peržiūrėti</Link> */}
+                                    <Button href={`/products/${item.id}`} size="small" color="primary">
+                                        Peržiūrėti
+                                    </Button>
                                     <Button size="small" color="primary">
                                         Pirkti
                                     </Button>
