@@ -7,17 +7,19 @@ use App\Item;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Session;
+
 //use Session;
 
 class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api',['except' => 'showCart', 'getAddToCart']);
+        $this->middleware('auth:api', ['except' => 'showCart', 'getAddToCart']);
     }
 
-    public function add(Request $request, Item $item){
+    public function add(Request $request, Item $item)
+    {
 //        dd(\Cart::session(auth()->id()));
 
         \Cart::session('_token');//auth()->id()
@@ -29,10 +31,11 @@ class CartController extends Controller
             'attributes' => array(),
             'associatedModel' => $item
         ));
-        return response()->json(["message" => $cart,'name' => $item->title]);
+        return response()->json(["message" => $cart, 'name' => $item->title]);
     }
 
-    public function showCart(){
+    public function showCart()
+    {
         \Cart::session('_token');
         $cartItems = \Cart::getContent();
 //        dd($cartItems);
@@ -40,7 +43,7 @@ class CartController extends Controller
         return response()->json($cartItems);
     }
 
-    public function getAddToCart(Request $request,$id)
+    public function getAddToCart(Request $request, $id)
     {
         $item = Item::find($id);
         $oldCart = $request->session()->has('cart') ? $request->session()->get('cart') : null;
@@ -50,9 +53,10 @@ class CartController extends Controller
         $request->session()->put('cart', $cart);
         return response()->json($cart);
     }
+
     public function getCart(Request $request)
     {
-        if(!$request->session()->has('cart')){
+        if (!$request->session()->has('cart')) {
             return response()->json(["message" => "Krepšelis tuščias"]);
         }
         $oldCart = $request->session()->get('cart');
@@ -60,5 +64,17 @@ class CartController extends Controller
 
         return response()->json(["items" => $cart->items, "totalPrice" => $cart->totalPrice,
             "totalQty" => $cart->totalQty]);
+    }
+
+    public function removeProductsFromCart($id)
+    {
+        $cart = Session::get('cart');
+        $item = Item::find($id);
+        $cart->remove($item, $item->id);
+
+        unset($cart->items[$id]);
+        Session::put('cart', $cart);
+
+        return response()->json(['message' => 'Item Removed From Cart!']);
     }
 }
