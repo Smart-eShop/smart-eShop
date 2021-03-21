@@ -5,10 +5,9 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {Link} from "react-router-dom";
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
     },
     cardMedia: {
-        paddingTop: '40%', // 16:9
+        width: '100%', // 16:9
     },
     cardContent: {
         flexGrow: 1,
@@ -63,9 +62,9 @@ const  Products = () => {
                 <Grid container spacing={4}>
                     {items.map((item) => (
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
-                            <Card className={classes.item}>
+                            <Card className={classes.cardMedia}>
                                 <img
-                                    src={imgUrl + item.img[1]}/>
+                                    src={imgUrl + item.img[0]} style={{width: "500px", height: "200px"}} />
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}

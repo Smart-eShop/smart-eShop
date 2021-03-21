@@ -104,10 +104,12 @@ class OrderController extends Controller
     {
         $oldCart = $request->session()->get('cart');
         $cart = new Cart($oldCart);
-
+        $beforeTaxesPrice = ($cart->totalPrice*79)/100;
+        $taxes = ($cart->totalPrice*21)/100;
         $order = new Order();
 
-        $order->invoice_number = 1;
+        $latestOrder = Order::orderBy('created_at','DESC')->first();
+        $order->invoice_number = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
         $order->user_id = Auth::id();
         $order->total_item = $cart->totalQty;
         $order->delivery_id = $request->input('delivery_id');
@@ -120,8 +122,8 @@ class OrderController extends Controller
         $order->billing_street_number = $request->input('billing_street_number');
         $order->billing_city = $request->input('billing_city');
         $order->billing_postcode = $request->input('billing_postcode');
-        $order->total_price_without_tax = $request->input('total_price_without_tax');
-        $order->total_taxes = $request->input('total_taxes');
+        $order->total_price_without_tax = $beforeTaxesPrice;
+        $order->total_taxes = $taxes;
         $order->total_price = $cart->totalPrice;
          Auth::user()->orders()->save($order);
 

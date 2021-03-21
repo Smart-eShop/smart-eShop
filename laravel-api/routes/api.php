@@ -58,7 +58,7 @@ Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 Route::post('payment/store', 'PaymentController@store');
 Route::post('payment/update/{payment}', 'PaymentController@update');
 Route::get('payment/delete/{payment}', 'PaymentController@destroy');
-Route::get('payment/show', 'DeliveryController@showAll');
+Route::get('payment/show', 'PaymentController@showAll');
 
 
 Route::get('recaptcha', 'ApiController@recaptchaKey');
@@ -82,3 +82,5 @@ Route::post('order/update-order-status/{order}', 'OrderController@updateOrderSta
 //cart with laravel session
 Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');
 Route::get('cart/shopping-cart', 'CartController@getCart');
+Route::get('cart/delete/{item}', 'CartController@removeProductsFromCart');
+
