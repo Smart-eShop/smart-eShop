@@ -11,35 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => 'showCart', 'getAddToCart']);
-    }
 
-    public function add(Request $request, Item $item)
-    {
-//        dd(\Cart::session(auth()->id()));
-
-        \Cart::session('_token');//auth()->id()
-        $cart = \Cart::add(array(
-            'id' => $item->id,
-            'name' => $item->title,
-            'price' => $item->price,
-            'quantity' => 4,
-            'attributes' => array(),
-            'associatedModel' => $item
-        ));
-        return response()->json(["message" => $cart, 'name' => $item->title]);
-    }
-
-    public function showCart()
-    {
-        \Cart::session('_token');
-        $cartItems = \Cart::getContent();
-//        dd($cartItems);
-
-        return response()->json($cartItems);
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth:api', ['except' => 'getCart', 'getAddToCart']);
+//    }
 
     public function getAddToCart(Request $request, $id)
     {
