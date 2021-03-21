@@ -82,5 +82,5 @@ Route::post('order/update-order-status/{order}', 'OrderController@updateOrderSta
 //cart with laravel session
 Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');
 Route::get('cart/shopping-cart', 'CartController@getCart');
+Route::get('cart/delete/{item}', 'CartController@removeProductsFromCart');
 
-Route::post('cart/delete-from-cart/{id}', 'CartController@removeProductFromCart');
