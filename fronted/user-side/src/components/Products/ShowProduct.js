@@ -98,8 +98,11 @@ const ShowProduct = ({ match }) => {
                             {item.description}
                         </Typography>
                         <Typography >
-                            {item.price}
+                            {item.price} 
                         </Typography>
+
+                        <p>Raktiniai žodžiai: {(item.keywords == null) ? "Nėra" : item.keywords.map(key => <li>{key}</li>)}</p>
+
                         <Typography className={classes.discount}>
                                         - {item.discount}%
                                     </Typography>

@@ -22,8 +22,8 @@ const ProductTable = () => {
 	const [products, setProducts] = useState([]);
 
 
+	function fetchData() {
 
-	useEffect(() => {
 		fetch(`https://eshopsmart.herokuapp.com/api/items`, {
 			method: "GET",
 			headers: {
@@ -45,7 +45,12 @@ const ProductTable = () => {
 					setError(error);
 				}
 			)
-	}, [accessToken])
+	}
+
+	useEffect(() => {
+		fetchData()
+
+	}, [])
 
 
 
@@ -61,6 +66,8 @@ const ProductTable = () => {
 
 			.then(data => data.json())
 			.then(data => console.log(data))
+		fetchData()
+		AllProducts()
 
 	}
 
@@ -162,18 +169,12 @@ const ProductTable = () => {
 											<h4>
 												{item.title}
 											</h4>
-
-
-											{/* {item.img.map(a => <img width="100" src='https://eshopsmart.herokuapp.com/images/'+{a}/>)} */}
-
-											<img width="100" src={'https://eshopsmart.herokuapp.com/images/' + item.img[0]} alt="" />
-
 											<img width="100" src={'https://eshopsmart.herokuapp.com/images/' + item.img[0]} alt="" />
 											<img width="100" src={'https://eshopsmart.herokuapp.com/images/' + item.img[1]} alt="" />
 											<img width="100" src={'https://eshopsmart.herokuapp.com/images/' + item.img[2]} alt="" />
 											<img width="100" src={'https://eshopsmart.herokuapp.com/images/' + item.img[3]} alt="" />
 
-											<dt class="col-sm-3">{item.description}</dt>
+
 											<p className="text-muted">Created at: {item.created_at}</p>
 											<p>{item.description}</p>
 											<p>Kategorija: {item.category.category_name}</p>

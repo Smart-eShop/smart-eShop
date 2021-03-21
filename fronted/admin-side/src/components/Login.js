@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TheLayout from '../containers/TheLayout'
-import {Router, Link } from 'react-router-dom'
+import { Router, Link } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -24,7 +24,7 @@ const Login = () => {
   const [redir, setRedir] = useState(false);
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
-  
+
   const [userNameInput, userSetName] = useState('');
   const [userPasswordInput, userSetPassword] = useState('');
 
@@ -32,7 +32,7 @@ const Login = () => {
 
 
   async function userLoginFetch() {
-    
+
     fetch(`https://eshopsmart.herokuapp.com/api/login?name=${userNameInput}&password=${userPasswordInput}`, {
       method: "POST",
       headers: {
@@ -45,8 +45,8 @@ const Login = () => {
       .then(data => localStorage.setItem('access_token', data))
       .then(setRedir(true))
   }
-  
-  
+
+
   async function loginFetch() {
     fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
       method: "POST",
@@ -55,16 +55,16 @@ const Login = () => {
       },
     })
 
-      
+
       .then(data => data.json())
       .then(data => JSON.parse(JSON.stringify(data.access_token)))
       .then(data => localStorage.setItem('access_token', data))
       .then(setRedir(true))
   }
 
-  
-  
-  
+
+
+
 
   if (redir) {
     return (<TheLayout />)
@@ -84,7 +84,7 @@ const Login = () => {
                 <CCardBody>
                   <CForm  >
 
-                    <h1>Prisijungimas</h1>
+                    <h3>Administratoriaus prisijungimas</h3>
                     <p className="text-muted">Prisijunkite prie savo paskyros</p>
 
                     <CInputGroup className="mb-3">
@@ -116,22 +116,22 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              
-              
-              <CCard className="text-white bg-primary p-3 d-md-down-none" style={{ width: '50%' }}>
-                
-              
+
+
+              <CCard className="text-white bg-primary p-3 d-md-down" >
+
+
                 <CCardBody>
                   <CForm  >
-                    <h1>Login User</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    <h3> Pardavėjų prisijungimas</h3>
+                    <p className="text-muted">Prisijunkite prie savo paskyros</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Name" autoComplete="Name"
+                      <CInput type="text" placeholder="Vardas" autoComplete="Name"
                         value={userNameInput} onInput={e => userSetName(e.target.value)} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -140,12 +140,12 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Password" autoComplete="current-password"
+                      <CInput type="password" placeholder="Slaptažodis" autoComplete="current-password"
                         value={userPasswordInput} onInput={e => userSetPassword(e.target.value)} />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="secondary" onClick={userLoginFetch} type='submit' className="px-4">Login</CButton>
+                        <CButton color="secondary" onClick={userLoginFetch} type='submit' className="px-4">Prisijungti</CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>
@@ -153,14 +153,14 @@ const Login = () => {
                     </CRow>
                   </CForm>
                 </CCardBody>
-              
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
                 {/* <CCardBody className="text-center">
                   <div>
                     <h2>Registruotis</h2>

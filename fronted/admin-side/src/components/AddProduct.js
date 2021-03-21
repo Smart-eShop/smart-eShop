@@ -72,9 +72,9 @@ const AddProduct = () => {
     formData.append('description', descriptionInput);
     formData.append('keywords', keywordsInput);
 
-    // for (let i = 0; i < file.length; i++) {
-    formData.append('img[]', file[0]);
-
+    for (let i = 0; i < file.length; i++) {
+      formData.append('img[]', file[i]);
+    }
 
     formData.append('price', priceInput);
     formData.append('discount', discountInput);
