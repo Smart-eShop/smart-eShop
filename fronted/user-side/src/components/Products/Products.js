@@ -65,7 +65,7 @@ const  Products = () => {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.cardMedia}>
                                 <img
-                                    src={imgUrl + item.img[0]} style={{width: "500px"}} />
+                                    src={imgUrl + item.img[0]} style={{width: "500px", height: "200px"}} />
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
