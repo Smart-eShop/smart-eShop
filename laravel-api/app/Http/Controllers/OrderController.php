@@ -90,18 +90,6 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-    //bandom sukurti orderi
-//    public function store(Request $request){
-//        $order = Order::create($request->all());
-//
-////        $item = $request->input('item_id');
-////        $qty = $request->input('qty');
-//
-//                $order->items()->sync($request->input('item_id'), $order->id, $request->input('quantity'));
-//
-//        return response()->json(["message" => 'Order successfully created', 'order' => $order], 200);
-//    }
-
 //kuriam orderi su cart is seesion
     public function store(Request $request)
     {

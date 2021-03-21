@@ -25,7 +25,8 @@ class CartController extends Controller
         $cart->add($item, $item->id);
 
         $request->session()->put('cart', $cart);
-        return response()->json($cart);
+        $id = session()->getId();
+        return response()->json([$cart, 'session_id' => $id]);
     }
 
     public function getCart(Request $request)
@@ -36,8 +37,10 @@ class CartController extends Controller
         $oldCart = $request->session()->get('cart');
         $cart = new Cart($oldCart);
 
+        $id = session()->getId();
+
         return response()->json(["items" => $cart->items, "totalPrice" => $cart->totalPrice,
-            "totalQty" => $cart->totalQty]);
+            "totalQty" => $cart->totalQty, 'session_id' => $id]);
     }
 
     public function removeProductsFromCart($id)
