@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-import Carousel from 'react-material-ui-carousel'
+import Carousel from 'react-material-ui-carousel';
+import { flexbox } from '@material-ui/system';
 
 
 
@@ -22,15 +23,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    // cardMedia: {
-    //     paddingTop: '56.25%', // 16:9
-    // },
-    cardContent: {
-        flexGrow: 1,
+    cardMedia: {
+        width: '100%', // 16:9
     },
-    basket: {
-        marginTop: '200px',
-    },
+    discount: {
+        color: '#e64a19',
+    }
 
 }));
 
@@ -81,19 +79,10 @@ const ShowProduct = ({ match }) => {
                             {(item.img?.length) ?
                                 <Carousel>
                                     {
-                                        item.img.map(a => ( 
-                         
+                                        item.img.map(a => (                         
                                         <img src={imgUrl + a}   className={classes.cardMedia}/>))}
                                 </Carousel>
                                  : false} 
-
-                            {/* <Card className={classes.card}>
-                                {console.log(item.img)}
-
-                                {item.img.map( a => <img width="100" src={imgUrl + a} />
-                                )}
-                            
-                            </Card> */}
                              </Card>
                         </Paper>
                     </Grid>
@@ -110,24 +99,14 @@ const ShowProduct = ({ match }) => {
                         <Typography >
                             {item.price}
                         </Typography>
+                        <Typography className={classes.discount}>
+                                        - {item.discount}%
+                                    </Typography>
                         <Button href={`/#`} className={classes.basket}>Dėti į krepšelį</Button>
                         <Button href={`/products`} className={classes.basket}>Atgal</Button>
                     </Grid>
                 </Grid>
             </div>
-            {/* <Grid container item justify="space-between" className={classes.con}>
-            <Link to={`/products`}>Atgal</Link>
-                <Grid key={item.id} item xs={12} md={5}>
-                    <Grid container item direction='column' align="center" className="p-4 bg-danger mt-5">
-                        <Grid item className="text"> */}
-            {/* {item.img.map()} */}
-            {/* <h1 className="text-dark">{item.title}</h1>
-                            <h1>{item.description}</h1>
-                            <p>Kaina: {item.price} eur</p>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid> */}
         </>
     );
 }
