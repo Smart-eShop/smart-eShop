@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ImageUpload from './ImageUpload'
 import {
   CButton,
   CCard,
@@ -74,7 +73,7 @@ const AddProduct = () => {
     formData.append('keywords', keywordsInput);
 
     // for (let i = 0; i < file.length; i++) {
-    formData.append('img', file[0]);
+    formData.append('img[]', file[0]);
 
 
     formData.append('price', priceInput);
