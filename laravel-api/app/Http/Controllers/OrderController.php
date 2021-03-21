@@ -107,7 +107,8 @@ class OrderController extends Controller
 
         $order = new Order();
 
-        $order->invoice_number = 1;
+        $latestOrder = Order::orderBy('created_at','DESC')->first();
+        $order->invoice_number = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
         $order->user_id = Auth::id();
         $order->total_item = $cart->totalQty;
         $order->delivery_id = $request->input('delivery_id');
