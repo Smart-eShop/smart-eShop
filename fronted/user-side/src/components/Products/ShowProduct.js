@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardMedia: {
         width: '100%', // 16:9
+        height: '100%',
     },
     discount: {
         color: '#e64a19',
@@ -80,7 +81,7 @@ const ShowProduct = ({ match }) => {
                                 <Carousel>
                                     {
                                         item.img.map(a => (                         
-                                        <img src={imgUrl + a}   className={classes.cardMedia}/>))}
+                                        <img src={imgUrl + a} style={{height: "500px"}}   className={classes.cardMedia}  />))}
                                 </Carousel>
                                  : false} 
                              </Card>
