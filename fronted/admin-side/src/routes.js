@@ -42,18 +42,20 @@ const User = React.lazy(() => import('./views/users/User'));
 
 const UserRoles = React.lazy(() => import('./components/UserRoles'));
 const AdminLogin = React.lazy(() => import('./components/Login'));
-const AddProduct = React.lazy(()=> import('./components/AddProduct'));
-const AddDelivery = React.lazy(()=> import('./components/AddDelivery'));
-const AllDelivery = React.lazy(()=> import('./components/AllDelivery'));
-const AddPayment = React.lazy(()=> import('./components/AddPayment'));
-const AllPayments = React.lazy(()=> import('./components/AllPayments'));
-const AllCategories = React.lazy(()=> import('./components/categories/AllCategories'));
-const AllProducts = React.lazy(()=> import('./components/AllProducts/AllProducts'));
+const AddProduct = React.lazy(() => import('./components/AddProduct'));
+const EditProduct = React.lazy(() => import('./components/EditProduct'));
+const AddDelivery = React.lazy(() => import('./components/AddDelivery'));
+const AllDelivery = React.lazy(() => import('./components/AllDelivery'));
+const AddPayment = React.lazy(() => import('./components/AddPayment'));
+const AllPayments = React.lazy(() => import('./components/AllPayments'));
+const AllCategories = React.lazy(() => import('./components/categories/AllCategories'));
+const AllProducts = React.lazy(() => import('./components/AllProducts/AllProducts'));
 
 
 const routes = [
   { path: '/theme/UserRoles', name: 'UserRoles', component: UserRoles },
-  { path:'/add-product', exact: true, name:'AddProduct', component: AddProduct},
+  { path: '/add-product', exact: true, name: 'AddProduct', component: AddProduct },
+  { path: '/edit-product', exact: true, name: 'EditProduct', component: EditProduct },
   { path: '/all-categories', exact: true, Name: 'AllCategories', component: AllCategories },
   { path: '/login', exact: true, Name: 'Login', component: AdminLogin },
   { path: '/add-delivery', exact: true, Name: 'AddDelivery', component: AddDelivery },
@@ -61,7 +63,7 @@ const routes = [
   { path: '/all-delivery', exact: true, Name: 'AllDelivery', component: AllDelivery },
   { path: '/all-payments', exact: true, Name: 'AllPayments', component: AllPayments },
   { path: '/all-products', Name: 'AllProducts', component: AllProducts },
-  
+
 
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },

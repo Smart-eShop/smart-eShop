@@ -108,8 +108,9 @@ const ShowProduct = ({ match }) => {
                             {item.description}
                         </Typography>
                         <Typography >
-                            {item.price}
+                            {item.price} 
                         </Typography>
+                        <p className="text-muted">Raktiniai žodžiai: {(item.keywords == null) ? "Nėra" : item.keywords.map(key => <li>{key}</li>)}</p>
                         <Button href={`/#`} className={classes.basket}>Dėti į krepšelį</Button>
                         <Button href={`/products`} className={classes.basket}>Atgal</Button>
                     </Grid>
