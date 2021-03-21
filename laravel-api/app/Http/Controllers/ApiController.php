@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Item;
 use App\Order;
+use App\OrderStatus;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 
 class ApiController extends Controller
 {
@@ -32,7 +34,7 @@ class ApiController extends Controller
             return response()->json(['users' => $data], 200);
         }
 
-        return response()->json(["error" => 404, "message" => 'Not found!'], 404);
+        return response()->json(["error" => 404, "message" => 'Nerasta!'], 404);
 
     }
 
@@ -69,7 +71,15 @@ class ApiController extends Controller
         if (Gate::allows('user-id', $order) || Gate::allows('order-user-id', $order)) {
             return response()->json(['order' => $order], 200);
         }
-        return response()->json(['message' => "You don't have permission to see other's orders"]);
+        return response()->json(['message' => Lang::get('messages_lt.not_allowed')]);
+    }
+
+    public function showOrderStatuses(){
+        if (Gate::allows('admin-role')) {
+            $orderSatuses = OrderStatus::all();
+            return response()->json(['order statuses' => $orderSatuses],200);
+        }
+        return response()->json(['message' => Lang::get('messages_lt.not_allowed')]);
     }
 
 }

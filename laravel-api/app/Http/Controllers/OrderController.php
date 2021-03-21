@@ -10,6 +10,7 @@ use App\Item;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
@@ -35,10 +36,10 @@ class OrderController extends Controller
             return response()->json(['error' => $validate->errors()]);
         } else {
             User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-            return response()->json(['message' => 'Address updated successfully!'], 200);
+            return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
         }
     }
-        return response()->json(['message'=>'You can only update your address!'],200);
+        return response()->json(['message'=>Lang::get('messages_lt.not_allowed')],200);
     }
 
 
@@ -61,20 +62,21 @@ class OrderController extends Controller
             'payment_id' => request('payment_id')
         ]);
 
-        return response()->json(['message' => 'Order successfully created', 'order' => $order], 200);
+        return response()->json(['message' => Lang::get('messages_lt.created_order'), 'order' => $order], 200);
 
     }
 
     //keiciam orderio statusa
-    public function updateOrderStatus(Request $request, Order $order, Item $item)
+    public function updateOrderStatus(Request $request, $id)
     {
-        if (Gate::allows('user-id', $item)) {
+        if (Gate::allows('seller-role')) {
 
-            Order::where('id', $order->id)->update($request->only(['order_status_id']));
+            Order::find($id)->update($request->only(['order_status_id']));
+            $order = Order::find($id);
 
-            return response()->json(['order' => $order, 'message' => 'Order status successfully updated!']);
+            return response()->json(['message' => Lang::get('messages_lt.updated_order_status'), 'order' => $order]);
         }
-        return response()->json(['message' => "You don't have permission to update this order status!"]);
+        return response()->json(['message' => Lang::get('messages_lt.change_order_status')]);
     }
 
 // pasiziurejimui cia tik

@@ -14,27 +14,27 @@ class OrderStatusSeeder extends Seeder
     public function run()
     {
         OrderStatus::create([
-            'status_name' => 'new',
+            'status_name' => 'naujas',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
         OrderStatus::create([
-            'status_name' => 'paid',
+            'status_name' => 'apmokėtas',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
         OrderStatus::create([
-            'status_name' => 'order in progress',
+            'status_name' => 'užsakymas apdorojamas',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
         OrderStatus::create([
-            'status_name' => 'sent',
+            'status_name' => 'išsiųstas',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
         OrderStatus::create([
-            'status_name' => 'done',
+            'status_name' => 'užbaigtas',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
