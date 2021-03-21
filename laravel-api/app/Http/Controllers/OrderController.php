@@ -65,6 +65,7 @@ class OrderController extends Controller
 
     }
 
+    //keiciam orderio statusa
     public function updateOrderStatus(Request $request, Order $order, Item $item)
     {
         if (Gate::allows('user-id', $item)) {
@@ -109,7 +110,7 @@ class OrderController extends Controller
         $order = new Order();
 
         $latestOrder = Order::orderBy('created_at','DESC')->first();
-        $order->invoice_number = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+        $order->invoice_number = '#'.str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
         $order->user_id = Auth::id();
         $order->total_item = $cart->totalQty;
         $order->delivery_id = $request->input('delivery_id');

@@ -44,13 +44,7 @@ class ApiController extends Controller
     public function getAllItems()
     {
 
-        $data = DB::table('items')
-            ->join('users', 'users.id', '=', 'items.user_id')
-            ->join('categories', 'categories.id', '=', 'items.category_id')
-            ->select('items.*', 'users.name as user_username', 'categories.category_name')
-            ->get();
-
-        $data = Item::with('category:id,category_name', 'user:id,name')->get();
+        $data = Item::with('category:id,category_name', 'user:id,name')->orderByDesc('items.created_at')->get();
         return response()->json(['items' => $data], 200);
 
     }
