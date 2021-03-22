@@ -55,6 +55,7 @@ Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 //Payment methods
 Route::post('payment/store', 'PaymentController@store');
+Route::get('payment/edit/{payment}', 'PaymentController@editPayment');
 Route::post('payment/update/{payment}', 'PaymentController@update');
 Route::get('payment/delete/{payment}', 'PaymentController@destroy');
 Route::get('payment/show', 'PaymentController@showAll');
