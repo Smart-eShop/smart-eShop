@@ -84,3 +84,6 @@ Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');
 Route::get('cart/shopping-cart', 'CartController@getCart');
 Route::get('cart/delete/{item}', 'CartController@removeProductsFromCart');
 
+//cart store from frontend local storage
+Route::post('cart/add', 'CartController@store');
+
