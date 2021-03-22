@@ -13,6 +13,7 @@ import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
+import Cart from "./Products/Cart";
 
 const Main = () => {
        return (
@@ -25,6 +26,7 @@ const Main = () => {
                     <Route path="/register" exact component={Register} />
                     <Route path="/products" exact component={Products}/>
                     <Route path="/products/:id" component={ShowProduct}/>
+                    {/*<Route path="/cart/add-to-cart/:id" component={Cart}/>*/}
                     <Route path="/about" exact component={About} />
                     <Route path="/contact-us" exact component={Contact} />
                     <Route path="/terms-conditions" exact component={TermsConditions} />

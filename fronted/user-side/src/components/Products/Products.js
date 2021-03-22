@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const  Products = () => {
+const Products = () => {
     const classes = useStyles();
     const [items, setItems] = useState([]);
 
@@ -53,6 +53,55 @@ const  Products = () => {
         printItems();
     }, []);
 
+    const [cartItems, setCartItems] = useState(() => {
+        const localData = localStorage.getItem("cartItems");
+        return localData ? JSON.parse(localData) : [];
+    });
+    // const [myCart, setMyCart] = useState({});
+    const [sesionToken, setSessionToken] = useState('');
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        // addToCart();
+    }, [cartItems]);
+    console.log(cartItems);
+
+    const addToCart = async (id) => {
+        const url = `https://eshopsmart.herokuapp.com/api/cart/add-to-cart/${id}`;
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'method': 'GET',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            setCartItems([...cartItems, {...data}]);
+            console.log(cartItems);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        cart();
+    }, []);
+
+    const cart = async () => {
+        const url = `https://eshopsmart.herokuapp.com/api/cart/shopping-cart`;
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
     return (
         <React.Fragment>
@@ -65,7 +114,7 @@ const  Products = () => {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.item}>
                                 <img
-                                    src={imgUrl + item.img[1]}/>
+                                    src={imgUrl + item.img[0]}/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
@@ -82,9 +131,10 @@ const  Products = () => {
                                     <Button href={`/products/${item.id}`} size="small" color="primary">
                                         Peržiūrėti
                                     </Button>
-                                    <Button size="small" color="primary">
-                                        Pirkti
-                                    </Button>
+
+                                        <Button onClick={()=> addToCart(item.id)} size="small" color="primary">Į
+                                            krepšelį</Button>
+
                                 </CardActions>
                             </Card>
                         </Grid>
