@@ -7,6 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -39,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 const  Products = () => {
     const classes = useStyles();
     const [items, setItems] = useState([]);
+    const [filter, setFilter] = useState("");
 
     const printItems = async () => {
         const url = 'https://eshopsmart.herokuapp.com/api/items';
@@ -51,6 +54,11 @@ const  Products = () => {
     useEffect(() => {
         printItems();
     }, []);
+
+    const handleSearchChange = (e) => {
+        setFilter(e.target.value);
+    };
+
 
     const [cartItems, setCartItems] = useState(() => {
         const localData = localStorage.getItem("cartItems");
@@ -169,11 +177,31 @@ const  Products = () => {
     return (
         <React.Fragment>
             <Container className={classes.cardGrid} maxWidth="lg">
-                <Typography variant='h3' align="center" className={classes.pageTtitle} gutterBottom>Prekių
+            <Typography variant='h3' align="center" className={classes.pageTtitle} gutterBottom>Prekių
                     katalogas</Typography>
+                <div style ={{ width: 300 }}>
+                    <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        options={items.map((item) => item.title)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Prekių paieška"
+                                margin="normal"
+                                variant="outlined"
+                                onChange={handleSearchChange}
+                                
+                                InputProps={{ ...params.InputProps, type: 'search' }}
+                            />
+                        )}
+                    />
+                </div>
                 {/* End hero unit */}
                 <Grid container spacing={4}>
                     {items.map((item) => (
+                        item.title.includes(filter) &&
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.cardMedia}>
                                 <img

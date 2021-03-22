@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../FrontPage/frontpage1.png';
+import ProductsCategories from '../Category/ProductsCategories';
+import Footer from '../Footer/Footer';
 
 
 
@@ -17,14 +19,17 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
+  root: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
  
   heroContent: {
     backgroundImage:`url(${Image})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    padding: theme.spacing(30, 0, 15),
-    // opacity: 0.9,
-    font:'',
+    backgroundColor: '#fffff', // Average color of the background image.
+    backgroundPosition: 'center',
+    padding: theme.spacing(35, 0, 40),
+    
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -121,9 +126,13 @@ export default function Album() {
             </div>
           </Container>
         </div>
-       
+        <ProductsCategories/>
         <Container className={classes.cardGrid} maxWidth="lg">
-        <Typography variant='h4' align="justify" color="#inherit" gutterBottom>Populiariausios prekės:</Typography>
+        <Container className={classes.root} component="section">
+        <Typography variant="h4" marked="center" align="center" component="h2">
+        Populiariausios prekės
+      </Typography>
+      </Container>
           {/* End hero unit */}
           <Grid container spacing={4}>
             
@@ -206,7 +215,11 @@ export default function Album() {
             </Container>
         
         <Container className={classes.cardGrid} maxWidth="lg">
-        <Typography variant='h4' align="justify" color="inherit" gutterBottom>Naujausios prekės:</Typography>
+        <Container className={classes.root} component="section">
+        <Typography variant="h4" marked="center" align="center" component="h2">
+        Naujausios prekės
+      </Typography>
+      </Container>
           {/* End hero unit */}
           <Grid container spacing={4}>
                     {items.map((item) => (
