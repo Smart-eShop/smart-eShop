@@ -14,6 +14,7 @@ import TermsConditions from "../components/TermsConditions";
 import RemindPassword from './RemindPassword/RemindPassword';
 import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
+import Checkout from './Checkout/Checkout';
 
 const Main = () => {
        return (
@@ -29,6 +30,7 @@ const Main = () => {
                     <Route path="/about" exact component={About} />
                     <Route path="/category" exact component={ProductsCategory} />
                     <Route path="/contact-us" exact component={Contact} />
+                    <Route path="/checkout" exact component={Checkout} />
                     <Route path="/terms-conditions" exact component={TermsConditions} />
                     <Route path="/remind-password" exact component={RemindPassword} />
                     <Route path="/reset-password" exact component={ResetPassword} />
