@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_number');
+            $table->string('invoice_number');
             $table->foreignId('user_id')->constrained();
             $table->integer('total_item');
             $table->foreignId('delivery_id')->constrained();
