@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\CartStorage;
 use App\Item;
 
 use Illuminate\Http\Request;
@@ -50,5 +51,17 @@ class CartController extends Controller
         Session::put('cart', $cart);
 
         return response()->json(['message' => 'Item Removed From Cart!']);
+    }
+
+    public function store(Request $request)
+    {
+        $cart = CartStorage::create([
+            'cart' => $request->input('cart'),
+            'price_before_taxes' =>$request->input('price_before_taxes'),
+            'taxes' => $request->input('taxes'),
+            'total_price' => $request->input('total_price'),
+            'total_quantity' => $request->input('total_quantity')
+        ]);
+        return response()->json(["cart" => $cart]);
     }
 }
