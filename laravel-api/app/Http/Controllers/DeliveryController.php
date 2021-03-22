@@ -12,7 +12,7 @@ class DeliveryController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => 'show']);
 
     }
 
@@ -40,9 +40,6 @@ class DeliveryController extends Controller
 
     public function show(Delivery $delivery)
     {
-        if (Gate::denies('admin-role'))
-            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
-
         $delivery = Delivery::all();
         return response()->json(["Delivery" => $delivery]);
     }
