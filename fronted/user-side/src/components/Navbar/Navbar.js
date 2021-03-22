@@ -56,6 +56,9 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     size: "18px",
     marginLeft: "38px",
+    '&:hover': {
+      color: "#fff",
+   },
   },
   toolbar: {
     display: "flex",

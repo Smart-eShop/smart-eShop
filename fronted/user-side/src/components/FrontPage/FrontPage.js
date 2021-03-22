@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../FrontPage/frontpage1.png';
 import ProductsCategories from '../Category/ProductsCategories';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 
 
 
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }
 }));
 
-const cards = [1, 2, 3,];
+
 
 
 export default function Album() {
@@ -226,7 +226,7 @@ export default function Album() {
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.item}>
                                 <img
-                                    src={imgUrl + item.img[0]}/>
+                                    src={imgUrl + item.img[0]} alt="nuotrauka"/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
