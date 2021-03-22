@@ -7,12 +7,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-// import { loadReCaptcha } from 'react-recaptcha-google';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import Alert from '@material-ui/lab/Alert';
 import Image from '../Login/login-bg2.png';
 import Box from '@material-ui/core/Box';
 import Products from '../Products/Products';
@@ -51,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     // opacity: '0.9',
     height: '1054px',
+    width: '100%',
     paddingTop: '7em',
 
   }
@@ -100,7 +99,7 @@ export default function Login() {
       password: ''
     },
     validationSchema: Yup.object({
-      username: Yup.string().max(10, 'Vartotojo vardas turi būti trumpesnis nei 10 simbolių').required('Privaloma *'),
+      username: Yup.string().max(15, 'Vartotojo vardas turi būti trumpesnis nei 10 simbolių').required('Privaloma *'),
       password: Yup.string().min(6, 'Slaptažodis turi būti ilgesnis nei 6 simboliai').required()
     }),
     onSubmit: ({ username, password }) => {
