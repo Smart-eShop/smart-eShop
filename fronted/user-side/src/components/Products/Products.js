@@ -64,6 +64,11 @@ const  Products = () => {
         const localData = localStorage.getItem("cartItems");
         return localData ? JSON.parse(localData) : [];
     });
+
+    const [cartItemName, setCartItemName] = useState(() => {
+        const localData = localStorage.getItem("cartItemName");
+        return localData ? JSON.parse(localData) : "";
+    });
     const [cartPriceBeforeTax, setCartPriceBeforeTax] = useState(() => {
         const localData = localStorage.getItem("cartPriceBeforeTax");
         return localData ? JSON.parse(localData) : "";
@@ -82,6 +87,10 @@ const  Products = () => {
     });
 
     const addCart = (item) => {
+        const cartItemName = cartItems.map(i =>{
+            return  i.title  
+        });
+        setCartItemName(cartItemName)
         const itemsPriceBeforeTaxes = cartItems.reduce((a, c) => a + ((c.price*79)/100) * c.quantity, 0);
         setCartPriceBeforeTax(itemsPriceBeforeTaxes);
         const taxes = cartItems.reduce((a, c) => a + ((c.price*21)/100) * c.quantity, 0);
@@ -99,6 +108,7 @@ const  Products = () => {
             alert('Atsiprašome, daugiau prekių sandėlyje nėra')
         }
     }
+   
 
 
     useEffect(() => {
@@ -106,13 +116,13 @@ const  Products = () => {
         localStorage.setItem("cartTaxes", JSON.stringify(cartTaxes))
         localStorage.setItem("cartTotalPrice", JSON.stringify(cartTotalPrice))
         localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity))
-        localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        localStorage.setItem("cartItemName", JSON.stringify(cartItemName))
         // addToCart();
     }, [cartItems]);
     console.log(cartItems);
 
     const sendCart = async () => {
-            const url = `http://smart.test/api/cart/add?cart=${cartItems}&price_before_taxes=${cartPriceBeforeTax}&taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
+            const url = `http://smart.test/api/cart/add?cart=${cartItemName}&price_before_taxes=${cartPriceBeforeTax}&taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
             try {
                 const response = await fetch(url, {
                     method: 'POST',
@@ -126,10 +136,12 @@ const  Products = () => {
             } catch (error) {
                 console.log(error);
             }
+            localStorage.clear();
         }
-
+        
     useEffect(() => {
         sendCart();
+         
     }, []);
 
 
@@ -230,6 +242,8 @@ const  Products = () => {
                         </Grid>
                     ))}
                     <Button onClick={sendCart}>Checkout</Button>
+
+                   
                 </Grid>
             </Container>
         </React.Fragment>

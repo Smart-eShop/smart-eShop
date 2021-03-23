@@ -15,7 +15,7 @@ class CreateCartStoragesTable extends Migration
     {
         Schema::create('cart_storages', function (Blueprint $table) {
             $table->id();
-            $table->text('cart');
+            $table->json('cart');
             $table->double('price_before_taxes');
             $table->double('taxes');
             $table->double('total_price');
