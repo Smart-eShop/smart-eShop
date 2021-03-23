@@ -66,6 +66,14 @@ class ApiController extends Controller
         return response()->json(['Categories' => $categories], 200);
     }
 
+//    public function showOrders(Order $order)
+//    {
+//        if (Gate::allows('order-user-id', $order)) {
+//            return response()->json(['orders' => $order], 200);
+//        }
+//        return response()->json(['message' => Lang::get('messages_lt.not_allowed')]);
+//    }
+
     public function showOneOrder(Order $order)
     {
         if (Gate::allows('order-user-id', $order)) {

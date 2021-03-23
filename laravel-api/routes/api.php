@@ -47,6 +47,8 @@ Route::get('categories', 'ApiController@showAllCategories');
 
 Route::get('order-statuses', 'ApiController@showOrderStatuses');
 
+Route::get('show-cart', 'CartController@showCart');
+
 //Delivery methods
 Route::post('delivery/store', 'DeliveryController@store');
 Route::get('delivery/show', 'DeliveryController@show');
@@ -75,15 +77,20 @@ Route::post('update-address/{user}', 'OrderController@updateUserAddress');
 //Orders
 Route::post('order/store', 'OrderController@store');
 Route::get('orders', 'OrderController@getAllOrdersTest');
-Route::get('order/{order}', 'ApiController@showOneOrder');
 Route::post('order/update-order-status/order={order}', 'OrderController@updateOrderStatus');
+
 Route::get('orders/all', 'OrderController@showOrders');
 
+//Route::get('orders/show', 'ApiController@showOrders');
+Route::get('order/{order}', 'ApiController@showOneOrder');
+
+
+
 //cart with laravel session
-Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');
-Route::get('cart/shopping-cart', 'CartController@getCart');
-Route::get('cart/delete/{item}', 'CartController@removeProductsFromCart');
+//Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');
+//Route::get('cart/shopping-cart', 'CartController@getCart');
+//Route::get('cart/delete/{item}', 'CartController@removeProductsFromCart');
 
 //cart store from frontend local storage
-Route::post('cart/add', 'CartController@store');
+//Route::post('cart/add', 'CartController@store');
 
