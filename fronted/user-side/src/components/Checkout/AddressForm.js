@@ -30,10 +30,9 @@ export default function AddressForm() {
     printAllDeliveries();
   }, [])
 
-  const [value, setValue] = React.useState('female');
-
+  const [deliveryValue, setDeliveryValue] = useState('');
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setDeliveryValue(event.target.value);
   };
 
 
@@ -54,8 +53,8 @@ export default function AddressForm() {
 
         <FormControl component="fieldset">
           {printDelivery.map((delivery) => (
-            <RadioGroup aria-label="delivery" name="delivery" value={value} onChange={handleChange}>
-              <FormControlLabel value="delivery" control={<Radio />} label={delivery.name} />
+            <RadioGroup aria-label="delivery" name="delivery" value="delivery" >
+              <FormControlLabel value="delivery" control={<Radio onChange={handleChange}/>} label={delivery.name} />
             </RadioGroup>
           ))}
         </FormControl>
