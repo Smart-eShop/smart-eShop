@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 
-
 use App\Cart;
 use App\Order;
 use App\Item;
@@ -20,68 +19,32 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth:api', ['except' => 'getAllOrdersTest']);
+        $this->middleware('auth:api');
     }
 
-    public function updateUserAddress(Request $request, User $user){
-
-        $validate = Validator::make($request->all(),[
-            'street_number' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'postcode' => ['required']
-            ]);
-
-        if (auth()->id() == $user->id){
-        if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()]);
-        } else {
-            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-            return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
-        }
-    }
-        return response()->json(['message'=>Lang::get('messages_lt.not_allowed')],200);
-    }
-
-
-    public function createOrder(Request $request)
-    {
-        $orderValidation = $request->validate([
-            'item_id' => 'required',
-            'delivery_id' => 'required',
-            'payment_id' => 'required'
-        ]);
-
-        $itemsId = $request['item_id'];
-        $itemsArray = array_map('intval', explode(',', $itemsId));
-
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'item_id' => $itemsArray,
-            'delivery_id' => request('delivery_id'),
-            'order_status_id' => 1,
-            'payment_id' => request('payment_id')
-        ]);
-
-        return response()->json(['message' => Lang::get('messages_lt.created_order'), 'order' => $order], 200);
-
-    }
-
-    //keiciam orderio statusa
-    public function updateOrderStatus(Request $request, $id)
-    {
-        if (Gate::allows('seller-role')) {
-
-            Order::find($id)->update($request->only(['order_status_id']));
-            $order = Order::find($id);
-
-            return response()->json(['message' => Lang::get('messages_lt.updated_order_status'), 'order' => $order]);
-        }
-        return response()->json(['message' => Lang::get('messages_lt.change_order_status')]);
-    }
+//    public function updateUserAddress(Request $request, User $user){
+//
+//        $validate = Validator::make($request->all(),[
+//            'street_number' => ['required', 'string'],
+//            'city' => ['required', 'string'],
+//            'postcode' => ['required']
+//            ]);
+//
+//        if (auth()->id() == $user->id){
+//        if ($validate->fails()) {
+//            return response()->json(['error' => $validate->errors()]);
+//        } else {
+//            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
+//            return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
+//        }
+//    }
+//        return response()->json(['message'=>Lang::get('messages_lt.not_allowed')],200);
+//    }
 
 // pasiziurejimui cia tik
     public function getAllOrdersTest()
     {
+
         $orders = Order::all();
 //        $item = $orders->items()->get();
 //        $users = User::all();
@@ -90,18 +53,19 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-//kuriam orderi su cart is seesion
     public function store(Request $request)
     {
-//        $oldCart = $request->session()->get('cart');
-//        $cart = new Cart($oldCart);
-//        $beforeTaxesPrice = ($cart->totalPrice*79)/100;
-//        $taxes = ($cart->totalPrice*21)/100;
+        $orders = Order::all();
+        $invoicenumber = '';
         $order = new Order();
-
-
-        $latestOrder = Order::orderBy('created_at','DESC')->first();
-        $order->invoice_number = '#'.str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+        if ($orders->isEmpty()) {
+            $latestOrder = Order::orderBy('created_at', 'DESC')->first('id');
+            $invoicenumber .= '#' . str_pad($latestOrder + 1, 8, "0", STR_PAD_LEFT);
+        } else {
+            $latestOrder = Order::orderBy('created_at', 'DESC')->first();
+            $invoicenumber .= '#' . str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+        }
+        $order->invoice_number = $invoicenumber;
         $order->user_id = Auth::id();
         $order->delivery_id = $request->input('delivery_id');
         $order->order_status_id = 1;
@@ -117,12 +81,23 @@ class OrderController extends Controller
         $order->total_taxes = $request->input('total_taxes');
         $order->total_price = $request->input('total_price');
         $order->total_quantity = $request->input('total_quantity');
-         Auth::user()->orders()->save($order);
+        Auth::user()->orders()->save($order);
 
-         return response()->json(["order" => $order]);
+        return response()->json(["order" => $order]);
     }
 
+    //keiciam orderio statusa
+    public function updateOrderStatus(Request $request, $id)
+    {
+        if (Gate::allows('seller-role')) {
 
+            Order::find($id)->update($request->only(['order_status_id']));
+            $order = Order::find($id);
+
+            return response()->json(['message' => Lang::get('messages_lt.updated_order_status'), 'order' => $order]);
+        }
+        return response()->json(['message' => Lang::get('messages_lt.change_order_status')]);
+    }
 
 
 }
