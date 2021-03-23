@@ -70,7 +70,4 @@ class CartController extends Controller
         ]);
         return response()->json(["cart" => $cart]);
     }
-     public function showCart(){
-
-     }
 }
