@@ -45,13 +45,13 @@ const AddPayment = () => {
     
         .then(res => {
           console.log(res.message);
-          if (res.message === "Payment method added to database successfully") { ///////cia nekeisti lietuviskai
+          if (res.message === "Pridėta sėkmingai") {
+            ///////cia nekeisti lietuviskai
             setPaymentAdded(true);
             setRequestError(false);
           } else {
             setRequestError(true);
             setPaymentAdded(false);
-    
           }
         })
         .catch(err => {
