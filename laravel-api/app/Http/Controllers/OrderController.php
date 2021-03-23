@@ -10,6 +10,7 @@ use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
@@ -42,31 +43,13 @@ class OrderController extends Controller
         return response()->json(['message'=>'You can only update your address!'],200);
     }
 
-
-
-
-    public function updateOrderStatus(Request $request, Order $order, Item $item)
-    {
-        if (Gate::allows('user-id', $item)) {
-
-            Order::where('id', $order->id)->update($request->only(['order_status_id']));
-
-            return response()->json(['order' => $order, 'message' => 'Order status successfully updated!']);
-        }
-        return response()->json(['message' => "You don't have permission to update this order status!"]);
-    }
-
-
-// pasiziurejimui cia tik
+// visas orderio atvaizdavimas
     public function getAllOrdersTest()
     {
 
         if (Gate::allows('seller-role')){
 
         $orders = Order::all();
-//        $item = $orders->items()->get();
-//        $users = User::all();
-//        $user = $users->orders()->get();
         $en = '';
         foreach ($orders as $order)
            $en = $order->cart;
@@ -78,21 +61,21 @@ class OrderController extends Controller
     public function showOrders(Request $request)
     {
         $id = Auth::id();
-       $orders = DB::table('orders')
-           ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
-           ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
-           ->where('user_id', $id)
-           ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
+        $orders = DB::table('orders')
+            ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
+            ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
+            ->where('user_id', $id)
+            ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
 
-       $cart = [];
-       $enCart = [];
-       foreach ($orders as $order){
+        $cart = [];
+        $enCart = [];
+        foreach ($orders as $order) {
 //           array_push($cart, $order->cart);
-           $cart = $order->cart;
-       }
-       $enCart = json_decode($cart);
+            $cart = $order->cart;
+        }
+        $enCart = json_decode($cart);
 
-       return response()->json(["orders" => $orders, "cart" =>$enCart]);
+        return response()->json(["orders" => $orders, "cart" => $enCart]);
 
     }
 
