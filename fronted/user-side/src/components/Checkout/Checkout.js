@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import DetailsForm from './DetailsForm';
 
 // function Copyright() {
 //   return (
@@ -61,15 +62,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Pristatymo būdas', 'Apmokėjimo būdas', 'Patvirtinti užsakymą'];
+const steps = ['Užsakymo detalės', 'Pristatymo būdas', 'Apmokėjimo būdas', 'Patvirtinti užsakymą'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <DetailsForm />;
     case 1:
-      return <PaymentForm />;
+      return <AddressForm />;
     case 2:
+      return <PaymentForm />;
+    case 3:
       return <Review />;
     default:
       throw new Error('Unknown step');

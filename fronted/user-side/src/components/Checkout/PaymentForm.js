@@ -1,17 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-
 
  
 const useStyles = makeStyles({
@@ -23,28 +16,37 @@ const useStyles = makeStyles({
 export default function PaymentForm() {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState('female');
+  const [printPayment, setPrintPayment] = useState([]);
+  const printAllPayments = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.payment);
+    setPrintPayment(data.payment);
+  }
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  useEffect(() => {
+    printAllPayments();
+  }, [])
+
+
+
 
 
   return (
     <React.Fragment>
 
       <Typography variant="h6" gutterBottom>
-        Pažymėkite apmokėjimo būdą
+      Pasirinkite apmokėjimo būdą
       </Typography>
 
       <div className={classes.root}>
-        <FormControl component="fieldset">
-          <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
-            
-          </RadioGroup>
+      <FormControl component="fieldset">
+          {printPayment.map((payment) => (
+            <RadioGroup aria-label="payment" name="payment" >
+              <FormControlLabel value="payment" control={<Radio />} label={payment.name} />
+            </RadioGroup>
+          ))}
         </FormControl>
       </div>
     </React.Fragment>
