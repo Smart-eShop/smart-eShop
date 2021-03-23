@@ -67,4 +67,10 @@ class CartController extends Controller
         ]);
         return response()->json(["cart" => $cart]);
     }
+
+    public function showCart(){
+
+        $cartItem = CartStorage::all();
+        return response()->json(['Cart:' => $cartItem]);
+    }
 }
