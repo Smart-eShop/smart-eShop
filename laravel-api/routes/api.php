@@ -42,11 +42,10 @@ Route::post('import/items', 'ItemsImportController@createItems');
 Route::get('users','ApiController@getUsers');
 Route::get('item/{item}', 'ApiController@showFullItem');
 Route::get('items', 'ApiController@getAllItems');
-
 Route::get('recaptcha', 'ApiController@recaptchaKey');
-
 Route::get('categories', 'ApiController@showAllCategories');
 
+Route::get('order-statuses', 'ApiController@showOrderStatuses');
 
 //Delivery methods
 Route::post('delivery/store', 'DeliveryController@store');
@@ -56,6 +55,7 @@ Route::patch('delivery/update/{delivery}', 'DeliveryController@update');
 Route::get('delivery/delete/{delivery}', 'DeliveryController@destroy');
 //Payment methods
 Route::post('payment/store', 'PaymentController@store');
+Route::get('payment/edit/{payment}', 'PaymentController@editPayment');
 Route::post('payment/update/{payment}', 'PaymentController@update');
 Route::get('payment/delete/{payment}', 'PaymentController@destroy');
 Route::get('payment/show', 'PaymentController@showAll');
@@ -76,7 +76,7 @@ Route::post('update-address/{user}', 'OrderController@updateUserAddress');
 Route::post('order/store', 'OrderController@store');
 Route::get('orders', 'OrderController@getAllOrdersTest');
 Route::get('order/{order}', 'ApiController@showOneOrder');
-Route::post('order/update-order-status/{order}', 'OrderController@updateOrderStatus');
+Route::post('order/update-order-status/order={order}', 'OrderController@updateOrderStatus');
 
 
 //cart with laravel session

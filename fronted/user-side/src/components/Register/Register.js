@@ -3,19 +3,15 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Image from '../Register/register-img.png';
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { ErrorMessage } from 'formik';
 import Login from '../Login/Login';
 
 
@@ -30,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',
+    height: '100%',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     // backgroundSize: 'cover',
@@ -42,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   avatar: {
-    marginTop: "2em",
+    marginTop: "5em",
     marginBottom: "2em",
     backgroundColor: '#9e9e9e',
     height: '3em',
@@ -70,7 +67,7 @@ export default function Register() {
   const [lastNameInput, setLastName] = useState('');
   const [emailInput, setEmail] = useState('');
   const [passwordInput, setPassword] = useState('');
-  const [redir, setRedir] = useState(false);
+  // const [redir, setRedir] = useState(false);
 
   const registerFetch = e => {
 
@@ -80,16 +77,17 @@ export default function Register() {
       method: "POST",
     }
     )
+
       .then(response => response.json())
 
       .then(json => console.log(json))
-      .then(setRedir(true))
+      // .then(setRedir(true))
   }
 
   // const recaptchaRef = React.createRef();
 
 
-  const { handleSubmit, reset, handleChange, values, touched, errors, setFieldValue, handleBlur, } = useFormik({
+  const { handleSubmit, handleChange, touched, errors, handleBlur, } = useFormik({
     initialValues: {
       username: '',
       firstName: '',
@@ -108,13 +106,15 @@ export default function Register() {
     }),
     onSubmit: ({ username, password, firstName, lastName, email }) => {
       alert("Anketa sėkmingai sukurta!")
+      window.location.href = "http://localhost:3000/login";
     }
 
   }
   )
-  if (redir) {
-    return (<Login />)
-  }
+
+  // if (redir) {
+  //   return (<Login />)
+  // }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -124,7 +124,6 @@ export default function Register() {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-
           <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -139,7 +138,7 @@ export default function Register() {
                   id="username"
                   label="Vartotojo vardas"
                   name="username"
-                  autoComplete="username"
+                  // autoComplete="username"
                 />
                 {touched.username && errors.username ? (
                   <div>{errors.username}</div>

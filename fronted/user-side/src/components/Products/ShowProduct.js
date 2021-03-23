@@ -81,7 +81,7 @@ const ShowProduct = ({ match }) => {
                                 <Carousel>
                                     {
                                         item.img.map(a => (                         
-                                        <img src={imgUrl + a} style={{height: "500px"}}   className={classes.cardMedia}  />))}
+                                        <img src={imgUrl + a} alt="nuotrauka" style={{height: "500px"}}   className={classes.cardMedia}  />))}
                                 </Carousel>
                                  : false} 
                              </Card>

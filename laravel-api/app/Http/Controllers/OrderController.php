@@ -10,6 +10,7 @@ use App\Item;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
@@ -35,10 +36,10 @@ class OrderController extends Controller
             return response()->json(['error' => $validate->errors()]);
         } else {
             User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-            return response()->json(['message' => 'Address updated successfully!'], 200);
+            return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
         }
     }
-        return response()->json(['message'=>'You can only update your address!'],200);
+        return response()->json(['message'=>Lang::get('messages_lt.not_allowed')],200);
     }
 
 
@@ -61,19 +62,21 @@ class OrderController extends Controller
             'payment_id' => request('payment_id')
         ]);
 
-        return response()->json(['message' => 'Order successfully created', 'order' => $order], 200);
+        return response()->json(['message' => Lang::get('messages_lt.created_order'), 'order' => $order], 200);
 
     }
 
-    public function updateOrderStatus(Request $request, Order $order, Item $item)
+    //keiciam orderio statusa
+    public function updateOrderStatus(Request $request, $id)
     {
-        if (Gate::allows('user-id', $item)) {
+        if (Gate::allows('seller-role')) {
 
-            Order::where('id', $order->id)->update($request->only(['order_status_id']));
+            Order::find($id)->update($request->only(['order_status_id']));
+            $order = Order::find($id);
 
-            return response()->json(['order' => $order, 'message' => 'Order status successfully updated!']);
+            return response()->json(['message' => Lang::get('messages_lt.updated_order_status'), 'order' => $order]);
         }
-        return response()->json(['message' => "You don't have permission to update this order status!"]);
+        return response()->json(['message' => Lang::get('messages_lt.change_order_status')]);
     }
 
 // pasiziurejimui cia tik
@@ -87,18 +90,6 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-    //bandom sukurti orderi
-//    public function store(Request $request){
-//        $order = Order::create($request->all());
-//
-////        $item = $request->input('item_id');
-////        $qty = $request->input('qty');
-//
-//                $order->items()->sync($request->input('item_id'), $order->id, $request->input('quantity'));
-//
-//        return response()->json(["message" => 'Order successfully created', 'order' => $order], 200);
-//    }
-
 //kuriam orderi su cart is seesion
     public function store(Request $request)
     {
@@ -108,9 +99,9 @@ class OrderController extends Controller
 //        $taxes = ($cart->totalPrice*21)/100;
         $order = new Order();
 
-        $latestOrder = Order::orderBy('created_at','DESC')->first('id');
 
-        $order->invoice_number = str_pad($latestOrder + 1, 8, "0", STR_PAD_LEFT);
+        $latestOrder = Order::orderBy('created_at','DESC')->first();
+        $order->invoice_number = '#'.str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
         $order->user_id = Auth::id();
         $order->delivery_id = $request->input('delivery_id');
         $order->order_status_id = 1;

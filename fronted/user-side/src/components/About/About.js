@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-const About = () => {
+const Cart = () => {
   return (
     <div
       style={{
@@ -11,9 +11,9 @@ const About = () => {
         height: '90vh'
       }}
     >
-      <h1>Apie</h1>
+      <h1>cart</h1>
     </div>
   );
 };
 
-export default About;
+export default Cart;

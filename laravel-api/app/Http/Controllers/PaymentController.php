@@ -12,7 +12,7 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => 'showAll']);
 
     }
     /**
@@ -65,9 +65,6 @@ class PaymentController extends Controller
      */
     public function showAll()
     {
-        if (Gate::denies('admin-role'))
-            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
-
         $payment = Payment::all();
         return response()->json(["payment" => $payment]);
     }
@@ -76,11 +73,15 @@ class PaymentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response.
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit(Payment $payment)
+    public function editPayment(Payment $payment)
     {
-        //
+        if (Gate::denies('admin-role'))
+            return response()->json(["message" => Lang::get('messages_lt.not_admin')], 200);
+
+        return response()->json(["Payment" => $payment]);
     }
 
     /**

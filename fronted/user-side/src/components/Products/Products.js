@@ -7,7 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,10 +37,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const  Products = () => {
+const Products = (props) => {
     const classes = useStyles();
     const [items, setItems] = useState([]);
-
+    const [filter, setFilter] = useState("");
+    console.log(props);
     const printItems = async () => {
         const url = 'https://eshopsmart.herokuapp.com/api/items';
         const response = await fetch(url);
@@ -52,130 +54,9 @@ const  Products = () => {
         printItems();
     }, []);
 
-    const [cartItems, setCartItems] = useState(() => {
-        const localData = localStorage.getItem("cartItems");
-        return localData ? JSON.parse(localData) : [];
-    });
-
-    const [cartItemName, setCartItemName] = useState(() => {
-        const localData = localStorage.getItem("cartItemName");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [cartPriceBeforeTax, setCartPriceBeforeTax] = useState(() => {
-        const localData = localStorage.getItem("cartPriceBeforeTax");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [cartTaxes, setCartTaxes] = useState(() => {
-        const localData = localStorage.getItem("cartTaxes");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [cartTotalPrice, setCartTotalPrice] = useState(() => {
-        const localData = localStorage.getItem("cartTotalPrice");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [totalQuantity, setTotalQuantity] = useState(() => {
-        const localData = localStorage.getItem("totalQuantity");
-        return localData ? JSON.parse(localData) : "";
-    });
-
-    const addCart = (item) => {
-        const cartItemName = cartItems.map(i =>{
-            return  i.title  
-        });
-        setCartItemName(cartItemName)
-        const itemsPriceBeforeTaxes = cartItems.reduce((a, c) => a + ((c.price*79)/100) * c.quantity, 0);
-        setCartPriceBeforeTax(itemsPriceBeforeTaxes);
-        const taxes = cartItems.reduce((a, c) => a + ((c.price*21)/100) * c.quantity, 0);
-        setCartTaxes(taxes);
-        const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
-        setCartTotalPrice(totalPrice);
-        const totalQuantity = cartItems.reduce((a, c) => a + c.quantity, 0);
-        setTotalQuantity(totalQuantity);
-        const exist = cartItems.find((x) => x.id === item.id);
-        if(exist && exist.quantity < item.quantity){
-            setCartItems(cartItems.map((x) => x.id === item.id ? {...exist, quantity: exist.quantity + 1} : x))
-        }else if (exist === undefined){
-            setCartItems([...cartItems, {...item, quantity: 1}]);
-        }else{
-            alert('Atsiprašome, daugiau prekių sandėlyje nėra')
-        }
-    }
-   
-
-
-    useEffect(() => {
-        localStorage.setItem("cartPriceBeforeTax", JSON.stringify(cartPriceBeforeTax))
-        localStorage.setItem("cartTaxes", JSON.stringify(cartTaxes))
-        localStorage.setItem("cartTotalPrice", JSON.stringify(cartTotalPrice))
-        localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity))
-        localStorage.setItem("cartItemName", JSON.stringify(cartItemName))
-        // addToCart();
-    }, [cartItems]);
-    console.log(cartItems);
-
-    const sendCart = async () => {
-            const url = `http://smart.test/api/cart/add?cart=${cartItemName}&price_before_taxes=${cartPriceBeforeTax}&taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    }
-                });
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.log(error);
-            }
-            localStorage.clear();
-        }
-        
-    useEffect(() => {
-        sendCart();
-         
-    }, []);
-
-
-    // const addToCart = async (id) => {
-    //     const url = `https://eshopsmart.herokuapp.com/api/cart/add-to-cart/${id}`;
-    //     try {
-    //         const response = await fetch(url, {
-    //             method: 'GET',
-    //             headers: {
-    //
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             }
-    //         });
-    //         const data = await response.json();
-    //
-    //         console.log(cartItems);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-    //
-    // useEffect(() => {
-    //     cart();
-    // }, []);
-    //
-    // const cart = async () => {
-    //     const url = `https://eshopsmart.herokuapp.com/api/cart/shopping-cart`;
-    //     try {
-    //         const response = await fetch(url, {
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             }
-    //         });
-    //         const data = await response.json();
-    //         console.log(data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
+    const handleSearchChange = (e) => {
+        setFilter(e.target.value);
+    };
 
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
     return (
@@ -183,13 +64,34 @@ const  Products = () => {
             <Container className={classes.cardGrid} maxWidth="lg">
                 <Typography variant='h3' align="center" className={classes.pageTtitle} gutterBottom>Prekių
                     katalogas</Typography>
+                <div style={{width: 300}}>
+                    <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        options={items.map((item) => item.title)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Prekių paieška"
+                                margin="normal"
+                                variant="outlined"
+                                onChange={handleSearchChange}
+
+                                InputProps={{...params.InputProps, type: 'search'}}
+                            />
+                        )}
+                    />
+                </div>
                 {/* End hero unit */}
                 <Grid container spacing={4}>
                     {items.map((item) => (
+                        item.title.includes(filter) &&
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.cardMedia}>
                                 <img
-                                    src={imgUrl + item.img[0]} style={{width: "500px", height: "200px"}} />
+                                    src={imgUrl + item.img[0]} alt="nuotrauka"
+                                    style={{width: "500px", height: "200px"}}/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
@@ -207,15 +109,12 @@ const  Products = () => {
                                         Peržiūrėti
                                     </Button>
 
-                                    <Button onClick={()=> addCart(item)} size="small" color="primary">Į
+                                    <Button onClick={() => props.addCart(item)} size="small" color="primary">Į
                                         krepšelį</Button>
                                 </CardActions>
                             </Card>
                         </Grid>
                     ))}
-                    <Button onClick={sendCart}>Checkout</Button>
-
-                   
                 </Grid>
             </Container>
         </React.Fragment>

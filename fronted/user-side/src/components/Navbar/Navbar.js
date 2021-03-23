@@ -1,5 +1,3 @@
-
-
 import {
   AppBar,
   Toolbar,
@@ -9,16 +7,19 @@ import {
   Drawer,
   Link,
   MenuItem,
+  TableSortLabel,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import Home from '@material-ui/icons/Home';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Menu from '@material-ui/core/Menu';
+import Home from "@material-ui/icons/Home";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Menu from "@material-ui/core/Menu";
+import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const headersData = [
   // {
@@ -36,10 +37,11 @@ const headersData = [
   {
     label: "Prisijungti",
     href: "/login",
-  }, {
+  },
+  {
     label: "Prekės",
-    href:"/products"
-  }
+    href: "/products",
+  },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -56,6 +58,9 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     size: "18px",
     marginLeft: "38px",
+    "&:hover": {
+      color: "#fff",
+    },
   },
   toolbar: {
     display: "flex",
@@ -66,24 +71,39 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(totalQuantity) {
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [access_token, setaccess_token] = useState(false);
+
+  function clerLocalStorage() {
+    localStorage.clear();
+    document.location.reload();
+  }
+
+  function getToken() {
+    const tokenString = localStorage.getItem("access_token");
+    return tokenString;
+  }
+
+  useEffect(() => {
+    console.log("labas");
+    setaccess_token(getToken());
+  }, []);
 
   const handleChange = (event) => {
-        setAuth(event.target.checked);
-      };
-    
-      const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-    
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
+    setAuth(event.target.checked);
+  };
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const [state, setState] = useState({
     mobileView: false,
@@ -107,42 +127,47 @@ export default function Navbar() {
   const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
-        
         {smartEShop}
 
         <div>{getMenuButtons()}</div>
-        {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
-                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
-              </Menu>
-            </div>
-          )}
-          
+        {access_token && (
+          <div>
+            <IconButton aria-label="show basket" color="inherit">
+              <Badge badgeContent={0} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
+              <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
+            </Menu>
+          </div>
+        )}
       </Toolbar>
     );
   };
@@ -166,7 +191,7 @@ export default function Navbar() {
         >
           <MenuIcon />
         </IconButton>
-        
+
         <Drawer
           {...{
             anchor: "left",
@@ -178,37 +203,37 @@ export default function Navbar() {
         </Drawer>
 
         <div>{smartEShop}</div>
-        {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
-                <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
-              </Menu>
-            </div>
-          )}
+        {!access_token && (
+          <div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
+              <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
+            </Menu>
+          </div>
+        )}
       </Toolbar>
     );
   };
@@ -261,12 +286,7 @@ export default function Navbar() {
   return (
     <header>
       <AppBar className={header}>
-      <FormGroup>
-    <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
+        <FormGroup></FormGroup>
         {mobileView ? displayMobile() : displayDesktop()}
       </AppBar>
     </header>
