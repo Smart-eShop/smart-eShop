@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
   
 }));
 
-const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
+const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart, cartItems }) => {
   const classes = useStyles();
-
+console.log(cartItems);
   const handleEmptyCart = () => onEmptyCart();
 
   const renderEmptyCart = () => (
@@ -71,7 +71,7 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
     <Container>
       <div className={classes.toolbar} />
       <Typography className={classes.title} variant="h5" gutterBottom>Your Shopping Cart</Typography>
-      <CartItem/>
+      <CartItem cartItems={cartItems}/>
       <div className={classes.cardDetails}>
         <Typography variant="h4">Iš viso: </Typography>
         <div>
