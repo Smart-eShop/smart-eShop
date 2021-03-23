@@ -78,8 +78,12 @@ Route::post('update-address/{user}', 'OrderController@updateUserAddress');
 Route::post('order/store', 'OrderController@store');
 Route::get('orders', 'OrderController@getAllOrdersTest');
 Route::post('order/update-order-status/order={order}', 'OrderController@updateOrderStatus');
+
+Route::get('orders/all', 'OrderController@showOrders');
+
 //Route::get('orders/show', 'ApiController@showOrders');
 Route::get('order/{order}', 'ApiController@showOneOrder');
+
 
 
 //cart with laravel session

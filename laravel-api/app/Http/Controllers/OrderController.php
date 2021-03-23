@@ -9,7 +9,7 @@ use App\Item;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
@@ -19,39 +19,83 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+
+         $this->middleware('auth:api');
     }
 
-//    public function updateUserAddress(Request $request, User $user){
-//
-//        $validate = Validator::make($request->all(),[
-//            'street_number' => ['required', 'string'],
-//            'city' => ['required', 'string'],
-//            'postcode' => ['required']
-//            ]);
-//
-//        if (auth()->id() == $user->id){
-//        if ($validate->fails()) {
-//            return response()->json(['error' => $validate->errors()]);
-//        } else {
-//            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-//            return response()->json(['message' => Lang::get('messages_lt.updated')], 200);
-//        }
-//    }
-//        return response()->json(['message'=>Lang::get('messages_lt.not_allowed')],200);
-//    }
+    public function updateUserAddress(Request $request, User $user)
+    {
+        $validate = Validator::make($request->all(),[
+            'street_number' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'postcode' => ['required']
+            ]);
+
+        if (auth()->id() == $user->id){
+        if ($validate->fails()) {
+            return response()->json(['error' => $validate->errors()]);
+        } else {
+            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
+            return response()->json(['message' => 'Address updated successfully!'], 200);
+        }
+    }
+        return response()->json(['message'=>'You can only update your address!'],200);
+    }
+
+
+
+
+    public function updateOrderStatus(Request $request, Order $order, Item $item)
+    {
+        if (Gate::allows('user-id', $item)) {
+
+            Order::where('id', $order->id)->update($request->only(['order_status_id']));
+
+            return response()->json(['order' => $order, 'message' => 'Order status successfully updated!']);
+        }
+        return response()->json(['message' => "You don't have permission to update this order status!"]);
+    }
+
 
 // pasiziurejimui cia tik
     public function getAllOrdersTest()
     {
 
+        if (Gate::allows('seller-role')){
+
         $orders = Order::all();
 //        $item = $orders->items()->get();
 //        $users = User::all();
 //        $user = $users->orders()->get();
+        $en = '';
+        foreach ($orders as $order)
+           $en = $order->cart;
 
-        return response()->json($orders);
+        return response()->json(['orders'=>$orders, "en"=>  json_decode($en)]);
+         }
+        return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
     }
+    public function showOrders(Request $request)
+    {
+        $id = Auth::id();
+       $orders = DB::table('orders')
+           ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
+           ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
+           ->where('user_id', $id)
+           ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
+
+       $cart = [];
+       $enCart = [];
+       foreach ($orders as $order){
+//           array_push($cart, $order->cart);
+           $cart = $order->cart;
+       }
+       $enCart = json_decode($cart);
+
+       return response()->json(["orders" => $orders, "cart" =>$enCart]);
+
+    }
+
 
     public function store(Request $request)
     {
@@ -64,6 +108,7 @@ class OrderController extends Controller
         } else {
             $latestOrder = Order::orderBy('created_at', 'DESC')->first();
             $invoicenumber .= '#' . str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+
         }
         $order->invoice_number = $invoicenumber;
         $order->user_id = Auth::id();
