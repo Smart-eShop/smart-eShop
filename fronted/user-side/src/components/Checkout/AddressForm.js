@@ -1,74 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-
-
-const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-  });
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function AddressForm() {
-    const classes = useStyles();
-    const [delivery, setItems] = useState([]);
-    // const [filter, setFilter] = useState("");
-
-    const printItems = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data.delivery);
-        setItems(data.Delivery);
-    }
-
-    useEffect(() => {
-        printItems();
-    }, []);
-
-   
-
   return (
     <React.Fragment>
-
       <Typography variant="h6" gutterBottom>
-        Pažymėkite pristatymo būdą
+        Užsakymo patvirtinimas
       </Typography>
-
-      <div className={classes.root}>
-           {delivery.map((item) => (
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-label="Expand"
-          aria-controls="additional-actions1-content"
-          id="additional-actions1-header"
-        >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
-            label={item.name}
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="firstName"
+            name="firstName"
+            label="Vardas"
+            fullWidth
+            autoComplete="given-name"
           />
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography color="textSecondary">
-            {item.terms}
-            {item.price}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      ))}   
-        </div>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="lastName"
+            name="lastName"
+            label="Pavardė"
+            fullWidth
+            autoComplete="family-name"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="El. Paštas"
+            fullWidth
+            autoComplete="email"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="address1"
+            name="address1"
+            label="Adresas"
+            fullWidth
+            autoComplete="shipping address-line1"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="city"
+            name="city"
+            label="Miestas"
+            fullWidth
+            autoComplete="shipping address-level2"
+          />
+        </Grid>
+        
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="zip"
+            name="zip"
+            label="Pašto kodas"
+            fullWidth
+            autoComplete="shipping postal-code"
+          />
+        </Grid>
+        
+        
+      </Grid>
     </React.Fragment>
-          
-    )
+  );
 }
