@@ -1,81 +1,64 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+
+
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+});
 
 export default function AddressForm() {
+  const classes = useStyles();
+
+
+  const [printDelivery, setPrintDelivery] = useState([]);
+  const printAllDeliveries = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.Delivery);
+    setPrintDelivery(data.Delivery);
+  }
+
+  useEffect(() => {
+    printAllDeliveries();
+  }, [])
+
+  const [value, setValue] = React.useState('female');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
   return (
     <React.Fragment>
+
       <Typography variant="h6" gutterBottom>
-        Užsakymo patvirtinimas
+        Pasirinkite pristatymo būdą
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="Vardas"
-            fullWidth
-            autoComplete="given-name"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Pavardė"
-            fullWidth
-            autoComplete="family-name"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="email"
-            name="email"
-            label="El. Paštas"
-            fullWidth
-            autoComplete="email"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Adresas"
-            fullWidth
-            autoComplete="shipping address-line1"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="Miestas"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid>
-        
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Pašto kodas"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid>
-        
-        
-      </Grid>
+
+      {/* <div className={classes.root}>
+        <div>
+          {printDelivery.map((delivery) => (
+            <p>{delivery.name}</p>
+          ))}
+        </div> 
+</div> */}
+
+        <FormControl component="fieldset">
+          {printDelivery.map((delivery) => (
+            <RadioGroup aria-label="delivery" name="delivery" value={value} onChange={handleChange}>
+              <FormControlLabel value="delivery" control={<Radio />} label={delivery.name} />
+            </RadioGroup>
+          ))}
+        </FormControl>
     </React.Fragment>
   );
 }

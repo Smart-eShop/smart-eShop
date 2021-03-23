@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const ShowProduct = ({ match }) => {
+const ShowProduct = ({ match, props, addCart }) => {
     const classes = useStyles();
     useEffect(() => {
         printSingleItem();
@@ -106,7 +106,7 @@ const ShowProduct = ({ match }) => {
                         <Typography className={classes.discount}>
                                         - {item.discount}%
                                     </Typography>
-                        <Button href={`/#`} className={classes.basket}>Dėti į krepšelį</Button>
+                        <Button onClick={() => props.addCart(item)} size="small" color="primary" className={classes.basket}>Dėti į krepšelį</Button>
                         <Button href={`/products`} className={classes.basket}>Atgal</Button>
                     </Grid>
                 </Grid>
