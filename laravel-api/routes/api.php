@@ -77,7 +77,7 @@ Route::post('order/store', 'OrderController@store');
 Route::get('orders', 'OrderController@getAllOrdersTest');
 Route::get('order/{order}', 'ApiController@showOneOrder');
 Route::post('order/update-order-status/order={order}', 'OrderController@updateOrderStatus');
-
+Route::get('orders/all', 'OrderController@showOrders');
 
 //cart with laravel session
 Route::get('cart/add-to-cart/{id}', 'CartController@getAddToCart');

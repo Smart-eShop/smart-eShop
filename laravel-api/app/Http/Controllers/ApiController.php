@@ -68,7 +68,7 @@ class ApiController extends Controller
 
     public function showOneOrder(Order $order)
     {
-        if (Gate::allows('user-id', $order) || Gate::allows('order-user-id', $order)) {
+        if (Gate::allows('order-user-id', $order)) {
             return response()->json(['order' => $order], 200);
         }
         return response()->json(['message' => Lang::get('messages_lt.not_allowed')]);

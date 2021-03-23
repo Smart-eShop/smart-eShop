@@ -10,6 +10,7 @@ use App\Item;
 use App\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
@@ -79,12 +80,38 @@ class OrderController extends Controller
 // pasiziurejimui cia tik
     public function getAllOrdersTest()
     {
+        if (Gate::allows('seller-role')){
         $orders = Order::all();
 //        $item = $orders->items()->get();
 //        $users = User::all();
 //        $user = $users->orders()->get();
+        $en = '';
+        foreach ($orders as $order)
+           $en = $order->cart;
 
-        return response()->json($orders);
+        return response()->json(['orders'=>$orders, "en"=>  json_decode($en)]);
+         }
+        return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
+    }
+    public function showOrders(Request $request)
+    {
+        $id = Auth::id();
+       $orders = DB::table('orders')
+           ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
+           ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
+           ->where('user_id', $id)
+           ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
+
+       $cart = [];
+       $enCart = [];
+       foreach ($orders as $order){
+//           array_push($cart, $order->cart);
+           $cart = $order->cart;
+       }
+       $enCart = json_decode($cart);
+
+       return response()->json(["orders" => $orders, "cart" =>$enCart]);
+
     }
 
     //bandom sukurti orderi
@@ -106,11 +133,17 @@ class OrderController extends Controller
 //        $cart = new Cart($oldCart);
 //        $beforeTaxesPrice = ($cart->totalPrice*79)/100;
 //        $taxes = ($cart->totalPrice*21)/100;
+        $orders = Order::all();
+        $invoicenumber = '';
         $order = new Order();
-
-        $latestOrder = Order::orderBy('created_at','DESC')->first('id');
-
-        $order->invoice_number = str_pad($latestOrder + 1, 8, "0", STR_PAD_LEFT);
+        if($orders->isEmpty()){
+            $latestOrder = Order::orderBy('created_at','DESC')->first('id');
+            $invoicenumber = str_pad($latestOrder + 1, 8, "0", STR_PAD_LEFT);
+        } else {
+            $latestOrder = Order::orderBy('created_at','DESC')->first();
+            $invoicenumber = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+        }
+        $order->invoice_number = $invoicenumber;
         $order->user_id = Auth::id();
         $order->delivery_id = $request->input('delivery_id');
         $order->order_status_id = 1;
