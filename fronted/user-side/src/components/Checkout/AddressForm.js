@@ -52,11 +52,16 @@ export default function AddressForm() {
 </div> */}
 
         <FormControl component="fieldset">
-          {printDelivery.map((delivery) => (
+          {/* {printDelivery.map((delivery) => (
             <RadioGroup aria-label="delivery" name="delivery" value="delivery" >
               <FormControlLabel value="delivery" control={<Radio onChange={handleChange}/>} label={delivery.name} />
             </RadioGroup>
-          ))}
+          ))} */}
+            <select id="payment" name="payment">
+            {printDelivery.map((delivery) => (
+    <option value="payment">{delivery.name}</option>
+    ))}
+  </select>
         </FormControl>
     </React.Fragment>
   );

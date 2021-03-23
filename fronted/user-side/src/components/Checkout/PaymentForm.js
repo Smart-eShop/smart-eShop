@@ -42,11 +42,11 @@ export default function PaymentForm() {
 
       <div className={classes.root}>
       <FormControl component="fieldset">
-          {printPayment.map((payment) => (
-            <RadioGroup aria-label="payment" name="payment" >
-              <FormControlLabel value="payment" control={<Radio />} label={payment.name} />
-            </RadioGroup>
-          ))}
+      <select id="payment" name="payment">
+            {printPayment.map((payment) => (
+    <option value="payment">{payment.name}</option>
+    ))}
+  </select>
         </FormControl>
       </div>
     </React.Fragment>
