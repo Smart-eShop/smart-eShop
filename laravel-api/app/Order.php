@@ -10,7 +10,6 @@ class Order extends Model
     protected $fillable = [
         'invoice_number',
         'user_id',
-        'total_item',
         'delivery_id',
         'order_status_id',
         'payment_id',
@@ -23,7 +22,8 @@ class Order extends Model
         'billing_postcode',
         'total_price_without_tax',
         'total_taxes',
-        'total_price'
+        'total_price',
+        'total_quantity'
     ];
 
     public function user(){

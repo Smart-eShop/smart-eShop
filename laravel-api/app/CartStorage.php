@@ -8,7 +8,7 @@ class CartStorage extends Model
 {
     protected $fillable = ['cart', 'price_before_taxes', 'taxes', 'total_price', 'total_quantity'];
 
-    protected $casts = [
-      'cart' => 'array'
-    ];
+//    protected $casts = [
+//      'cart' => 'array'
+//    ];
 }

@@ -59,7 +59,7 @@ class CartController extends Controller
         $cartItems = explode(",", $key);
 
         $cart = CartStorage::create([
-            'cart' => $cartItems,
+            'cart' => $request->input('cart'),
             'price_before_taxes' =>$request->input('price_before_taxes'),
             'taxes' => $request->input('taxes'),
             'total_price' => $request->input('total_price'),

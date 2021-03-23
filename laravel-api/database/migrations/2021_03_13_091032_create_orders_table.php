@@ -19,7 +19,6 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('invoice_number');
             $table->foreignId('user_id')->constrained();
-            $table->integer('total_item');
             $table->foreignId('delivery_id')->constrained();
             $table->foreignId('order_status_id')->constrained();
             $table->foreignId('payment_id')->constrained();
@@ -33,6 +32,7 @@ class CreateOrdersTable extends Migration
             $table->double('total_price_without_tax',10,2);
             $table->double('total_taxes',10,2);
             $table->double('total_price', 10, 2);
+            $table->integer('total_quantity');
             $table->timestamps();
         });
     }
