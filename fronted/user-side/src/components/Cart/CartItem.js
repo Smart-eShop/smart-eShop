@@ -29,9 +29,6 @@ card: {
 cardMedia: {
     width: '100%', // 16:9
 },
-cardContent: {
-    flexGrow: 1,
-},
 discount: {
     color: '#e64a19',
 }
@@ -39,7 +36,7 @@ discount: {
 }));
 
 
-const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
+const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart, cartItems }) => {
   const classes = useStyles();
 
   const handleUpdateCartQty = (lineItemId, newQuantity) => onUpdateCartQty(lineItemId, newQuantity);

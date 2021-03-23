@@ -40,7 +40,7 @@ const Main = () => {
     });
 
     const addCart = (item) => {
-
+        console.log("pridedu preke")
         const exist = cartItems.find((x) => x.id === item.id);
         if (exist && exist.quantity < item.quantity) {
             setCartItems(cartItems.map((x) => x.id === item.id ? {...exist, quantity: exist.quantity + 1} : x))
@@ -94,26 +94,28 @@ const Main = () => {
     //     sendCart();
     // }, []);
 
-       return (
+    return (
         <>
             <Router>
                 <Navbar/>
                 <Switch>
-                    <Route path="/" exact component={FrontPage} />
-                    <Route path="/login" exact component={Login} />
-                    <Route path="/register" exact component={Register} />
+                    <Route path="/" exact component={FrontPage}/>
+                    <Route path="/login" exact component={Login}/>
+                    <Route path="/register" exact component={Register}/>
                     <Route path="/products" exact render={(props) => (
                         <Products {...props} addCart={addCart}/>
-                    )} />
+                    )}/>
                     <Route path="/products/:id" component={ShowProduct}/>
-                    <Route path="/about" exact component={About} />
-                    <Route path="/category" exact component={ProductsCategory} />
-                    <Route path="/contact-us" exact component={Contact} />
-                    <Route path="/checkout" exact component={Checkout} />
-                    <Route path="/cart" exact component={Cart} />
-                    <Route path="/terms-conditions" exact component={TermsConditions} />
-                    <Route path="/remind-password" exact component={RemindPassword} />
-                    <Route path="/reset-password" exact component={ResetPassword} />
+                    <Route path="/about" exact component={About}/>
+                    <Route path="/category" exact component={ProductsCategory}/>
+                    <Route path="/contact-us" exact component={Contact}/>
+                    <Route path="/checkout" exact component={Checkout}/>
+                    <Route path="/cart" exact render={(props) => (
+                        <Cart{...props} cartItems={cartItems}/>
+                    )}/>
+                    <Route path="/terms-conditions" exact component={TermsConditions}/>
+                    <Route path="/remind-password" exact component={RemindPassword}/>
+                    <Route path="/reset-password" exact component={ResetPassword}/>
                 </Switch>
             </Router>
         </>
