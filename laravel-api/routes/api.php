@@ -47,6 +47,8 @@ Route::get('categories', 'ApiController@showAllCategories');
 
 Route::get('order-statuses', 'ApiController@showOrderStatuses');
 
+Route::get('show-cart', 'CartController@showCart');
+
 //Delivery methods
 Route::post('delivery/store', 'DeliveryController@store');
 Route::get('delivery/show', 'DeliveryController@show');
