@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Cart;
+use App\Mail\OrderPaid;
 use App\Order;
 use App\Item;
 use App\User;
@@ -11,9 +12,12 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
+use niklasravnsborg\LaravelPdf\Pdf;
+
 
 
 class OrderController extends Controller
@@ -113,7 +117,29 @@ class OrderController extends Controller
         $order->total_quantity = $request->input('total_quantity');
         Auth::user()->orders()->save($order);
 
-        return response()->json(["order" => $order]);
+
+        $payments = DB::table('payments')
+                ->where('payments.id', $order->payment_id)
+                ->select('payments.name')
+                ->get();
+
+        $deliveries = DB::table('deliveries')
+                    ->where('deliveries.id', $order->delivery_id)
+                    ->select('deliveries.*')
+                    ->get();
+
+        $en = json_decode($order->cart);
+
+        $orderArray = [];
+        $cart = [];
+        array_push($cart, $en);
+        array_push($orderArray, $order);
+
+        Mail::to($order->user->email)->send(new OrderPaid($orderArray, $cart, $payments, $deliveries));
+
+
+
+        return response()->json([$orderArray, $cart]);
     }
 
     //keiciam orderio statusa
