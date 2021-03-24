@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
+const useStyles = makeStyles((theme) => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
   },
-});
+  formControl: {
+    margin: theme.spacing(0.2),
+    minWidth: 250,
+  },
+}));
+
 
 export default function AddressForm() {
+
+
   const classes = useStyles();
 
 
@@ -31,10 +36,6 @@ export default function AddressForm() {
   }, [])
 
   const [deliveryValue, setDeliveryValue] = useState('');
-  const handleChange = (event) => {
-    setDeliveryValue(event.target.value);
-  };
-
 
   return (
     <React.Fragment>
@@ -43,26 +44,15 @@ export default function AddressForm() {
         Pasirinkite pristatymo būdą
       </Typography>
 
-      {/* <div className={classes.root}>
-        <div>
+      <div>
+        <NativeSelect id='select' variant='standard' className={classes.formControl}>
           {printDelivery.map((delivery) => (
-            <p>{delivery.name}</p>
+            <option>{delivery.name}</option>
           ))}
-        </div> 
-</div> */}
+        </NativeSelect>
 
-        <FormControl component="fieldset">
-          {/* {printDelivery.map((delivery) => (
-            <RadioGroup aria-label="delivery" name="delivery" value="delivery" >
-              <FormControlLabel value="delivery" control={<Radio onChange={handleChange}/>} label={delivery.name} />
-            </RadioGroup>
-          ))} */}
-            <select id="payment" name="payment">
-            {printDelivery.map((delivery) => (
-    <option value="payment">{delivery.name}</option>
-    ))}
-  </select>
-        </FormControl>
+      </div>
     </React.Fragment>
   );
 }
+
