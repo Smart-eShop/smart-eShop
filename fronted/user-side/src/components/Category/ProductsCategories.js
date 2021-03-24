@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsCategories = ({printCategories}) => {
+const ProductsCategories = ({printCategories, setCategoryId}) => {
     const classes = useStyles();
     console.log(printCategories);
     // const [printCategories, setPrintCategories] = useState([]);
@@ -34,14 +34,11 @@ const ProductsCategories = ({printCategories}) => {
 
     return (
         <Container className={classes.root} component="section">
-            <Button href={`/category/2`}>
-                butonas
-            </Button>
             <Typography variant="h4" marked="center" align="center" component="h2">
                 Prekių kategorijos
             </Typography>
             {printCategories.map((category) => (
-                <Button href={`/category/${category.id}`}>
+                <Button href={`/category/${category.id}`} value={category.id} onClick={(e) => setCategoryId(e.currentTarget.value)}>
                     {category.category_name}
                 </Button>
             ))}

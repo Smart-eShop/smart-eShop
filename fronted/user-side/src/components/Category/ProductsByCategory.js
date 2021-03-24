@@ -15,8 +15,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ProductsByCategory({items, printCategories}) {
+function ProductsByCategory({items, printCategories, categoryId}) {
   const classes = useStyles();
+  console.log(categoryId);
  console.log(items);
  console.log(printCategories)
   return (
