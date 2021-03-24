@@ -14,13 +14,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ProductsByCategory() {
+function ProductsByCategory(props) {
   const classes = useStyles();
- 
+ console.log(props);
   return (
     <Container className={classes.root} component="section">
       <Typography variant="h4" marked="center" align="center" component="h2">
-        Prekių kategorijos
+        by category
       </Typography>
       {/* {printCategories.map((category) => (
         <Button>

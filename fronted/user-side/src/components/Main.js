@@ -6,7 +6,8 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import Products from './Products/Products';
 import ShowProduct from './Products/ShowProduct';
-import ProductsCategory from './Category/ProductsCategory';
+import ProductsCategories from './Category/ProductsCategories';
+import ProductsByCategory from './Category/ProductsByCategory';
 import "../neumorphism.css";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
@@ -19,6 +20,17 @@ import Cart from './Cart/Cart';
 import useLocalStorage from './useLocalStorage'
 
 const Main = () => {
+    const [items, setItems] = useState([]);
+const printItems = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/items';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.items);
+    setItems(data.items);
+}
+useEffect(() => {
+    printItems();
+}, []);
     // const [cartItems, setCartItems] = useState(() => {
     //     const localData = localStorage.getItem("cartItems");
     //     return localData ? JSON.parse(localData) : [];
@@ -77,6 +89,21 @@ const Main = () => {
     console.log(cartItems);
     console.log(cartTotalPrice);
     console.log(totalQuantity);
+
+    const [printCategories, setPrintCategories] = useState([]);
+
+    const printAllCategories = async () => {
+      const url = "https://eshopsmart.herokuapp.com/api/categories";
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data.Categories);
+      setPrintCategories(data.Categories);
+    };
+  console.log(printCategories);
+    useEffect(() => {
+      printAllCategories();
+    }, []);
+
 // const sendCart = async () => {
     //     const cart = JSON.stringify(cartItems);
     //     const url = `http://eshopsmart.herokuapp.com/api/cart/add?cart=${cart}&price_before_taxes=${cartPriceBeforeTax}&taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
@@ -110,11 +137,17 @@ const Main = () => {
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
                     <Route path="/products" exact render={(props) => (
-                        <Products {...props} addCart={addCart}/>
-                    )}/>
+    <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
+)}/>
+<Route path="/category" exact render={(props) => (
+    <ProductsCategories {...props} printCategories={printCategories} />
+)} />
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>
-                    <Route path="/category" exact component={ProductsCategory}/>
+                   
+                    <Route path="/category/:id" render={(props) => (
+                        <ProductsByCategory {...props} items={items} printCategories={printCategories}/>
+                    )}/>
                     <Route path="/contact-us" exact component={Contact}/>
                     <Route path="/checkout" exact render={(props) => (
                         <Checkout{...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
