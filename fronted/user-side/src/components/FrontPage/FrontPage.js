@@ -23,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
- 
+
   heroContent: {
-    backgroundImage:`url(${Image})`,
+    backgroundImage: `url(${Image})`,
     backgroundColor: '#fffff', // Average color of the background image.
     backgroundPosition: 'center',
     padding: theme.spacing(35, 0, 40),
-    
+
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -49,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
   },
-  
-  paper:{
+
+  paper: {
     color: "#fffff",
     height: "100px",
-    width:"200px",
+    width: "200px",
   },
   discount: {
     color: '#e64a19',
-}
+  }
 }));
 
 
@@ -66,27 +66,50 @@ const useStyles = makeStyles((theme) => ({
 export default function Album() {
   const classes = useStyles();
 
-  const [items, setItems] = useState([]);
+  const [popularItems, setPopularItems] = useState([]);
   const reducedOptions = [];
 
+  const printPopularItems = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/popular-items';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    //    data.popularItems.forEach(items => {
+    //       if (reducedOptions.length < 3) {
+    //         reducedOptions.push(items)
+    //     }
+    // });
+    //     setPopularItems(reducedOptions);
+    //     console.log(reducedOptions);
 
-  const printItems = async () => {
-      const url = 'https://eshopsmart.herokuapp.com/api/items';
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-     data.items.forEach(item => {
-        if (reducedOptions.length < 3) {
-          reducedOptions.push(item)
-      }
-  });
-      setItems(reducedOptions);
-      console.log(reducedOptions);
-  
   }
 
   useEffect(() => {
-      printItems();
+    printPopularItems();
+  }, []);
+
+
+
+  const [items, setItems] = useState([]);
+
+
+  const printItems = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/items';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    data.items.forEach(item => {
+      if (reducedOptions.length < 3) {
+        reducedOptions.push(item)
+      }
+    });
+    setItems(reducedOptions);
+    console.log(reducedOptions);
+
+  }
+
+  useEffect(() => {
+    printItems();
   }, []);
 
   const imgUrl = 'https://eshopsmart.herokuapp.com/images/';
@@ -105,10 +128,10 @@ export default function Album() {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-        
-             <Typography variant='h2' align="center" color="#inherit" gutterBottom>SMART SHOP </Typography>
+
+            <Typography variant='h2' align="center" color="#inherit" gutterBottom>SMART SHOP </Typography>
             <Typography variant="h6" align='center' color="#inherit" paragraph>
-            Nestovėk eilėse! Apsipirk pas mus greičiau ir pigiau!
+              Nestovėk eilėse! Apsipirk pas mus greičiau ir pigiau!
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
@@ -126,30 +149,30 @@ export default function Album() {
             </div>
           </Container>
         </div>
-        <ProductsCate/>
+        <ProductsCate />
         <Container className={classes.cardGrid} maxWidth="lg">
-        <Container className={classes.root} component="section">
-        <Typography variant="h4" marked="center" align="center" component="h2">
-        Populiariausios prekės
+          <Container className={classes.root} component="section">
+            <Typography variant="h4" marked="center" align="center" component="h2">
+              Populiariausios prekės
       </Typography>
-      </Container>
-          {/* End hero unit */}
+          </Container>
+
           <Grid container spacing={4}>
-            
-              <Grid item  xs={4} sm={12} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://www.jabra.com.au/-/media/Images/Products/Jabra-Elite-85h/Product/elite_85h_titanium_01.png?w=540&la=en-AU&hash=9B47FE6AD701B8AAA983C3269910BFB2F22955FD"
-                    title="Image title"
-                  />
+            {popularItems.map((itemp) => (
+              <Grid itemp key={itemp.id} xs={4} sm={12} md={4}>
+                <Card className={classes.item}>
+                  <img
+                    src={imgUrl + itemp.img[0]} alt="nuotrauka" />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h1">
-                      Belaidės ausinės
+                      {itemp.title}
                     </Typography>
                     <Typography>
-                    €120.00
-                    </Typography>
+                      {itemp.price} €
+                                    </Typography>
+                    <Typography className={classes.discount}>
+                      - {itemp.discount}%
+                                    </Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
@@ -161,99 +184,53 @@ export default function Album() {
                   </CardActions>
                 </Card>
               </Grid>
-            <Grid item  xs={12} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="https://brain-images-ssl.cdn.dixons.com/4/2/10199624/u_10199624.jpg"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h1">
-                    Nešiojamas kompiuteris
-                  </Typography>
-                  <Typography>
-                  €500.00
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    Peržiūrėti
-                  </Button>
-                  <Button size="small" color="primary">
-                    Pirkti
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item  xs={12} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="https://www.varle.lt/static/uploads/products/12/tel/televizorius-tv-setlg4k-smart553840x2160wireless_wtunbuI.Jpeg"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h1">
-                    Televizorius Samsung
-                  </Typography>
-                  <Typography>
-                  €350.00
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    Peržiūrėti
-                  </Button>
-                  <Button size="small" color="primary">
-                    Pirkti
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            </Grid>
-            </Container>
-        
+            ))}
+          </Grid>
+        </Container>
+
         <Container className={classes.cardGrid} maxWidth="lg">
-        <Container className={classes.root} component="section">
-        <Typography variant="h4" marked="center" align="center" component="h2">
-        Naujausios prekės
+          <Container className={classes.root} component="section">
+            <Typography variant="h4" marked="center" align="center" component="h2">
+              Naujausios prekės
       </Typography>
-      </Container>
+          </Container>
           {/* End hero unit */}
           <Grid container spacing={4}>
-                    {items.map((item) => (
-                        <Grid item key={item.id} xs={12} sm={6} md={4}>
-                            <Card className={classes.item}>
-                                <img
-                                    src={imgUrl + item.img[0]} alt="nuotrauka"/>
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant="h5" component="h1">
-                                        {item.title}
+            {items.map((item) => (
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
+                <Card className={classes.item}>
+                  <img
+                    src={imgUrl + item.img[0]} alt="nuotrauka" />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h1">
+                      {item.title}
+                    </Typography>
+                    <Typography>
+                      {item.price} €
                                     </Typography>
-                                    <Typography>
-                                        {item.price} €
+                    <Typography className={classes.discount}>
+                      - {item.discount}%
                                     </Typography>
-                                    <Typography className={classes.discount}>
-                                        - {item.discount}%
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    {/* <Link to={`/products/${item.id}`}>Peržiūrėti</Link> */}
-                                    <Button href={`/products/${item.id}`} size="small" color="primary">
-                                        Peržiūrėti
+                  </CardContent>
+                  <CardActions>
+                    {/* <Link to={`/products/${item.id}`}>Peržiūrėti</Link> */}
+                    <Button href={`/products/${item.id}`} size="small" color="primary">
+                      Peržiūrėti
                                     </Button>
-                                    <Button size="small" color="primary">
-                                        Pirkti
+                    <Button size="small" color="primary">
+                      Pirkti
                                     </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </main>
-     
+
     </React.Fragment>
   );
 }
+
+
+
