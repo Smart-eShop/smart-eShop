@@ -44,6 +44,8 @@ const Main = () => {
     const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
     const [cartTotalPrice, setCartTotalPrice] = useLocalStorage('total_price', 0)
     const [totalQuantity, setTotalQuantity] = useLocalStorage('total_quantity', 0)
+    const accessToken = localStorage.getItem("access_token");
+
 
     const addCart = (item) => {
         console.log("pridedu preke")
@@ -116,7 +118,7 @@ const Main = () => {
                     <Route path="/contact-us" exact component={Contact}/>
                     <Route path="/checkout" exact render={(props) => (
                         <Checkout{...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
-                        cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity}/>
+                        cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity} cartItems={cartItems}/>
                     )}/>
                     <Route path="/cart" exact render={(props) => (
                         <Cart{...props} cartItems={cartItems}/>

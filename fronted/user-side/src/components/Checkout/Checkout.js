@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Checkout() {
+export default function Checkout({cartPriceBeforeTax, cartTaxes, cartTotalPrice, totalQuantity, cartItems}) {
+    // console.log(cartTotalPrice);
     const classes = useStyles();
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -59,9 +60,11 @@ export default function Checkout() {
     const [city, setCity] = useState('');
     const [postCode, setPostCode] = useState('');
     const [printPayment, setPrintPayment] = useState([]);
-    const [paymentId, setPaymentId] = useState(0);
-    // const [deliveryValue, setDeliveryValue] = useState('');
+    const [paymentId, setPaymentId] = useState(47);//reikia pakeisti kad imtu is selectu value
+    const [deliveryValue, setDeliveryValue] = useState(13);
     const [printDelivery, setPrintDelivery] = useState([]);
+    const accessToken = localStorage.getItem("access_token");
+
 
     const printAllPayments = async () => {
         const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
@@ -75,11 +78,7 @@ export default function Checkout() {
         printAllPayments();
     }, [])
 
-
-
     // console.log(paymentId)
-
-
     const printAllDeliveries = async () => {
         const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
         const response = await fetch(url);
@@ -92,6 +91,35 @@ export default function Checkout() {
         printAllDeliveries();
     }, [])
 
+
+
+const sendCart = async () => {
+        const cart = JSON.stringify(cartItems);
+        const url = `http://eshopsmart.herokuapp.com/api/order/store?delivery_id=${deliveryValue}&payment_id=${paymentId}
+        &cart=${cart}&billing_first_name=${name}&billing_last_name=${lastName}&billing_email=${email}&billing_street_number=
+        ${adress}&billing_city=${city}&billing_postcode=${postCode}&total_price_without_tax=${cartPriceBeforeTax}&
+        total_taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+            // localStorage.clear();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        sendCart();
+    }, []);
 
 
 
@@ -188,9 +216,8 @@ export default function Checkout() {
                         <Typography variant="subtitle1">
                             Pasirinkite apmokėjimo būdą</Typography>
                         <div>
-                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onInput={(e) => setPaymentId(e.target.value)}>
                                 {printPayment.map((payment) => (
-
                                     <option value={payment.id}>{payment.name}</option>
                                 ))}
                             </NativeSelect>
@@ -202,10 +229,9 @@ export default function Checkout() {
                         <Typography variant="subtitle1">
                             Pasirinkite pristatymo būdą</Typography>
                         <div>
-                            <NativeSelect id='select' variant='standard' className={classes.formControl}>
+                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={deliveryValue} onInput={(e) => setDeliveryValue(e.target.value)}>
                                 {printDelivery.map((delivery) => (
-
-                                    <option>{delivery.name}</option>
+                                    <option value={delivery.id}>{delivery.name}</option>
                                 ))}
                             </NativeSelect>
                         </div>
@@ -214,7 +240,7 @@ export default function Checkout() {
 
                     <React.Fragment>
                         <div className={classes.buttons}>
-                            <Button variant="contained" color="primary" className={classes.button}>Pateikti užsakymą</Button>
+                            <Button variant="contained" color="primary" className={classes.button} onClick={sendCart}>Pateikti užsakymą</Button>
                         </div>
                     </React.Fragment>
 
