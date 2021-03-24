@@ -37,11 +37,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Products = (props) => {
+const Products = ({addCart}) => {
     const classes = useStyles();
     const [items, setItems] = useState([]);
     const [filter, setFilter] = useState("");
-    console.log(props);
     const printItems = async () => {
         const url = 'https://eshopsmart.herokuapp.com/api/items';
         const response = await fetch(url);
@@ -109,7 +108,7 @@ const Products = (props) => {
                                         Peržiūrėti
                                     </Button>
 
-                                    <Button onClick={() => props.addCart(item)} size="small" color="primary">Į
+                                    <Button onClick={() => addCart(item)} size="small" color="primary">Į
                                         krepšelį</Button>
                                 </CardActions>
                             </Card>
