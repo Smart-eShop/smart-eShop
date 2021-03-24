@@ -16,28 +16,34 @@ import ResetPassword from './RemindPassword/ResetPassword';
 import FrontPage from './FrontPage/FrontPage';
 import Checkout from './Checkout/Checkout';
 import Cart from './Cart/Cart';
+import useLocalStorage from './useLocalStorage'
 
 const Main = () => {
-    const [cartItems, setCartItems] = useState(() => {
-        const localData = localStorage.getItem("cartItems");
-        return localData ? JSON.parse(localData) : [];
-    });
-    const [cartPriceBeforeTax, setCartPriceBeforeTax] = useState(() => {
-        const localData = localStorage.getItem("cartPriceBeforeTax");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [cartTaxes, setCartTaxes] = useState(() => {
-        const localData = localStorage.getItem("cartTaxes");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [cartTotalPrice, setCartTotalPrice] = useState(() => {
-        const localData = localStorage.getItem("cartTotalPrice");
-        return localData ? JSON.parse(localData) : "";
-    });
-    const [totalQuantity, setTotalQuantity] = useState(() => {
-        const localData = localStorage.getItem("totalQuantity");
-        return localData ? JSON.parse(localData) : "";
-    });
+    // const [cartItems, setCartItems] = useState(() => {
+    //     const localData = localStorage.getItem("cartItems");
+    //     return localData ? JSON.parse(localData) : [];
+    // });
+    // const [cartPriceBeforeTax, setCartPriceBeforeTax] = useState(() => {
+    //     const localData = localStorage.getItem("cartPriceBeforeTax");
+    //     return localData ? JSON.parse(localData) : "";
+    // });
+    // const [cartTaxes, setCartTaxes] = useState(() => {
+    //     const localData = localStorage.getItem("cartTaxes");
+    //     return localData ? JSON.parse(localData) : "";
+    // });
+    // const [cartTotalPrice, setCartTotalPrice] = useState(() => {
+    //     const localData = localStorage.getItem("cartTotalPrice");
+    //     return localData ? JSON.parse(localData) : "";
+    // });
+    // const [totalQuantity, setTotalQuantity] = useState(() => {
+    //     const localData = localStorage.getItem("totalQuantity");
+    //     return localData ? JSON.parse(localData) : "";
+    // });
+    const [cartItems, setCartItems] = useLocalStorage('items', []);
+    const [cartPriceBeforeTax, setCartPriceBeforeTax] = useLocalStorage('price', 0)
+    const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
+    const [cartTotalPrice, setCartTotalPrice] = useLocalStorage('total_price', 0)
+    const [totalQuantity, setTotalQuantity] = useLocalStorage('total_quantity', 0)
 
     const addCart = (item) => {
         console.log("pridedu preke")
@@ -49,8 +55,8 @@ const Main = () => {
         } else {
             alert('Atsiprašome, daugiau prekių sandėlyje nėra')
         }
-
     }
+
     const totals = () => {
         const itemsPriceBeforeTaxes = cartItems.reduce((a, c) => a + ((c.price * 79) / 100) * c.quantity, 0);
         setCartPriceBeforeTax(itemsPriceBeforeTaxes);
@@ -61,20 +67,14 @@ const Main = () => {
         const totalQuantity1 = cartItems.reduce((a, c) => a + c.quantity, 0);
         setTotalQuantity(totalQuantity1);
     }
-
     useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(cartItems))
-    }, [addCart]);
+        totals();
+    }, [cartItems]);
 
-    useEffect(() => {
-        totals()
-        localStorage.setItem("cartPriceBeforeTax", JSON.stringify(cartPriceBeforeTax))
-        localStorage.setItem("cartTaxes", JSON.stringify(cartTaxes))
-        localStorage.setItem("cartTotalPrice", JSON.stringify(cartTotalPrice))
-        localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity))
-    }, [cartItems])
     console.log(JSON.stringify(cartItems));
     console.log(cartItems);
+    console.log(cartTotalPrice);
+    console.log(totalQuantity);
 // const sendCart = async () => {
     //     const cart = JSON.stringify(cartItems);
     //     const url = `http://eshopsmart.herokuapp.com/api/cart/add?cart=${cart}&price_before_taxes=${cartPriceBeforeTax}&taxes=${cartTaxes}&total_price=${cartTotalPrice}&total_quantity=${totalQuantity}`;
@@ -114,7 +114,10 @@ const Main = () => {
                     <Route path="/about" exact component={About}/>
                     <Route path="/category" exact component={ProductsCategory}/>
                     <Route path="/contact-us" exact component={Contact}/>
-                    <Route path="/checkout" exact component={Checkout}/>
+                    <Route path="/checkout" exact render={(props) => (
+                        <Checkout{...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
+                        cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity}/>
+                    )}/>
                     <Route path="/cart" exact render={(props) => (
                         <Cart{...props} cartItems={cartItems}/>
                     )}/>
