@@ -37,10 +37,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-const Products = ({addCart, items, printItems}) => {
+const Products = ({addCart, items, printCategories}) => {
     const classes = useStyles();
-
+    console.log(printCategories);
     const [filter, setFilter] = useState("");
 
     const handleSearchChange = (e) => {
