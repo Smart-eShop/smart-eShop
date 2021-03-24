@@ -30,90 +30,87 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShowProduct = ({ match }) => {
-  const classes = useStyles();
-  useEffect(() => {
-    printSingleItem();
-    console.log(match);
-  }, []);
 
-  const [item, setItem] = useState({});
+const ShowProduct = ({ match, props, addCart }) => {
+    const classes = useStyles();
+    useEffect(() => {
+        printSingleItem();
+        console.log(match);
+    }, []);
 
-  const printSingleItem = async () => {
-    const url = `https://eshopsmart.herokuapp.com/api/item/${match.params.id}`;
+    const [item, setItem] = useState({});
 
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      const item = data.item;
-      console.log(item);
-      setItem(item);
-    } catch (error) {
-      console.log(error);
+    const printSingleItem = async () => {
+        const url = `https://eshopsmart.herokuapp.com/api/item/${match.params.id}`;
+
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            const item = data.item;
+            console.log(item);
+            setItem(item);
+        } catch (error) {
+            console.log(error);
+        }
     }
-  };
-  const imgUrl = "https://eshopsmart.herokuapp.com/images/";
+    const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
 
-  // console.log(item.img);
-  // const b = item.img.map(a => {
-  //     return <p>{a}</p>
-  // })
+    // console.log(item.img);
+    // const b = item.img.map(a => {
+    //     return <p>{a}</p> 
+    // })
 
-  return (
-    <>
-      <div className={classes.root}>
-        <Grid key={item.id} container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Paper className={classes.paper}>
-              <Card className={classes.card}>
-                {item.img?.length ? (
-                  <Carousel>
-                    {item.img.map((a) => (
-                      <img
-                        src={imgUrl + a}
-                        alt="nuotrauka"
-                        style={{ height: "500px" }}
-                        className={classes.cardMedia}
-                      />
-                    ))}
-                  </Carousel>
-                ) : (
-                  false
-                )}
-              </Card>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography gutterBottom variant="h5" component="h1">
-              {item.title}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="h6">
-              {item.size}
-            </Typography>
-            <Typography gutterBottom variant="p" component="p">
-              {item.description}
-            </Typography>
-            <Typography>{item.price}</Typography>
+    console.log(item.img);
 
-            <Typography className={classes.discount}>
-              - {item.discount}%
-            </Typography>
-            <Button href={`/#`} className={classes.basket}>
-              Dėti į krepšelį
-            </Button>
-            <Button href={`/products`} className={classes.basket}>
-              Atgal
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
-    </>
-  );
-};
+    return (
+        <>
+
+            <div className={classes.root}>
+                <Grid key={item.id} container spacing={3}>
+                    <Grid item xs={12} md={6} >
+                        <Paper className={classes.paper}>
+                        <Card className={classes.card}>
+                            {(item.img?.length) ?
+                                <Carousel>
+                                    {
+                                        item.img.map(a => (                         
+                                        <img src={imgUrl + a} alt="nuotrauka" style={{height: "500px"}}   className={classes.cardMedia}  />))}
+                                </Carousel>
+                                 : false} 
+                             </Card>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Typography gutterBottom variant="h5" component="h1">
+                            {item.title}
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="h6">
+                            {item.size}
+                        </Typography>
+                        <Typography gutterBottom variant="p" component="p">
+                            {item.description}
+                        </Typography>
+                        <Typography >
+                            {item.price} 
+                        </Typography>
+
+                        <p>Raktiniai žodžiai: {(item.keywords == null) ? "Nėra" : item.keywords.map(key => <li>{key}</li>)}</p>
+
+                        <Typography className={classes.discount}>
+                                        - {item.discount}%
+                                    </Typography>
+                        <Button onClick={() => props.addCart(item)} size="small" color="primary" className={classes.basket}>Dėti į krepšelį</Button>
+                        <Button href={`/products`} className={classes.basket}>Atgal</Button>
+                    </Grid>
+                </Grid>
+            </div>
+        </>
+    );
+}
 
 export default ShowProduct;

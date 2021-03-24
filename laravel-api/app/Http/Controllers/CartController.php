@@ -58,6 +58,9 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        $key = $request['cart'];
+        $cartItems = explode(",", $key);
+
         $cart = CartStorage::create([
             'cart' => $request->input('cart'),
             'price_before_taxes' =>$request->input('price_before_taxes'),
@@ -66,5 +69,11 @@ class CartController extends Controller
             'total_quantity' => $request->input('total_quantity')
         ]);
         return response()->json(["cart" => $cart]);
+    }
+
+    public function showCart(){
+
+        $cartItem = CartStorage::all();
+        return response()->json(['Cart:' => $cartItem]);
     }
 }

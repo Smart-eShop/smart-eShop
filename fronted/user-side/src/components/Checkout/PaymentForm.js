@@ -1,98 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 
-const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-  });
+const useStyles = makeStyles((theme) => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(0.2),
+    minWidth: 250,
+  },
+}));
+
 
 export default function PaymentForm() {
-    const classes = useStyles();
+  const classes = useStyles();
+
+  const [printPayment, setPrintPayment] = useState([]);
+  const printAllPayments = async () => {
+    const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.payment);
+    setPrintPayment(data.payment);
+  }
+
+  useEffect(() => {
+    printAllPayments();
+  }, [])
+
+const [paymentId, setPaymentId]=useState(0);
+
+console.log(paymentId)
+
   return (
     <React.Fragment>
 
       <Typography variant="h6" gutterBottom>
-        Pažymėkite apmokėjimo būdą
+        Pasirinkite apmokėjimo būdą
       </Typography>
+      <div>
+        <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+          {printPayment.map((payment) => (
+            <option value={payment.id}>{payment.name}</option>
+          ))}
+        </NativeSelect>
 
-      <div className={classes.root}>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-label="Expand"
-          aria-controls="additional-actions1-content"
-          id="additional-actions1-header"
-        >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
-            label="Seb Bankas"
-          />
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography color="textSecondary">
-            The click event of the nested action will propagate up and expand the accordion unless
-            you explicitly stop it.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-label="Expand"
-          aria-controls="additional-actions2-content"
-          id="additional-actions2-header"
-        >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
-            label="I acknowledge that I should stop the focus event propagation"
-          />
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography color="textSecondary">
-            The focus event of the nested action will propagate up and also focus the accordion
-            unless you explicitly stop it.
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-label="Expand"
-          aria-controls="additional-actions3-content"
-          id="additional-actions3-header"
-        >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
-            label="I acknowledge that I should provide an aria-label on each action that I add"
-          />
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography color="textSecondary">
-            If you forget to put an aria-label on the nested action, the label of the action will
-            also be included in the label of the parent button that controls the accordion
-            expansion.
-          </Typography>
-        </AccordionDetails>
-        </Accordion> */}
-        </div>
+      </div>
     </React.Fragment>
   );
 }

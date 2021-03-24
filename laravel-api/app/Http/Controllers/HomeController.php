@@ -17,8 +17,10 @@ class HomeController extends Controller
 
     public function index(Request $request, $id=1)
     {
-
-//dd(Order::find(1)->items()->get());
+//        $users = User::all();
+//
+////dd(Order::find(1)->items()->get());
+//        dd($users->orders()->get());
 
 
         return view('welcome');

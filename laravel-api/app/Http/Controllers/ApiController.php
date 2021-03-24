@@ -9,6 +9,7 @@ use App\OrderStatus;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 
@@ -53,7 +54,6 @@ class ApiController extends Controller
 
     public function recaptchaKey()
     {
-
         $secret = env('GOOGLE_RECAPTCHA_SECRET');
         $site = env('GOOGLE_RECAPTCHA_KEY');
 
@@ -68,14 +68,15 @@ class ApiController extends Controller
 
     public function showOneOrder(Order $order)
     {
-        if (Gate::allows('user-id', $order) || Gate::allows('order-user-id', $order)) {
+        if (Gate::allows('order-user-id', $order)) {
             return response()->json(['order' => $order], 200);
         }
+
         return response()->json(['message' => Lang::get('messages_lt.not_allowed')]);
     }
 
     public function showOrderStatuses(){
-        if (Gate::allows('admin-role')) {
+        if (Gate::allows('seller-role')) {
             $orderSatuses = OrderStatus::all();
             return response()->json(['order statuses' => $orderSatuses],200);
         }
