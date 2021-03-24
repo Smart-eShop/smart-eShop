@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
-import DetailsForm from './DetailsForm';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 
 
@@ -30,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(5),
         padding: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
             marginTop: theme.spacing(12),
@@ -38,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
             padding: theme.spacing(3),
         },
     },
-    stepper: {
-        padding: theme.spacing(3, 0, 5),
-    },
+   
     buttons: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -49,97 +43,182 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(1),
     },
+    formControl: {
+        margin: theme.spacing(0.5),
+        minWidth: 250,
+    },
 }));
 
-const steps = ['Užsakymo detalės', 'Pristatymo būdas', 'Apmokėjimo būdas', 'Patvirtinti užsakymą'];
-// const [name, setName] = useState('');
-// const [lastName, setLastName] = useState('');
-// const [email, setEmail] = useState('');
-// const [adress, setAdress] = useState('');
-// const [city, setCity] = useState('');
-// const [postCode, setPostCode] = useState('');
-
-// console.log(name);
-
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <DetailsForm />;
-        case 1:
-            return <AddressForm/>;
-        case 2:
-            return <PaymentForm/>;
-        case 3:
-            return <Review/>;
-        default:
-            throw new Error('Unknown step');
-    }
-}
 
 export default function Checkout() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [adress, setAdress] = useState('');
+    const [city, setCity] = useState('');
+    const [postCode, setPostCode] = useState('');
+    const [printPayment, setPrintPayment] = useState([]);
+    const [paymentId, setPaymentId] = useState(0);
+    // const [deliveryValue, setDeliveryValue] = useState('');
+    const [printDelivery, setPrintDelivery] = useState([]);
 
-    const handleNext = () => {
-        setActiveStep(activeStep + 1);
-    };
+    const printAllPayments = async () => {
+        const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.payment);
+        setPrintPayment(data.payment);
+    }
 
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
+    useEffect(() => {
+        printAllPayments();
+    }, [])
+
+
+
+    // console.log(paymentId)
+
+
+    const printAllDeliveries = async () => {
+        const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.Delivery);
+        setPrintDelivery(data.Delivery);
+    }
+
+    useEffect(() => {
+        printAllDeliveries();
+    }, [])
+
+
+
+
+
 
     return (
         <React.Fragment>
-            <CssBaseline/>
+            <CssBaseline />
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography component="h1" variant="h4" align="center">
                         Užsakymo patvirtinimas
                     </Typography>
-                    <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <React.Fragment>
-                        {activeStep === steps.length ? (
-                            <React.Fragment>
-                                <Typography variant="h5" gutterBottom>
-                                    Ačiū už jūsų užsakymą.
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    Jūsų užsakymas patvirtintas. Jums išsiųstas laiškas užsakymo apmokėjimui.
-                                </Typography>
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                {getStepContent(activeStep)}
-                                <div className={classes.buttons}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} className={classes.button}>
-                                            Atgal
-                                        </Button>
-                                    )}
-                                    {activeStep === steps.length - 1 ?
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
+                    <React.Fragment >
+                        <Grid container spacing={4} >
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    id="firstName"
+                                    name="firstName"
+                                    label="Vardas"
+                                    fullWidth
+                                    autoComplete="given-name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    id="lastName"
+                                    name="lastName"
+                                    label="Pavardė"
+                                    fullWidth
+                                    autoComplete="family-name"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="email"
+                                    name="email"
+                                    label="El. Paštas"
+                                    fullWidth
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="address1"
+                                    name="address1"
+                                    label="Adresas"
+                                    fullWidth
+                                    autoComplete="shipping address-line1"
+                                    value={adress}
+                                    onChange={(e) => setAdress(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    id="city"
+                                    name="city"
+                                    label="Miestas"
+                                    fullWidth
+                                    autoComplete="shipping address-level2"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                />
+                            </Grid>
 
-                                            className={classes.button}
-                                        >Pateikti užsakymą
-                                        </Button> : <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={handleNext}
-                                            className={classes.button}
-                                        >Toliau
-                                        </Button>}
-                                </div>
-                            </React.Fragment>
-                        )}
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    id="zip"
+                                    name="zip"
+                                    label="Pašto kodas"
+                                    fullWidth
+                                    autoComplete="shipping postal-code"
+                                    value={postCode}
+                                    onChange={(e) => setPostCode(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
                     </React.Fragment>
+
+                    
+                    <React.Fragment>
+                        <Typography variant="subtitle1">
+                            Pasirinkite apmokėjimo būdą</Typography>
+                        <div>
+                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+                                {printPayment.map((payment) => (
+
+                                    <option value={payment.id}>{payment.name}</option>
+                                ))}
+                            </NativeSelect>
+                        </div>
+                    </React.Fragment>
+
+
+                    <React.Fragment>
+                        <Typography variant="subtitle1">
+                            Pasirinkite pristatymo būdą</Typography>
+                        <div>
+                            <NativeSelect id='select' variant='standard' className={classes.formControl}>
+                                {printDelivery.map((delivery) => (
+
+                                    <option>{delivery.name}</option>
+                                ))}
+                            </NativeSelect>
+                        </div>
+                    </React.Fragment>
+
+
+                    <React.Fragment>
+                        <div className={classes.buttons}>
+                            <Button variant="contained" color="primary" className={classes.button}>Pateikti užsakymą</Button>
+                        </div>
+                    </React.Fragment>
+
+
                 </Paper>
 
             </main>
