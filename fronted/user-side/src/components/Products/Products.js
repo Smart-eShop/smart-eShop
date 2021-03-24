@@ -46,7 +46,6 @@ const Products = ({addCart, items, printItems}) => {
     const handleSearchChange = (e) => {
         setFilter(e.target.value);
     };
-console.log(printCategories);
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
     return (
         <React.Fragment>
