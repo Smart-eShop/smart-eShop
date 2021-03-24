@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsCategories = ({printCategories, setCategoryId}) => {
+const ProductsCat = ({printCategories, setCategoryId}) => {
     const classes = useStyles();
     console.log(printCategories);
     // const [printCategories, setPrintCategories] = useState([]);
@@ -47,7 +47,7 @@ const ProductsCategories = ({printCategories, setCategoryId}) => {
     );
 }
 
-// ProductsCategories.propTypes = {
+// ProductsCat.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
-export default ProductsCategories;
+export default ProductsCat;

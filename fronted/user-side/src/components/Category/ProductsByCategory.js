@@ -97,7 +97,7 @@ function ProductsByCategory({addCart, items, printCategories, categoryId}) {
     );
 }
 
-// ProductsCategories.propTypes = {
+// ProductsCat.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
 export default ProductsByCategory;
