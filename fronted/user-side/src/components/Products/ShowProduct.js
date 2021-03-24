@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
-import Carousel from 'react-material-ui-carousel';
-
-
-
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import Carousel from "react-material-ui-carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        marginTop: '200px',
-        marginBottom: '100px',
-        marginLeft: '100px',
-        marginRight: '100px',
-    },
-    card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    cardMedia: {
-        width: '100%', // 16:9
-        height: '100%',
-    },
-    discount: {
-        color: '#e64a19',
-    }
-
+  root: {
+    flexGrow: 1,
+    marginTop: "200px",
+    marginBottom: "100px",
+    marginLeft: "100px",
+    marginRight: "100px",
+  },
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardMedia: {
+    width: "100%", // 16:9
+    height: "100%",
+  },
+  discount: {
+    color: "#e64a19",
+  },
 }));
+
 
 const ShowProduct = ({ match, props, addCart }) => {
     const classes = useStyles();
