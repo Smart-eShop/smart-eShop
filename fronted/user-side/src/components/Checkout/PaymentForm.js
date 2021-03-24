@@ -1,17 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
- 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
   },
-});
+  formControl: {
+    margin: theme.spacing(0.2),
+    minWidth: 250,
+  },
+}));
+
 
 export default function PaymentForm() {
   const classes = useStyles();
@@ -31,23 +34,19 @@ export default function PaymentForm() {
 
 
 
-
-
   return (
     <React.Fragment>
 
       <Typography variant="h6" gutterBottom>
-      Pasirinkite apmokėjimo būdą
+        Pasirinkite apmokėjimo būdą
       </Typography>
+      <div>
+        <NativeSelect id='select' variant='standard' className={classes.formControl}>
+          {printPayment.map((payment) => (
+            <option>{payment.name}</option>
+          ))}
+        </NativeSelect>
 
-      <div className={classes.root}>
-      <FormControl component="fieldset">
-      <select id="payment" name="payment">
-            {printPayment.map((payment) => (
-    <option value="payment">{payment.name}</option>
-    ))}
-  </select>
-        </FormControl>
       </div>
     </React.Fragment>
   );
