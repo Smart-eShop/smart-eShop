@@ -32,7 +32,9 @@ export default function PaymentForm() {
     printAllPayments();
   }, [])
 
+const [paymentId, setPaymentId]=useState(0);
 
+console.log(paymentId)
 
   return (
     <React.Fragment>
@@ -41,9 +43,9 @@ export default function PaymentForm() {
         Pasirinkite apmokėjimo būdą
       </Typography>
       <div>
-        <NativeSelect id='select' variant='standard' className={classes.formControl}>
+        <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
           {printPayment.map((payment) => (
-            <option>{payment.name}</option>
+            <option value={payment.id}>{payment.name}</option>
           ))}
         </NativeSelect>
 
