@@ -21,36 +21,18 @@ import useLocalStorage from './useLocalStorage'
 
 const Main = () => {
     const [items, setItems] = useState([]);
-const printItems = async () => {
-    const url = 'https://eshopsmart.herokuapp.com/api/items';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.items);
-    setItems(data.items);
-}
-useEffect(() => {
-    printItems();
-}, []);
-    // const [cartItems, setCartItems] = useState(() => {
-    //     const localData = localStorage.getItem("cartItems");
-    //     return localData ? JSON.parse(localData) : [];
-    // });
-    // const [cartPriceBeforeTax, setCartPriceBeforeTax] = useState(() => {
-    //     const localData = localStorage.getItem("cartPriceBeforeTax");
-    //     return localData ? JSON.parse(localData) : "";
-    // });
-    // const [cartTaxes, setCartTaxes] = useState(() => {
-    //     const localData = localStorage.getItem("cartTaxes");
-    //     return localData ? JSON.parse(localData) : "";
-    // });
-    // const [cartTotalPrice, setCartTotalPrice] = useState(() => {
-    //     const localData = localStorage.getItem("cartTotalPrice");
-    //     return localData ? JSON.parse(localData) : "";
-    // });
-    // const [totalQuantity, setTotalQuantity] = useState(() => {
-    //     const localData = localStorage.getItem("totalQuantity");
-    //     return localData ? JSON.parse(localData) : "";
-    // });
+    const printItems = async () => {
+        const url = 'https://eshopsmart.herokuapp.com/api/items';
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.items);
+        setItems(data.items);
+    }
+
+    useEffect(() => {
+        printItems();
+    }, []);
+
     const [cartItems, setCartItems] = useLocalStorage('items', []);
     const [cartPriceBeforeTax, setCartPriceBeforeTax] = useLocalStorage('price', 0)
     const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
@@ -137,11 +119,13 @@ useEffect(() => {
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
                     <Route path="/products" exact render={(props) => (
-    <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
-)}/>
+
 <Route path="/category" exact render={(props) => (
     <ProductsCategories {...props} printCategories={printCategories} />
 )} />
+                        <Products {...props} addCart={addCart} items={items} printItems={printItems}/>
+                    )}/>
+
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>
                    
