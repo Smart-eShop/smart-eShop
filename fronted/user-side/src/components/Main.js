@@ -75,15 +75,15 @@ const Main = () => {
     const [printCategories, setPrintCategories] = useState([]);
 
     const printAllCategories = async () => {
-      const url = "https://eshopsmart.herokuapp.com/api/categories";
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data.Categories);
-      setPrintCategories(data.Categories);
+        const url = "https://eshopsmart.herokuapp.com/api/categories";
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.Categories);
+        setPrintCategories(data.Categories);
     };
-  console.log(printCategories);
+    console.log(printCategories);
     useEffect(() => {
-      printAllCategories();
+        printAllCategories();
     }, []);
 
 // const sendCart = async () => {
@@ -119,23 +119,21 @@ const Main = () => {
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
                     <Route path="/products" exact render={(props) => (
-
-<Route path="/category" exact render={(props) => (
-    <ProductsCategories {...props} printCategories={printCategories} />
-)} />
                         <Products {...props} addCart={addCart} items={items} printItems={printItems}/>
                     )}/>
-
+                    <Route path="/category" exact render={(props) => (
+                        <ProductsCategories {...props} printCategories={printCategories}/>
+                    )}/>
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>
-                   
+
                     <Route path="/category/:id" render={(props) => (
                         <ProductsByCategory {...props} items={items} printCategories={printCategories}/>
                     )}/>
                     <Route path="/contact-us" exact component={Contact}/>
                     <Route path="/checkout" exact render={(props) => (
                         <Checkout{...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
-                        cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity} cartItems={cartItems}/>
+                                 cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity} cartItems={cartItems}/>
                     )}/>
                     <Route path="/cart" exact render={(props) => (
                         <Cart{...props} cartItems={cartItems}/>
