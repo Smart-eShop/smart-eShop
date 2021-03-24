@@ -6,7 +6,7 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import Products from './Products/Products';
 import ShowProduct from './Products/ShowProduct';
-import ProductsCat from './Category/ProductsCat';
+import ProductsCate from './Category/ProductsCate';
 import ProductsByCategory from './Category/ProductsByCategory';
 import "../neumorphism.css";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -18,6 +18,7 @@ import FrontPage from './FrontPage/FrontPage';
 import Checkout from './Checkout/Checkout';
 import Cart from './Cart/Cart';
 import useLocalStorage from './useLocalStorage'
+import ProductsCategories from "./Category/ProductsCategories";
 
 const Main = () => {
     const [items, setItems] = useState([]);
@@ -38,7 +39,7 @@ const Main = () => {
     const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
     const [cartTotalPrice, setCartTotalPrice] = useLocalStorage('total_price', 0)
     const [totalQuantity, setTotalQuantity] = useLocalStorage('total_quantity', 0)
-    const [categoryId, setCategoryId] = useState('');
+    const [categoryId, setCategoryId] = useState(0);
 
     const addCart = (item) => {
         console.log("pridedu preke")
@@ -120,7 +121,7 @@ const Main = () => {
                         <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
                     )}/>
                     <Route path="/category" exact render={(props) => (
-                        <ProductsCat{...props} printCategories={printCategories} setCategoryId={setCategoryId}/>
+                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId}/>
                     )}/>
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>

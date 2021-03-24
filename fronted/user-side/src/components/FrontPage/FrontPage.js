@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../FrontPage/frontpage1.png';
-import ProductsCat from '../Category/ProductsCat';
+import ProductsCate from '../Category/ProductsCate';
 // import Footer from '../Footer/Footer';
 
 
@@ -126,7 +126,7 @@ export default function Album() {
             </div>
           </Container>
         </div>
-        <ProductsCat/>
+        <ProductsCate/>
         <Container className={classes.cardGrid} maxWidth="lg">
         <Container className={classes.root} component="section">
         <Typography variant="h4" marked="center" align="center" component="h2">

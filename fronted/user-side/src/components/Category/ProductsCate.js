@@ -15,9 +15,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsCat = ({printCategories, setCategoryId}) => {
+const ProductsCate = (props) => {
     const classes = useStyles();
-    console.log(printCategories);
+    console.log(props);
     // const [printCategories, setPrintCategories] = useState([]);
 
     // const printAllCategories = async () => {
@@ -37,17 +37,17 @@ const ProductsCat = ({printCategories, setCategoryId}) => {
             <Typography variant="h4" marked="center" align="center" component="h2">
                 Prekių kategorijos
             </Typography>
-            {printCategories.map((category) => (
-                <Button href={`/category/${category.id}`} value={category.id} onClick={(e) => setCategoryId(e.currentTarget.value)}>
-                    {category.category_name}
-                </Button>
-            ))}
+            {/*{printCategories.map((category) => (*/}
+            {/*    <Button href={`/category/${category.id}`} value={category.category_name} onClick={(e) => setCategoryId(e.currentTarget.value)}>*/}
+            {/*        {category.category_name}*/}
+            {/*    </Button>*/}
+            {/*))}*/}
             {/* <Footer/> */}
         </Container>
     );
 }
 
-// ProductsCat.propTypes = {
+// ProductsCate.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
-export default ProductsCat;
+export default ProductsCate;
