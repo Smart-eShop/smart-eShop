@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Products = (props, addCart) => {
+const Products = (props) => {
     const classes = useStyles();
     const [items, setItems] = useState([]);
     const [filter, setFilter] = useState("");
