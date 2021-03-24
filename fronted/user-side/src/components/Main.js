@@ -38,8 +38,7 @@ const Main = () => {
     const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
     const [cartTotalPrice, setCartTotalPrice] = useLocalStorage('total_price', 0)
     const [totalQuantity, setTotalQuantity] = useLocalStorage('total_quantity', 0)
-    const accessToken = localStorage.getItem("access_token");
-
+    const [categoryId, setCategoryId] = useState(0);
 
     const addCart = (item) => {
         console.log("pridedu preke")
@@ -109,7 +108,6 @@ const Main = () => {
     // useEffect(() => {
     //     sendCart();
     // }, []);
-
     return (
         <>
             <Router>
@@ -122,13 +120,12 @@ const Main = () => {
                         <Products {...props} addCart={addCart} items={items} printItems={printItems}/>
                     )}/>
                     <Route path="/category" exact render={(props) => (
-                        <ProductsCategories {...props} printCategories={printCategories}/>
+                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId} />
                     )}/>
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>
-
                     <Route path="/category/:id" render={(props) => (
-                        <ProductsByCategory {...props} items={items} printCategories={printCategories}/>
+                        <ProductsByCategory {...props} items={items} printCategories={printCategories} categoryId={categoryId} />
                     )}/>
                     <Route path="/contact-us" exact component={Contact}/>
                     <Route path="/checkout" exact render={(props) => (
