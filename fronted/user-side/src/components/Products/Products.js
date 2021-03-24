@@ -37,21 +37,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Products = ({addCart}) => {
+const Products = ({addCart, items, printItems}) => {
     const classes = useStyles();
-    const [items, setItems] = useState([]);
-    const [filter, setFilter] = useState("");
-    const printItems = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/items';
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data.items);
-        setItems(data.items);
-    }
 
-    useEffect(() => {
-        printItems();
-    }, []);
+    const [filter, setFilter] = useState("");
 
     const handleSearchChange = (e) => {
         setFilter(e.target.value);
