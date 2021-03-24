@@ -18,6 +18,7 @@ export default function DetailsForm() {
   const [postCode, setPostCode] = useState('');
 
   console.log(name);
+  console.log(lastName)
   const classes = useStyles();
 
   return ( 

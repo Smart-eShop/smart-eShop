@@ -49,6 +49,9 @@ const Main = () => {
         } else {
             alert('Atsiprašome, daugiau prekių sandėlyje nėra')
         }
+
+    }
+    const totals = () => {
         const itemsPriceBeforeTaxes = cartItems.reduce((a, c) => a + ((c.price * 79) / 100) * c.quantity, 0);
         setCartPriceBeforeTax(itemsPriceBeforeTaxes);
         const taxes = cartItems.reduce((a, c) => a + ((c.price * 21) / 100) * c.quantity, 0);
@@ -61,13 +64,15 @@ const Main = () => {
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems))
+    }, [addCart]);
+
+    useEffect(() => {
+        totals()
         localStorage.setItem("cartPriceBeforeTax", JSON.stringify(cartPriceBeforeTax))
         localStorage.setItem("cartTaxes", JSON.stringify(cartTaxes))
         localStorage.setItem("cartTotalPrice", JSON.stringify(cartTotalPrice))
         localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity))
-        localStorage.setItem("cartItems", JSON.stringify(cartItems))
-    }, [addCart]);
-
+    }, [cartItems])
     console.log(JSON.stringify(cartItems));
     console.log(cartItems);
 // const sendCart = async () => {

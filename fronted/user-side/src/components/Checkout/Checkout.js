@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -52,11 +52,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const steps = ['Užsakymo detalės', 'Pristatymo būdas', 'Apmokėjimo būdas', 'Patvirtinti užsakymą'];
+// const [name, setName] = useState('');
+// const [lastName, setLastName] = useState('');
+// const [email, setEmail] = useState('');
+// const [adress, setAdress] = useState('');
+// const [city, setCity] = useState('');
+// const [postCode, setPostCode] = useState('');
+
+// console.log(name);
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return <DetailsForm/>;
+            return <DetailsForm />;
         case 1:
             return <AddressForm/>;
         case 2:
