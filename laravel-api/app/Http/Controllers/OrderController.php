@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
+use stdClass;
 
 
 class OrderController extends Controller
@@ -21,43 +22,56 @@ class OrderController extends Controller
     public function __construct()
     {
 
-         $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     public function updateUserAddress(Request $request, User $user)
     {
-        $validate = Validator::make($request->all(),[
+        $validate = Validator::make($request->all(), [
             'street_number' => ['required', 'string'],
             'city' => ['required', 'string'],
             'postcode' => ['required']
-            ]);
+        ]);
 
-        if (auth()->id() == $user->id){
-        if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()]);
-        } else {
-            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-            return response()->json(['message' => 'Address updated successfully!'], 200);
+        if (auth()->id() == $user->id) {
+            if ($validate->fails()) {
+                return response()->json(['error' => $validate->errors()]);
+            } else {
+                User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
+                return response()->json(['message' => 'Address updated successfully!'], 200);
+            }
         }
-    }
-        return response()->json(['message'=>'You can only update your address!'],200);
+        return response()->json(['message' => 'You can only update your address!'], 200);
     }
 
 // visas orderio atvaizdavimas
     public function getAllOrdersTest()
     {
 
-        if (Gate::allows('seller-role')){
+        if (Gate::allows('seller-role')) {
 
-        $orders = Order::all();
-        $en = '';
-        foreach ($orders as $order)
-           $en = $order->cart;
+            $orders = Order::all();
 
-        return response()->json(['orders'=>$orders, "en"=>  json_decode($en)]);
-         }
+            $array = [];
+            foreach ($orders as $order) {
+                $en = json_decode($order->cart);
+                array_push($array, $en);
+            }
+
+//            $itemID = "";
+//            $quantity = "";
+//            foreach ($array as $first) {
+//                foreach ($first as $value) {
+//                    $itemID = $value->id;
+//                    $quantity = $value->quantity;
+//                }
+//            }
+
+            return response()->json(['orders' => $orders, "en" => $array]);
+        }
         return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
     }
+
     public function showOrders(Request $request)
     {
         $id = Auth::id();
