@@ -80,7 +80,7 @@ Route::get('orders', 'OrderController@getAllOrdersTest');
 Route::post('order/update-order-status/order={order}', 'OrderController@updateOrderStatus');
 
 Route::get('orders/all', 'OrderController@showOrders');
-Route::get('order/{order}', 'ApiController@showOneOrder');
+//Route::get('order/{order}', 'ApiController@showOneOrder');
 
 
 

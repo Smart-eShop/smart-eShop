@@ -65,7 +65,9 @@ class OrderController extends Controller
             ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
             ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
             ->where('user_id', $id)
-            ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
+            ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')
+            ->orderByDesc('orders.created_at')
+            ->get();
 
         $cart = [];
         $enCart = [];
