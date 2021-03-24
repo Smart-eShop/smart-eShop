@@ -17,7 +17,7 @@ class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems', 'recaptchaKey', 'showAllCategories']]);
+        $this->middleware('auth:api', ['except' => ['showFullItem', 'getAllItems', 'recaptchaKey', 'showAllCategories','getPopularItems']]);
     }
 
     public function getUsers()
@@ -34,9 +34,7 @@ class ApiController extends Controller
 
             return response()->json(['users' => $data], 200);
         }
-
         return response()->json(["error" => 404, "message" => 'Nerasta!'], 404);
-
     }
 
     public function showFullItem(Item $item)
@@ -46,10 +44,18 @@ class ApiController extends Controller
 
     public function getAllItems()
     {
-
-        $data = Item::with('category:id,category_name', 'user:id,name')->orderByDesc('items.created_at')->get();
+        $data = Item::with('category:id,category_name', 'user:id,name')
+            ->orderByDesc('items.created_at')
+            ->get();
         return response()->json(['items' => $data], 200);
+    }
 
+    public function getPopularItems()
+    {
+        $data = Item::with('category:id,category_name', 'user:id,name')
+            ->orderByDesc('items.quantity')
+            ->get();
+        return response()->json(['items' => $data], 200);
     }
 
     public function recaptchaKey()
