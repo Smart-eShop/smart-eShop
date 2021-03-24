@@ -1,54 +1,55 @@
-import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-
- 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-});
-
-export default function PaymentForm() {
-  const classes = useStyles();
-
-  const [printPayment, setPrintPayment] = useState([]);
-  const printAllPayments = async () => {
-    const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.payment);
-    setPrintPayment(data.payment);
-  }
-
-  useEffect(() => {
-    printAllPayments();
-  }, [])
+// import React, { useState, useEffect } from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Typography from '@material-ui/core/Typography';
+// import NativeSelect from '@material-ui/core/NativeSelect';
 
 
+// const useStyles = makeStyles((theme) => ({
+//   button: {
+//     display: 'block',
+//     marginTop: theme.spacing(2),
+//   },
+//   formControl: {
+//     margin: theme.spacing(0.2),
+//     minWidth: 250,
+//   },
+// }));
 
 
+// export default function PaymentForm() {
+//   const classes = useStyles();
 
-  return (
-    <React.Fragment>
+//   const [printPayment, setPrintPayment] = useState([]);
+//   const printAllPayments = async () => {
+//     const url = 'https://eshopsmart.herokuapp.com/api/payment/show';
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     console.log(data.payment);
+//     setPrintPayment(data.payment);
+//   }
 
-      <Typography variant="h6" gutterBottom>
-      Pasirinkite apmokėjimo būdą
-      </Typography>
+//   useEffect(() => {
+//     printAllPayments();
+//   }, [])
 
-      <div className={classes.root}>
-      <FormControl component="fieldset">
-          {printPayment.map((payment) => (
-            <RadioGroup aria-label="payment" name="payment" >
-              <FormControlLabel value="payment" control={<Radio />} label={payment.name} />
-            </RadioGroup>
-          ))}
-        </FormControl>
-      </div>
-    </React.Fragment>
-  );
-}
+// const [paymentId, setPaymentId]=useState(0);
+
+// console.log(paymentId)
+
+//   return (
+//     <React.Fragment>
+
+//       <Typography variant="h6" gutterBottom>
+//         Pasirinkite apmokėjimo būdą
+//       </Typography>
+//       <div>
+//         <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+//           {printPayment.map((payment) => (
+//             <option value={payment.id}>{payment.name}</option>
+//           ))}
+//         </NativeSelect>
+
+//       </div>
+//     </React.Fragment>
+//   );
+// }

@@ -1,64 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+// import React, { useState, useEffect } from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Typography from '@material-ui/core/Typography';
+// import NativeSelect from '@material-ui/core/NativeSelect';
 
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-});
-
-export default function AddressForm() {
-  const classes = useStyles();
-
-
-  const [printDelivery, setPrintDelivery] = useState([]);
-  const printAllDeliveries = async () => {
-    const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.Delivery);
-    setPrintDelivery(data.Delivery);
-  }
-
-  useEffect(() => {
-    printAllDeliveries();
-  }, [])
-
-  const [value, setValue] = React.useState('female');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+// const useStyles = makeStyles((theme) => ({
+//   button: {
+//     display: 'block',
+//     marginTop: theme.spacing(2),
+//   },
+//   formControl: {
+//     margin: theme.spacing(0.2),
+//     minWidth: 250,
+//   },
+// }));
 
 
-  return (
-    <React.Fragment>
+// export default function AddressForm() {
 
-      <Typography variant="h6" gutterBottom>
-        Pasirinkite pristatymo būdą
-      </Typography>
 
-      {/* <div className={classes.root}>
-        <div>
-          {printDelivery.map((delivery) => (
-            <p>{delivery.name}</p>
-          ))}
-        </div> 
-</div> */}
+//   const classes = useStyles();
 
-        <FormControl component="fieldset">
-          {printDelivery.map((delivery) => (
-            <RadioGroup aria-label="delivery" name="delivery" value={value} onChange={handleChange}>
-              <FormControlLabel value="delivery" control={<Radio />} label={delivery.name} />
-            </RadioGroup>
-          ))}
-        </FormControl>
-    </React.Fragment>
-  );
-}
+
+//   const [printDelivery, setPrintDelivery] = useState([]);
+//   const printAllDeliveries = async () => {
+//     const url = 'https://eshopsmart.herokuapp.com/api/delivery/show';
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     console.log(data.Delivery);
+//     setPrintDelivery(data.Delivery);
+//   }
+
+//   useEffect(() => {
+//     printAllDeliveries();
+//   }, [])
+
+//   const [deliveryValue, setDeliveryValue] = useState('');
+
+//   return (
+//     <React.Fragment>
+
+//       <Typography variant="h6" gutterBottom>
+//         Pasirinkite pristatymo būdą
+//       </Typography>
+
+//       <div>
+//         <NativeSelect id='select' variant='standard' className={classes.formControl}>
+//           {printDelivery.map((delivery) => (
+//             <option>{delivery.name}</option>
+//           ))}
+//         </NativeSelect>
+
+//       </div>
+//     </React.Fragment>
+//   );
+// }
+

@@ -85,6 +85,7 @@ export default function Navbar(totalQuantity) {
   const classes = useStyles();
 
   function clerLocalStorage() {
+    console.log("logout");
     localStorage.clear();
     document.location.reload();
   }
@@ -176,7 +177,7 @@ export default function Navbar(totalQuantity) {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
-              <MenuItem onClick={handleClose}>Atsijungti</MenuItem>
+              <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
             </Menu>
           </div>
         )}
@@ -211,11 +212,17 @@ export default function Navbar(totalQuantity) {
             onClose: handleDrawerClose,
           }}
         >
-          <div className={drawerContainer}>{getDrawerChoices()}</div>
+          <div className={drawerContainer}>
+            {getDrawerChoices()}
+
+            <Link to={"/login"} component={RouterLink}>
+              <MenuItem>Prisijungti</MenuItem>
+            </Link>
+          </div>
         </Drawer>
 
         <div>{smartEShop}</div>
-        {!access_token && (
+        {access_token && (
           <div>
             <IconButton
               aria-label="account of current user"
@@ -253,6 +260,7 @@ export default function Navbar(totalQuantity) {
   const getDrawerChoices = () => {
     return headersData.map(({ label, href }) => {
       return (
+        <>
         <Link
           {...{
             component: RouterLink,
@@ -264,6 +272,12 @@ export default function Navbar(totalQuantity) {
         >
           <MenuItem>{label}</MenuItem>
         </Link>
+
+        <Link to={"/login"} component={RouterLink}>
+              <MenuItem>Prisijungti</MenuItem>
+            </Link>
+            </>
+        
       );
     });
   };

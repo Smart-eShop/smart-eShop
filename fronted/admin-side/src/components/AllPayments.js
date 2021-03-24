@@ -7,6 +7,7 @@ import {
   CModalHeader,
   CModalTitle,
   CModalFooter,
+  CAlert,
   CModalBody,
   CCard,
   CCardBody,
@@ -23,6 +24,7 @@ const PaymentsTable = () => {
   // const [deleteMessage, setDeleteMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [primary, setPrimary] = useState(false);
+  const [message, setMessage] = useState("");
 
   const accessToken = localStorage.getItem("access_token");
 
@@ -50,7 +52,7 @@ const PaymentsTable = () => {
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [AddPayment, primary]);
 
   function deletePayment(id) {
     fetch(`https://eshopsmart.herokuapp.com/api/payment/delete/${id}`, {
@@ -61,8 +63,19 @@ const PaymentsTable = () => {
       },
     })
       .then((data) => data.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setMessage(data.message);
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+        fetchData();
+      });
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const [details, setDetails] = useState([]);
   // const [items, setItems] = useState(usersData)
@@ -80,8 +93,8 @@ const PaymentsTable = () => {
 
   const fields = [
     { key: "id", _style: { width: "1%" } },
-    { key: "name", _style: { width: "5%" } },
-    { key: "terms", _style: { width: "5%" } },
+    { key: "name", label: "Pavadinimas", _style: { width: "5%" } },
+    { key: "terms", label: "Sąlygos", _style: { width: "5%" } },
 
     {
       key: "show_details",
@@ -124,14 +137,16 @@ const PaymentsTable = () => {
 
         <CModal
           show={primary}
-          onClose={() => setPrimary(!primary)}
+          onClose={() => {
+            setPrimary(!primary);
+          }}
           color="primary"
         >
           <CModalHeader closeButton>
             <CModalTitle>Sukurti naują apmokėjimą</CModalTitle>
           </CModalHeader>
           <CModalBody>
-            <AddPayment />
+            <AddPayment onReload={fetchData} />
           </CModalBody>
         </CModal>
         <CDataTable
@@ -141,7 +156,7 @@ const PaymentsTable = () => {
           tableFilter
           footer
           itemsPerPageSelect
-          itemsPerPage={5}
+          itemsPerPage={20}
           hover
           sorter
           pagination
@@ -163,7 +178,7 @@ const PaymentsTable = () => {
                       toggleDetails(index);
                     }}
                   >
-                    {details.includes(index) ? "Hide" : "Show"}
+                    {details.includes(index) ? "Paslėpti" : "Rodyti"}
                   </CButton>
                 </td>
               );
@@ -172,6 +187,12 @@ const PaymentsTable = () => {
               return (
                 <CCollapse show={details.includes(index)}>
                   <CCardBody>
+                    {message ? (
+                      <CAlert color="primary" closeButton>
+                        {message}
+                      </CAlert>
+                    ) : null}
+
                     <h4>{item.name}</h4>
                     {/* <p className="text-muted">{item.time}</p>
 											<p>{item.price}</p> */}
@@ -185,7 +206,7 @@ const PaymentsTable = () => {
                       color="danger"
                       className="ml-1"
                     >
-                      Ištrinti pristatymo būdą
+                      Ištrinti apmokėjimą
                     </CButton>
                   </CCardBody>
                 </CCollapse>
