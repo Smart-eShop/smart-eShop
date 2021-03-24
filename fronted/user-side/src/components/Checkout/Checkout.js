@@ -7,17 +7,16 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import { MenuItem } from '@material-ui/core';
 
 
 
 const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-    },
     layout: {
         width: 'auto',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
+        marginBottom: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
             width: 600,
             marginLeft: 'auto',
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
             marginTop: theme.spacing(12),
-            marginBottom: theme.spacing(6),
+            marginBottom: theme.spacing(8),
             padding: theme.spacing(3),
         },
     },
@@ -44,7 +43,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
     },
     formControl: {
-        margin: theme.spacing(0.5),
+        marginTop: theme.spacing(5),
+        minWidth: 250,
+    },
+    formControl2: {
         minWidth: 250,
     },
 }));
@@ -60,8 +62,8 @@ export default function Checkout({cartPriceBeforeTax, cartTaxes, cartTotalPrice,
     const [city, setCity] = useState('');
     const [postCode, setPostCode] = useState('');
     const [printPayment, setPrintPayment] = useState([]);
-    const [paymentId, setPaymentId] = useState(47);//reikia pakeisti kad imtu is selectu value
-    const [deliveryValue, setDeliveryValue] = useState(13);
+    const [paymentId, setPaymentId] = useState('');//reikia pakeisti kad imtu is selectu value
+    const [deliveryValue, setDeliveryValue] = useState('');
     const [printDelivery, setPrintDelivery] = useState([]);
     const accessToken = localStorage.getItem("access_token");
 
@@ -110,7 +112,7 @@ const sendCart = async () => {
             });
             const data = await response.json();
             console.log(data);
-            // localStorage.clear();
+            localStorage.clear();
 
         } catch (error) {
             console.log(error);
@@ -212,37 +214,33 @@ const sendCart = async () => {
                     </React.Fragment>
 
                     
-                    <React.Fragment>
-                        <Typography variant="subtitle1">
+                
+                        <Typography variant="subtitle1" className={classes.formControl}>
                             Pasirinkite apmokėjimo būdą</Typography>
-                        <div>
-                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={paymentId} onInput={(e) => setPaymentId(e.target.value)}>
+                        
+                            <select className={classes.formControl2} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
                                 {printPayment.map((payment) => (
                                     <option value={payment.id}>{payment.name}</option>
                                 ))}
-                            </NativeSelect>
-                        </div>
-                    </React.Fragment>
+                            </select>
+                    
+                    
 
 
-                    <React.Fragment>
-                        <Typography variant="subtitle1">
+                    
+                        <Typography variant="subtitle1" className={classes.formControl}>
                             Pasirinkite pristatymo būdą</Typography>
-                        <div>
-                            <NativeSelect id='select' variant='standard' className={classes.formControl} value={deliveryValue} onInput={(e) => setDeliveryValue(e.target.value)}>
+                        
+                            <select className={classes.formControl2} value={deliveryValue} onChange={(e) => setDeliveryValue(e.target.value)}>
                                 {printDelivery.map((delivery) => (
                                     <option value={delivery.id}>{delivery.name}</option>
                                 ))}
-                            </NativeSelect>
-                        </div>
-                    </React.Fragment>
-
-
-                    <React.Fragment>
+                            </select>
+                    
                         <div className={classes.buttons}>
                             <Button variant="contained" color="primary" className={classes.button} onClick={sendCart}>Pateikti užsakymą</Button>
                         </div>
-                    </React.Fragment>
+                    
 
 
                 </Paper>
