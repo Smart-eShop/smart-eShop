@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {map} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,11 +15,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ProductsByCategory(props) {
+function ProductsByCategory({items, printCategories}) {
   const classes = useStyles();
- console.log(props);
+ console.log(items);
+ console.log(printCategories)
   return (
     <Container className={classes.root} component="section">
+        {items.map(item => (
+            <h1>{item.title}</h1>
+        ))}
       <Typography variant="h4" marked="center" align="center" component="h2">
         by category
       </Typography>
