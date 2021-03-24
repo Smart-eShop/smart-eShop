@@ -14,34 +14,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ProductsCategories() {
+function ProductsByCategory() {
   const classes = useStyles();
-  const [printCategories, setPrintCategories] = useState([]);
-
-  const printAllCategories = async () => {
-    const url = "https://eshopsmart.herokuapp.com/api/categories";
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.Categories);
-    setPrintCategories(data.Categories);
-  };
-
-  useEffect(() => {
-    printAllCategories();
-  }, []);
-
-
-
+ 
   return (
     <Container className={classes.root} component="section">
       <Typography variant="h4" marked="center" align="center" component="h2">
         Prekių kategorijos
       </Typography>
-      {printCategories.map((category) => (
+      {/* {printCategories.map((category) => (
         <Button>
 {category.category_name}
         </Button>
-           ))}
+           ))} */}
     </Container>
   );
 }
@@ -49,4 +34,4 @@ function ProductsCategories() {
 // ProductsCategories.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
-export default ProductsCategories;
+export default ProductsByCategory;
