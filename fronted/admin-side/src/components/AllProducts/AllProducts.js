@@ -175,7 +175,7 @@ const ProductTable = () => {
                       toggleDetails(index);
                     }}
                   >
-                    {details.includes(index) ? "Hide" : "Show"}
+                    {details.includes(index) ? "Slėpti" : "Rodyti"}
                   </CButton>
                 </td>
               );

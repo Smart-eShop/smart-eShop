@@ -50,6 +50,7 @@ const AddPayment = React.lazy(() => import('./components/AddPayment'));
 const AllPayments = React.lazy(() => import('./components/AllPayments'));
 const AllCategories = React.lazy(() => import('./components/categories/AllCategories'));
 const AllProducts = React.lazy(() => import('./components/AllProducts/AllProducts'));
+const AllOrders = React.lazy(() => import('./components/AllOrders'));
 
 
 const routes = [
@@ -63,7 +64,8 @@ const routes = [
   { path: '/all-delivery', exact: true, Name: 'AllDelivery', component: AllDelivery },
   { path: '/all-payments', exact: true, Name: 'AllPayments', component: AllPayments },
   { path: '/all-products', Name: 'AllProducts', component: AllProducts },
-
+  { path: '/all-Orders', exact: true, Name: 'AllOrders', component: AllOrders },
+  
 
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
