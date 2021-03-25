@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../FrontPage/frontpage1.png';
 import ProductsCate from '../Category/ProductsCate';
+import Category from '../Category/Category'
 // import Footer from '../Footer/Footer';
 
 
@@ -74,11 +75,12 @@ export default function Album() {
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);
+    
     //    data.popularItems.forEach(items => {
     //       if (reducedOptions.length < 3) {
     //         reducedOptions.push(items)
     //     }
-    // });
+    // })
     //     setPopularItems(reducedOptions);
     //     console.log(reducedOptions);
 
@@ -149,7 +151,11 @@ export default function Album() {
             </div>
           </Container>
         </div>
-        <ProductsCate />
+
+
+        <Category />
+
+
         <Container className={classes.cardGrid} maxWidth="lg">
           <Container className={classes.root} component="section">
             <Typography variant="h4" marked="center" align="center" component="h2">
@@ -158,6 +164,7 @@ export default function Album() {
           </Container>
 
           <Grid container spacing={4}>
+          
             {popularItems.map((itemp) => (
               <Grid itemp key={itemp.id} xs={4} sm={12} md={4}>
                 <Card className={classes.item}>
