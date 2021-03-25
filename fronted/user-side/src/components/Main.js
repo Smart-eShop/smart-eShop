@@ -26,7 +26,7 @@ const Main = () => {
         const url = 'https://eshopsmart.herokuapp.com/api/items';
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.items);
+        // console.log(data.items);
         setItems(data.items);
     }
 
@@ -68,9 +68,9 @@ const Main = () => {
     }, [cartItems]);
 
     console.log(JSON.stringify(cartItems));
-    console.log(cartItems);
-    console.log(cartTotalPrice);
-    console.log(totalQuantity);
+    // console.log(cartItems);
+    // console.log(cartTotalPrice);
+    // console.log(totalQuantity);
 
     const [printCategories, setPrintCategories] = useState([]);
 
@@ -78,7 +78,7 @@ const Main = () => {
         const url = "https://eshopsmart.herokuapp.com/api/categories";
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.Categories);
+        // console.log(data.Categories);
         setPrintCategories(data.Categories);
     };
     console.log(printCategories);
@@ -109,6 +109,7 @@ const Main = () => {
     // useEffect(() => {
     //     sendCart();
     // }, []);
+    console.log(categoryId)
     return (
         <>
             <Router>
@@ -121,7 +122,7 @@ const Main = () => {
                         <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
                     )}/>
                     <Route path="/category" exact render={(props) => (
-                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId}/>
+                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
                     )}/>
                     <Route path="/products/:id" component={ShowProduct}/>
                     <Route path="/about" exact component={About}/>

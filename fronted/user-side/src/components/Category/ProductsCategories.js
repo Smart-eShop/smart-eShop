@@ -12,9 +12,14 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const ProductsCategories = ({printCategories, setCategoryId}) => {
+const ProductsCategories = ({printCategories, setCategoryId, categoryId}) => {
     const classes = useStyles();
-    console.log(printCategories);
+    console.log(categoryId);
+    const getCatId = (e,id) => {
+        console.log("gaunu id gal" + id)
+        setCategoryId(id);
+    }
+
     return (
         <div>
             <Container className={classes.root} component="section">
@@ -22,11 +27,14 @@ const ProductsCategories = ({printCategories, setCategoryId}) => {
                     Prekių kategorijos
                 </Typography>
                 {printCategories.map((category) => (
-                    <Button href={`/category/${category.id}`} key={category.id} value={category.id} onClick={(e) => setCategoryId(e.currentTarget.value)}>
-                        {category.category_name}
-                    </Button>
+
+                        <button type="submit" value={category.id}
+                                onClick={(e) => setCategoryId(e.currentTarget.value)}>
+                            <a href={`/category/${category.id}`}> {category.category_name}  </a>
+                        </button>
+
                 ))}
-                 {/*<Footer/>*/}
+                {/*<Footer/>*/}
             </Container>
         </div>
     );
