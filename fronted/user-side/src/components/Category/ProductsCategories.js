@@ -12,8 +12,22 @@ import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        marginTop: theme.spacing(8),
-        marginBottom: theme.spacing(4),
+        marginTop: theme.spacing(15),
+        marginBottom: theme.spacing(8),
+    },
+    title:{
+        marginBottom: theme.spacing(8),
+    },
+    button: {
+        margin: theme.spacing(1),
+        width: 230,
+        height: 80,
+        bgcolor: 'primary.dark',
+        ':hover': {
+            backgroundColor: 'primary.main',
+            opacity: [0.9, 0.8, 0.7],
+        },
+        marginBottom: theme.spacing(8),
     },
 
 }));
@@ -33,12 +47,12 @@ const ProductsCategories = ({printCategories, setCategoryId, items, addCart, cat
     return (
         <div>
             <Container className={classes.root} component="section">
-                <Typography variant="h4" marked="center" align="center" component="h2">
+                <Typography  className={classes.title} variant="h4" marked="center" align="center" component="h2">
                     Prekių kategorijos
                 </Typography>
                 {printCategories.map((category) => (
 
-                        <button type="submit" value={category.id}
+                        <button  variant='outlined' className={classes.button} type="submit" value={category.id}
                                 onClick={(e) => setCategoryId(category.id)}
                                 component={Link} to ={`/category/${category.id}`}
                                 placeholder={category.category_name} >

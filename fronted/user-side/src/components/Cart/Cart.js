@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CartItem from "./CartItem";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -31,6 +32,16 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     justifyContent: "space-between",
   },
+  paper: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(5),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(8),
+        padding: theme.spacing(3),
+    },
+},
 }));
 
 const Cart = ({
@@ -97,10 +108,12 @@ const Cart = ({
   // );
 
   return (
+  
     <Container>
+      <Paper className={classes.paper} >
       <div className={classes.toolbar} />
-      <Typography className={classes.title} variant="h5" gutterBottom>
-        Your Shopping Cart
+      <Typography className={classes.title} variant="h4" gutterBottom>
+        Pirkinių krepšelis:
       </Typography>
       <CartItem
         cartItems={cartItems}
@@ -110,8 +123,8 @@ const Cart = ({
       />
       <div className={classes.cardDetails}>
         <div clasName="col-10">
-          <Typography variant="h4">Iš viso:{viso} Eur.</Typography>
-          <Typography variant="p">Pvm mokestis:{mok} Eur.</Typography>
+          <Typography variant="h5">Iš viso: {viso} Eur.</Typography>
+          {/* <Typography variant="h6">Pvm mokestis:{mok} Eur.</Typography> */}
         </div>
         <div>
           <Button
@@ -122,7 +135,7 @@ const Cart = ({
             color="secondary"
             onClick={clearCart}
           >
-            Empty cart
+            Naikinti krepšelį
           </Button>
           <Button
             className={classes.checkoutButton}
@@ -133,10 +146,11 @@ const Cart = ({
             variant="contained"
             color="primary"
           >
-            Checkout
+            Užsakyti
           </Button>
         </div>
       </div>
+      </Paper>
     </Container>
   );
 };
