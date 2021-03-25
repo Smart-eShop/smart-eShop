@@ -20,6 +20,7 @@ import useLocalStorage from "./useLocalStorage";
 import ProductsCategories from "./Category/ProductsCategories";
 import Category from "./Category/Category";
 
+
 const Main = () => {
   const [items, setItems] = useState([]);
   const printItems = async () => {
@@ -164,6 +165,9 @@ const Main = () => {
                     )}/>
            <Route path="/products/:id" exact render={(props) =>(
                         <ShowProduct {...props} addCart={addCart} />
+                    )}/>
+                      <Route path="/category/:id" exact render={(props) =>(
+                        <ProductsByCategory {...props} addCart={addCart} items={items} categoryId={categoryId}/>
                     )}/>
           <Route path="/about" exact component={About} />
           
