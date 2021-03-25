@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import TheLayout from '../containers/TheLayout'
+import React, { useState } from "react";
+import TheLayout from "../containers/TheLayout";
 import {
   CButton,
   CCard,
@@ -12,66 +12,63 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-
-
-
+  CRow,
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { Link } from "react-router-dom";
+import { exact } from "prop-types";
 
 const Login = () => {
   const [redir, setRedir] = useState(false);
-  const [emailInput, setEmail] = useState('');
-  const [passwordInput, setPassword] = useState('');
+  const [emailInput, setEmail] = useState("");
+  const [passwordInput, setPassword] = useState("");
 
-  const [userNameInput, userSetName] = useState('');
-  const [userPasswordInput, userSetPassword] = useState('');
-
-
-
+  const [userNameInput, userSetName] = useState("");
+  const [userPasswordInput, userSetPassword] = useState("");
 
   async function userLoginFetch() {
-
-    fetch(`https://eshopsmart.herokuapp.com/api/login?name=${userNameInput}&password=${userPasswordInput}`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-
-      .then(data => data.json())
-      .then(data => JSON.parse(JSON.stringify(data.access_token)))
-      .then(data => localStorage.setItem('access_token', data))
-      .then(setRedir(true))
+    fetch(
+      `https://eshopsmart.herokuapp.com/api/login?name=${userNameInput}&password=${userPasswordInput}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => JSON.parse(JSON.stringify(data.access_token)))
+      .then((data) => {
+        localStorage.setItem("access_token", data);
+        localStorage.setItem("user", "user");
+        window.location.reload();
+      })
+      .then(setRedir(true));
   }
-
 
   async function loginFetch() {
-    fetch(`https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-
-
-      .then(data => data.json())
-      .then(data => JSON.parse(JSON.stringify(data.access_token)))
-      .then(data => localStorage.setItem('access_token', data))
-      .then(setRedir(true))
+    fetch(
+      `https://eshopsmart.herokuapp.com/api/login/admin?email=${emailInput}&password=${passwordInput}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => JSON.parse(JSON.stringify(data.access_token)))
+      .then((data) => {
+        localStorage.setItem("access_token", data);
+        localStorage.setItem("admin", "admin");
+        window.location.reload();
+      })
+      .then(setRedir(true));
   }
-
-
-
-
 
   if (redir) {
-    return (<TheLayout />)
+    return <Link to="/" exact component={TheLayout} />;
   }
-
-
-
-
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -81,10 +78,11 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-3">
                 <CCardBody>
-                  <CForm  >
-
+                  <CForm>
                     <h3>Administratoriaus prisijungimas</h3>
-                    <p className="text-muted">Prisijunkite prie savo paskyros</p>
+                    <p className="text-muted">
+                      Prisijunkite prie savo paskyros
+                    </p>
 
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
@@ -92,8 +90,13 @@ const Login = () => {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="El.Paštas" autoComplete="email"
-                        value={emailInput} onInput={e => setEmail(e.target.value)} />
+                      <CInput
+                        type="text"
+                        placeholder="El.Paštas"
+                        autoComplete="email"
+                        value={emailInput}
+                        onInput={(e) => setEmail(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -101,37 +104,55 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Slaptažodis" autoComplete="current-password"
-                        value={passwordInput} onInput={e => setPassword(e.target.value)} />
+                      <CInput
+                        type="password"
+                        placeholder="Slaptažodis"
+                        autoComplete="current-password"
+                        value={passwordInput}
+                        onInput={(e) => setPassword(e.target.value)}
+                      />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" onClick={loginFetch} type='submit' className="px-4">Prisijungti</CButton>
+                        <CButton
+                          color="primary"
+                          onClick={loginFetch}
+                          type="submit"
+                          className="px-4"
+                        >
+                          Prisijungti
+                        </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Pamiršote slaptažodį?</CButton>
+                        <CButton color="link" className="px-0">
+                          Pamiršote slaptažodį?
+                        </CButton>
                       </CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>
 
-
-              <CCard className="text-white bg-primary p-3 d-md-down" >
-
-
+              <CCard className="text-white bg-primary p-3 d-md-down">
                 <CCardBody>
-                  <CForm  >
+                  <CForm>
                     <h3> Pardavėjų prisijungimas</h3>
-                    <p className="text-muted">Prisijunkite prie savo paskyros</p>
+                    <p className="text-muted">
+                      Prisijunkite prie savo paskyros
+                    </p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="Vardas" autoComplete="Name"
-                        value={userNameInput} onInput={e => userSetName(e.target.value)} />
+                      <CInput
+                        type="text"
+                        placeholder="Vardas"
+                        autoComplete="Name"
+                        value={userNameInput}
+                        onInput={(e) => userSetName(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -139,26 +160,33 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="Slaptažodis" autoComplete="current-password"
-                        value={userPasswordInput} onInput={e => userSetPassword(e.target.value)} />
+                      <CInput
+                        type="password"
+                        placeholder="Slaptažodis"
+                        autoComplete="current-password"
+                        value={userPasswordInput}
+                        onInput={(e) => userSetPassword(e.target.value)}
+                      />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="secondary" onClick={userLoginFetch} type='submit' className="px-4">Prisijungti</CButton>
+                        <CButton
+                          color="secondary"
+                          onClick={userLoginFetch}
+                          type="submit"
+                          className="px-4"
+                        >
+                          Prisijungti
+                        </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                        <CButton color="link" className="px-0">
+                          Forgot password?
+                        </CButton>
                       </CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>
-
-
-
-
-
-
-
 
                 {/* <CCardBody className="text-center">
                   <div>
@@ -176,10 +204,8 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
-
     </div>
-  )
-}
+  );
+};
 
-
-export default Login
+export default Login;

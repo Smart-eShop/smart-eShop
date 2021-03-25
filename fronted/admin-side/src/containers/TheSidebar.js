@@ -12,36 +12,59 @@ import {
   CSidebarNavItem,
 } from "@coreui/react";
 
-
-
 // sidebar nav config
 import navigation from "./_nav";
+import userNavigation from "./_navcopy";
 
 const TheSidebar = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.sidebarShow);
-
-  return (
-    <CSidebar
-      show={show}
-      onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
-    >
-      <CSidebarBrand className="d-md-down-none" to="/">
-      </CSidebarBrand>
-      <CSidebarNav>
-        <CCreateElement
-          items={navigation}
-          components={{
-            CSidebarNavDivider,
-            CSidebarNavDropdown,
-            CSidebarNavItem,
-            CSidebarNavTitle,
-          }}
-        />
-      </CSidebarNav>
-      <CSidebarMinimizer className="c-d-md-down-none" />
-    </CSidebar>
-  );
+  const admin = localStorage.getItem("admin");
+  const user = localStorage.getItem("user");
+  if (admin) {
+    return (
+      <CSidebar
+        show={show}
+        onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
+      >
+        <CSidebarBrand className="d-md-down-none" to="/"></CSidebarBrand>
+        <CSidebarNav>
+          <CCreateElement
+            items={navigation}
+            components={{
+              CSidebarNavDivider,
+              CSidebarNavDropdown,
+              CSidebarNavItem,
+              CSidebarNavTitle,
+            }}
+          />
+        </CSidebarNav>
+        <CSidebarMinimizer className="c-d-md-down-none" />
+      </CSidebar>
+    );
+  }
+  if (user) {
+    return (
+      <CSidebar
+        show={show}
+        onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
+      >
+        <CSidebarBrand className="d-md-down-none" to="/"></CSidebarBrand>
+        <CSidebarNav>
+          <CCreateElement
+            items={userNavigation}
+            components={{
+              CSidebarNavDivider,
+              CSidebarNavDropdown,
+              CSidebarNavItem,
+              CSidebarNavTitle,
+            }}
+          />
+        </CSidebarNav>
+        <CSidebarMinimizer className="c-d-md-down-none" />
+      </CSidebar>
+    );
+  }
 };
 
 export default React.memo(TheSidebar);
