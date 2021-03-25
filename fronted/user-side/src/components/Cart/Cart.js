@@ -41,6 +41,7 @@ const Cart = ({
   cartItems,
   plusCart = { plusCart },
   minusCart = { minusCart },
+  printItems
 }) => {
   const classes = useStyles();
   console.log(cartItems);
@@ -69,6 +70,7 @@ const Cart = ({
     localStorage.removeItem("total_price");
     setViso("");
     setMok("");
+    window.location.reload();
   }
 
   //   if (!cart.line_items) return 'Loading';
@@ -104,6 +106,7 @@ const Cart = ({
         cartItems={cartItems}
         plusCart={plusCart}
         minusCart={minusCart}
+        printItems={printItems}
       />
       <div className={classes.cardDetails}>
         <div clasName="col-10">

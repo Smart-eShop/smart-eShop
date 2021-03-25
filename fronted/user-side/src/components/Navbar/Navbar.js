@@ -76,13 +76,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Navbar(totalQuantity) {
+export default function Navbar({totalQuantity}) {
   const { header, menuButton, toolbar, drawerContainer } = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [access_token, setaccess_token] = useState(false);
   const classes = useStyles();
+
+  
 
   function clerLocalStorage() {
     console.log("logout");
@@ -131,7 +133,7 @@ export default function Navbar(totalQuantity) {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const displayDesktop = (countCartItems) => {
+  const displayDesktop = () => {
     return (
       <Toolbar className={toolbar}>
         {smartEShop}
@@ -143,7 +145,7 @@ export default function Navbar(totalQuantity) {
              <Link href="/cart" color="inherit" className={classes.basketHover}>
          
              <IconButton aria-label="show basket" color="inherit">
-              <Badge badgeContent={countCartItems} color="secondary">
+              <Badge  badgeContent={totalQuantity} color="secondary" >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

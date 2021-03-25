@@ -93,35 +93,35 @@ function ProductsCategories(props) {
         'https://source.unsplash.com/1SAnrIxw5OY?auto=format&fit=crop&w=400&q=80',
       title: 'Kompiuterinė technika',
       width: '40%',
-      href: "/category/10",
+      href: "/category",
     },
     {
       url:
         'https://source.unsplash.com/uPMQnZgtlP0?auto=format&fit=crop&w=400&q=80',
       title: 'Buitinė technika',
       width: '20%',
-      href: "/category/7",
+      href: "/category",
     },
     {
       url:
         'https://source.unsplash.com/ngMtsE5r9eI?auto=format&fit=crop&w=400&q=80',
       title: 'Vaizdo technika',
       width: '40%',
-      href: "/category/9",
+      href: "/category",
     },
     {
       url:
         'https://source.unsplash.com/YDZPdqv3FcA?auto=format&fit=crop&w=400&q=80',
       title: 'Garso technika',
       width: '50%',
-      href: "/category/12",
+      href: "/category",
     },
     {
       url:
         'https://source.unsplash.com/LIfRyiWWBZs?auto=format&fit=crop&w=400&q=80',
       title: 'Mobilieji telefonai',
       width: '50%',
-      href: "/category/8",
+      href: "/category",
     },
     
   ];

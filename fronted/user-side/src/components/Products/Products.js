@@ -12,6 +12,9 @@ import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles(theme => ({
+    automplete: {
+        marginBottom: '50px',
+    },
     pageTtitle: {
         marginTop: '100px',
         marginBottom: '50px',
@@ -37,7 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Products = ({addCart, items, printCategories}) => {
+const Products = ({addCart, items, printCategories, setCount}) => {
+    const krepselioKiekis = window.localStorage.getItem('cartItemsQuantity');
     const classes = useStyles();
     console.log(printCategories);
     const [filter, setFilter] = useState("");
@@ -46,6 +50,8 @@ const Products = ({addCart, items, printCategories}) => {
     const handleSearchChange = (e) => {
         setFilter(e.target.value);
     };
+
+    
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
     return (
         <React.Fragment>
@@ -54,6 +60,7 @@ const Products = ({addCart, items, printCategories}) => {
                     katalogas</Typography>
                 <div style={{width: 300}}>
                     <Autocomplete
+                    className={classes.automplete}
                         freeSolo
                         id="free-solo-2-demo"
                         disableClearable
@@ -97,7 +104,7 @@ const Products = ({addCart, items, printCategories}) => {
                                         Peržiūrėti
                                     </Button>
 
-                                    <Button onClick={() => addCart(item)} size="small" color="primary">Į
+                                    <Button onClick={() =>addCart(item)} size="small" color="primary">Į
                                         krepšelį</Button>
                                 </CardActions>
                             </Card>

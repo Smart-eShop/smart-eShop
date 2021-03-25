@@ -48,7 +48,7 @@ const Main = () => {
   );
   const [categoryId, setCategoryId] = useState(0);
   const accessToken = localStorage.getItem("access_token");
-
+  
   const addCart = (item) => {
     window.localStorage.setItem(item.title, item.quantity);
     const exist = cartItems.find((x) => x.id === item.id);
@@ -142,7 +142,17 @@ const Main = () => {
   return (
     <>
       <Router>
-        <Navbar />
+      <Route
+            exact
+            render={(props) => (
+              <Navbar
+                {...props}
+                
+                totalQuantity={totalQuantity}
+                
+              />
+            )}
+          />
         <Switch>
           <Route path="/" exact component={FrontPage} />
           <Route path="/login" exact component={Login} />
@@ -196,6 +206,7 @@ const Main = () => {
                 minusCart={minusCart}
                 plusCart={plusCart}
                 cartItems={cartItems}
+                printItems={printItems}
               />
             )}
           />
