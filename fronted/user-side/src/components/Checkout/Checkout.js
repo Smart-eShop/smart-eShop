@@ -6,8 +6,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import { MenuItem } from '@material-ui/core';
+
 
 
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
             padding: theme.spacing(3),
         },
     },
-   
+
     buttons: {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Checkout({cartPriceBeforeTax, cartTaxes, cartTotalPrice, totalQuantity, cartItems}) {
+export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice, totalQuantity, cartItems }) {
     // console.log(cartTotalPrice);
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -95,7 +94,7 @@ export default function Checkout({cartPriceBeforeTax, cartTaxes, cartTotalPrice,
 
 
 
-const sendCart = async () => {
+    const sendCart = async () => {
         const cart = JSON.stringify(cartItems);
         const url = `http://eshopsmart.herokuapp.com/api/order/store?delivery_id=${deliveryValue}&payment_id=${paymentId}
         &cart=${cart}&billing_first_name=${name}&billing_last_name=${lastName}&billing_email=${email}&billing_street_number=
@@ -112,7 +111,9 @@ const sendCart = async () => {
             });
             const data = await response.json();
             console.log(data);
+            const token = localStorage.getItem("access_token");
             localStorage.clear();
+            localStorage.setItem("access_token", token);
 
         } catch (error) {
             console.log(error);
@@ -122,6 +123,8 @@ const sendCart = async () => {
     useEffect(() => {
         sendCart();
     }, []);
+
+    
 
 
 
@@ -213,34 +216,36 @@ const sendCart = async () => {
                         </Grid>
                     </React.Fragment>
 
-                    
-                
-                        <Typography variant="subtitle1" className={classes.formControl}>
-                            Pasirinkite apmokėjimo būdą</Typography>
-                        
-                            <select className={classes.formControl2} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
-                                {printPayment.map((payment) => (
-                                    <option value={payment.id}>{payment.name}</option>
-                                ))}
-                            </select>
-                    
-                    
 
 
-                    
-                        <Typography variant="subtitle1" className={classes.formControl}>
-                            Pasirinkite pristatymo būdą</Typography>
-                        
-                            <select className={classes.formControl2} value={deliveryValue} onChange={(e) => setDeliveryValue(e.target.value)}>
-                                {printDelivery.map((delivery) => (
-                                    <option value={delivery.id}>{delivery.name}</option>
-                                ))}
-                            </select>
-                    
-                        <div className={classes.buttons}>
-                            <Button variant="contained" color="primary" className={classes.button} onClick={sendCart}>Pateikti užsakymą</Button>
-                        </div>
-                    
+                    <Typography variant="subtitle1" className={classes.formControl}>
+                        Pasirinkite apmokėjimo būdą</Typography>
+
+                    <select className={classes.formControl2} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+                        <option disabled>Pasirinkite apmokėjimo būdą...</option>
+                        {printPayment.map((payment) => (
+                            <option value={payment.id}>{payment.name}</option>
+                        ))}
+                    </select>
+
+
+
+
+
+                    <Typography variant="subtitle1" className={classes.formControl}>
+                        Pasirinkite pristatymo būdą</Typography>
+
+                    <select className={classes.formControl2} value={deliveryValue} onChange={(e) => setDeliveryValue(e.target.value)}>
+                    <option disabled>Pasirinkite pristatymo būdą...</option>
+                        {printDelivery.map((delivery) => (
+                            <option value={delivery.id}>{delivery.name}</option>
+                        ))}
+                    </select>
+
+                    <div className={classes.buttons}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={sendCart}>Pateikti užsakymą</Button>
+                    </div>
+
 
 
                 </Paper>
