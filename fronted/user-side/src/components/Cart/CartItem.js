@@ -6,8 +6,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
-  cartItems,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,42 +59,15 @@ const CartItem = ({
 }) => {
   const classes = useStyles();
 
-  console.log("kast u", item);
-
-  function increase(item) {
-    item.quantity < 1 ? alert("nebebėra prekės") : (item.quantity += 1);
-    console.log("increase", item.quantity);
-  }
-  function decrease(item) {
-    item.quantity === 0 ? alert("nebebėra prekės") : (item.quantity -= 1);
-    console.log("decrease", item.quantity);
-  }
-
-  function deleteITM(item) {
-    console.log("delete", item);
-    localStorage.removeItem(item.title);
-    localStorage.removeItem(item.id);
-    localStorage.removeItem(item.user);
-  }
-  // console.log("cartitem", cartItems);
-  // cartItems[0].category.category_name =
-  //   "mano kategorija kuria katik sugalvojau";
-  // console.log("cartitem", cartItems[0].category.category_name);
-  // console.log("cartitem", cartItems);
 
   const imgUrl = "https://eshopsmart.herokuapp.com/images/";
-  // console.log(cartItems);
-
-  const handleUpdateCartQty = (lineItemId, newQuantity) =>
-    onUpdateCartQty(lineItemId, newQuantity);
-
-  const handleRemoveFromCart = (lineItemId) => onRemoveFromCart(lineItemId);
+ 
 
   return (
     <Card >
       {cartItems.map((item) => (
         <div className={classes.cardContent}>
-          <img  className={classes.media}
+          <img className={classes.media}
             src={imgUrl + item.img}
             alt="nuotrauka"
             style={{ width: "200px", height: "200px" }}
