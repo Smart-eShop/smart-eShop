@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Cart;
+use App\Mail\OrderPaid;
 use App\Order;
 use App\Item;
 use App\User;
@@ -11,9 +12,12 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Gate;
+use niklasravnsborg\LaravelPdf\Pdf;
+
 
 
 class OrderController extends Controller
@@ -21,43 +25,56 @@ class OrderController extends Controller
     public function __construct()
     {
 
-         $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     public function updateUserAddress(Request $request, User $user)
     {
-        $validate = Validator::make($request->all(),[
+        $validate = Validator::make($request->all(), [
             'street_number' => ['required', 'string'],
             'city' => ['required', 'string'],
             'postcode' => ['required']
-            ]);
+        ]);
 
-        if (auth()->id() == $user->id){
-        if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()]);
-        } else {
-            User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
-            return response()->json(['message' => 'Address updated successfully!'], 200);
+        if (auth()->id() == $user->id) {
+            if ($validate->fails()) {
+                return response()->json(['error' => $validate->errors()]);
+            } else {
+                User::where('id', $user->id)->update($request->only('street_number', 'city', 'postcode'));
+                return response()->json(['message' => 'Address updated successfully!'], 200);
+            }
         }
-    }
-        return response()->json(['message'=>'You can only update your address!'],200);
+        return response()->json(['message' => 'You can only update your address!'], 200);
     }
 
 // visas orderio atvaizdavimas
     public function getAllOrdersTest()
     {
 
-        if (Gate::allows('seller-role')){
+        if (Gate::allows('seller-role')) {
 
-        $orders = Order::all();
-        $en = '';
-        foreach ($orders as $order)
-           $en = $order->cart;
+            $orders = Order::all();
 
-        return response()->json(['orders'=>$orders, "en"=>  json_decode($en)]);
-         }
+            $array = [];
+            foreach ($orders as $order) {
+                $en = json_decode($order->cart);
+                array_push($array, $en);
+            }
+
+//            $itemID = "";
+//            $quantity = "";
+//            foreach ($array as $first) {
+//                foreach ($first as $value) {
+//                    $itemID = $value->id;
+//                    $quantity = $value->quantity;
+//                }
+//            }
+
+            return response()->json(['orders' => $orders, "en" => $array]);
+        }
         return response()->json(["message" => Lang::get('messages_lt.no_permission_item')], 200);
     }
+
     public function showOrders(Request $request)
     {
         $id = Auth::id();
@@ -65,7 +82,9 @@ class OrderController extends Controller
             ->leftJoin('deliveries', 'orders.delivery_id', '=', 'deliveries.id')
             ->leftJoin('payments', 'orders.payment_id', '=', 'deliveries.id')
             ->where('user_id', $id)
-            ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')->get();
+            ->select('orders.*', 'payments.name as payment_type', 'deliveries.name as delivery_type')
+            ->orderByDesc('orders.created_at')
+            ->get();
 
         $cart = [];
         $enCart = [];
@@ -111,7 +130,29 @@ class OrderController extends Controller
         $order->total_quantity = $request->input('total_quantity');
         Auth::user()->orders()->save($order);
 
-        return response()->json(["order" => $order]);
+
+        $payments = DB::table('payments')
+                ->where('payments.id', $order->payment_id)
+                ->select('payments.name')
+                ->get();
+
+        $deliveries = DB::table('deliveries')
+                    ->where('deliveries.id', $order->delivery_id)
+                    ->select('deliveries.*')
+                    ->get();
+
+        $en = json_decode($order->cart);
+
+        $orderArray = [];
+        $cart = [];
+        array_push($cart, $en);
+        array_push($orderArray, $order);
+
+        Mail::to($order->user->email)->send(new OrderPaid($orderArray, $cart, $payments, $deliveries));
+
+
+
+        return response()->json([$orderArray, $cart]);
     }
 
     //keiciam orderio statusa

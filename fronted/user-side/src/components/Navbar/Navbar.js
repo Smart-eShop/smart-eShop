@@ -248,6 +248,7 @@ export default function Navbar(totalQuantity) {
               open={open}
               onClose={handleClose}
             >
+                
               <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
               <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
             </Menu>
@@ -272,7 +273,7 @@ export default function Navbar(totalQuantity) {
         >
           <MenuItem>{label}</MenuItem>
         </Link>
-
+       
         <Link to={"/login"} component={RouterLink}>
               <MenuItem>Prisijungti</MenuItem>
             </Link>

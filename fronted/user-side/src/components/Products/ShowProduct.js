@@ -90,17 +90,14 @@ const ShowProduct = ({ match, props, addCart }) => {
                             {item.title}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h6">
-                            {item.size}
+                            Dydis: {item.size}
                         </Typography>
                         <Typography gutterBottom variant="p" component="p">
-                            {item.description}
+                            Aprašymas: <br>{item.description}</br>
                         </Typography>
                         <Typography >
-                            {item.price} 
+                        € {item.price} 
                         </Typography>
-
-                        <p>Raktiniai žodžiai: {(item.keywords == null) ? "Nėra" : item.keywords.map(key => <li>{key}</li>)}</p>
-
                         <Typography className={classes.discount}>
                                         - {item.discount}%
                                     </Typography>

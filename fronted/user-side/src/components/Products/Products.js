@@ -37,26 +37,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Products = ({addCart}) => {
+const Products = ({addCart, items, printCategories}) => {
     const classes = useStyles();
-    const [items, setItems] = useState([]);
+    console.log(printCategories);
     const [filter, setFilter] = useState("");
-    const printItems = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/items';
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data.items);
-        setItems(data.items);
-    }
-
-    useEffect(() => {
-        printItems();
-    }, []);
 
     const handleSearchChange = (e) => {
         setFilter(e.target.value);
     };
-
     const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
     return (
         <React.Fragment>
@@ -68,7 +56,7 @@ const Products = ({addCart}) => {
                         freeSolo
                         id="free-solo-2-demo"
                         disableClearable
-                        options={items.map((item) => item.title)}
+                        // options={items.map((item) => item.title)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -90,7 +78,7 @@ const Products = ({addCart}) => {
                             <Card className={classes.cardMedia}>
                                 <img
                                     src={imgUrl + item.img[0]} alt="nuotrauka"
-                                    style={{width: "500px", height: "200px"}}/>
+                                    style={{width: "500px", height: "300px"}}/>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h1">
                                         {item.title}
