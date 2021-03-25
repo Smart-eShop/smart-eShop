@@ -84,6 +84,7 @@ const Main = () => {
     }
   };
 
+
   const minusCart = (item) => {
     console.log("atimu prekę", item);
     console.log("item quantity", item.quantity);
@@ -158,31 +159,14 @@ const Main = () => {
               />
             )}
           />
-          <Route
-            path="/category"
-            exact
-            render={(props) => (
-              <ProductsCategories
-                {...props}
-                printCategories={printCategories}
-                setCategoryId={setCategoryId}
-                categoryId={categoryId}
-              />
-            )}
-          />
-          <Route path="/products/:id" component={ShowProduct} />
+           <Route path="/category" exact render={(props) => (
+                        <ProductsCategories {...props} addCart={addCart} items={items} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
+                    )}/>
+           <Route path="/products/:id" exact render={(props) =>(
+                        <ShowProduct {...props} addCart={addCart} />
+                    )}/>
           <Route path="/about" exact component={About} />
-          <Route
-            path="/category/:id"
-            render={(props) => (
-              <ProductsByCategory
-                {...props}
-                items={items}
-                printCategories={printCategories}
-                categoryId={categoryId}
-              />
-            )}
-          />
+          
           <Route path="/contact-us" exact component={Contact} />
           <Route
             path="/checkout"

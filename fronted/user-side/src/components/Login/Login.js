@@ -114,6 +114,7 @@ export default function Login() {
       <>
         <Navbar />
         <FrontPage />
+
       </>
     );
   }
