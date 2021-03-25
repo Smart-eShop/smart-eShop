@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CButton,
   CCard,
@@ -111,6 +111,21 @@ const AddProduct = () => {
       });
   };
 
+  const [printCategories, setPrintCategories] = useState([]);
+
+  const printAllCategories = async () => {
+    const url = "https://eshopsmart.herokuapp.com/api/categories";
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.Categories);
+    setPrintCategories(data.Categories);
+  };
+
+  useEffect(() => {
+    printAllCategories();
+  }, []);
+
+
   return (
     <>
       <CRow>
@@ -197,14 +212,13 @@ const AddProduct = () => {
                       name="select"
                       id="select"
                     >
+
                       <option selected disabled value="">
                         Pasirinkite
                       </option>
-                      <option value="1">Kompiuterinė technika</option>
-                      <option value="2">Buitinė technika</option>
-                      <option value="3">Vaizdo technika</option>
-                      <option value="4">Garso technika</option>
-                      <option value="5">Mobilieji telefonai</option>
+                      {printCategories.map((category) => (
+                      <option value={category.id}>{category.category_name}</option>
+                      ))}
                     </CSelect>
                   </CCol>
                 </CFormGroup>
