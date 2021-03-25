@@ -45,8 +45,8 @@ function ProductsByCategory({addCart, items, printCategories, categoryId}) {
 
   const classes = useStyles();
   console.log(categoryId);
- console.log(items);
- console.log(printCategories)
+ // console.log(items);
+ // console.log(printCategories)
 
  const imgUrl = 'https://eshopsmart.herokuapp.com/images/'
   return (
