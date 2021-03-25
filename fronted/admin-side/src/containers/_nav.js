@@ -50,6 +50,13 @@ const _nav = [
   {
     _tag: "CSidebarNavItem",
 
+    name: "Užsakymai",
+    to: "/all-orders",
+    icon: "cil-cursor",
+  },
+  {
+    _tag: "CSidebarNavItem",
+
     name: "Keisti Produktą",
     to: "/edit-product",
     icon: "cil-basket",
