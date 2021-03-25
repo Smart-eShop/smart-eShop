@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Image from "../Login/login-bg2.png";
 import Box from "@material-ui/core/Box";
-import Album from "../FrontPage/FrontPage";
+import FrontPage from "../FrontPage/FrontPage";
 import Navbar from "../Navbar/Navbar";
 
 const useStyles = makeStyles((theme) => ({
@@ -113,7 +113,8 @@ export default function Login() {
     return (
       <>
         <Navbar />
-        <Album />
+        <FrontPage />
+
       </>
     );
   }

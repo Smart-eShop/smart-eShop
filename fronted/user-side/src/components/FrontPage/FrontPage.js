@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Image from '../FrontPage/frontpage1.png';
-import ProductsCate from '../Category/ProductsCate';
+
 import Category from '../Category/Category'
 // import Footer from '../Footer/Footer';
 
@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
   },
   discount: {
     color: '#e64a19',
+  },
+  pop: {
+    marginBottom: '100px'
   }
 }));
 
@@ -68,7 +71,7 @@ export default function Album() {
   const classes = useStyles();
 
   const [popularItems, setPopularItems] = useState([]);
-  const reducedOptions = [];
+  const reducedPopularItems = [];
 
   const printPopularItems = async () => {
     const url = 'https://eshopsmart.herokuapp.com/api/popular-items';
@@ -76,13 +79,13 @@ export default function Album() {
     const data = await response.json();
     console.log(data);
     
-    //    data.popularItems.forEach(items => {
-    //       if (reducedOptions.length < 3) {
-    //         reducedOptions.push(items)
-    //     }
-    // })
-    //     setPopularItems(reducedOptions);
-    //     console.log(reducedOptions);
+       data.items.forEach(items => {
+          if (reducedPopularItems.length < 3) {
+            reducedPopularItems.push(items)
+        }
+    })
+        setPopularItems(reducedPopularItems);
+        console.log(reducedPopularItems);
 
   }
 
@@ -94,7 +97,7 @@ export default function Album() {
 
   const [items, setItems] = useState([]);
 
-
+  const reducedOptions = [];
   const printItems = async () => {
     const url = 'https://eshopsmart.herokuapp.com/api/items';
     const response = await fetch(url);
@@ -158,15 +161,13 @@ export default function Album() {
 
         <Container className={classes.cardGrid} maxWidth="lg">
           <Container className={classes.root} component="section">
-            <Typography variant="h4" marked="center" align="center" component="h2">
+            <Typography variant="h4" marked="center" align="center" component="h2" className={classes.pop}>
               Populiariausios prekės
       </Typography>
           </Container>
-
-          <Grid container spacing={4}>
-          
-            {popularItems.map((itemp) => (
-              <Grid itemp key={itemp.id} xs={4} sm={12} md={4}>
+           <Grid container spacing={4}>
+           {popularItems.map((itemp) => (
+              <Grid item key={itemp.id} xs={12} sm={6} md={4}>
                 <Card className={classes.item}>
                   <img
                     src={imgUrl + itemp.img[0]} alt="nuotrauka" />
@@ -182,12 +183,13 @@ export default function Album() {
                                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    {/* <Link to={`/products/${item.id}`}>Peržiūrėti</Link> */}
+                    <Button href={`/products/${itemp.id}`} size="small" color="primary">
                       Peržiūrėti
-                    </Button>
+                                    </Button>
                     <Button size="small" color="primary">
                       Pirkti
-                    </Button>
+                                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -197,7 +199,7 @@ export default function Album() {
 
         <Container className={classes.cardGrid} maxWidth="lg">
           <Container className={classes.root} component="section">
-            <Typography variant="h4" marked="center" align="center" component="h2">
+            <Typography variant="h4" marked="center" align="center" component="h2" className={classes.pop}>
               Naujausios prekės
       </Typography>
           </Container>
@@ -213,7 +215,7 @@ export default function Album() {
                       {item.title}
                     </Typography>
                     <Typography>
-                      {item.price} €
+                    € {item.price}
                                     </Typography>
                     <Typography className={classes.discount}>
                       - {item.discount}%
