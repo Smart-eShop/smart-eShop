@@ -10,11 +10,16 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(8),
         marginBottom: theme.spacing(4),
     },
+
 }));
 
 const ProductsCategories = ({printCategories, setCategoryId}) => {
     const classes = useStyles();
     console.log(printCategories);
+
+
+
+    
     return (
         <div>
             <Container className={classes.root} component="section">
