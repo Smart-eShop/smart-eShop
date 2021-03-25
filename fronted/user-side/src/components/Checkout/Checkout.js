@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-
+import FrontPage from "../FrontPage/FrontPage";
+import Alert from '@material-ui/lab/Alert';
 
 
 
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice, totalQuantity, cartItems }) {
+    const [redir, setRedir] = useState(false);
     // console.log(cartTotalPrice);
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -92,9 +94,8 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
         printAllDeliveries();
     }, [])
 
-
-
     const sendCart = async () => {
+      
         const cart = JSON.stringify(cartItems);
         const url = `http://eshopsmart.herokuapp.com/api/order/store?delivery_id=${deliveryValue}&payment_id=${paymentId}
         &cart=${cart}&billing_first_name=${name}&billing_last_name=${lastName}&billing_email=${email}&billing_street_number=
@@ -117,17 +118,14 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
 
         } catch (error) {
             console.log(error);
-        }
+        } 
     }
 
     useEffect(() => {
         sendCart();
     }, []);
 
-    
-
-
-
+ 
 
 
     return (
@@ -139,6 +137,7 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
                         Užsakymo patvirtinimas
                     </Typography>
                     <React.Fragment >
+                
                         <Grid container spacing={4} >
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -213,8 +212,8 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
                                     onChange={(e) => setPostCode(e.target.value)}
                                 />
                             </Grid>
-                        </Grid>
-                    </React.Fragment>
+                        </Grid> 
+                      </React.Fragment>
 
 
 
