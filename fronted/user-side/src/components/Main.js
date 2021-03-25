@@ -154,7 +154,17 @@ const Main = () => {
             )}
           />
         <Switch>
-          <Route path="/" exact component={FrontPage} />
+        <Route
+            path="/"
+            exact
+            render={(props) => (
+              <Products
+                {...props}
+                addCart={addCart}
+                items={items}
+              />
+            )}
+          />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route

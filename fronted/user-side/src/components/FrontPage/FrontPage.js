@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Album() {
+export default function FrontPage({addCart}) {
   const classes = useStyles();
 
   const [popularItems, setPopularItems] = useState([]);
@@ -187,9 +187,8 @@ export default function Album() {
                     <Button href={`/products/${itemp.id}`} size="small" color="primary">
                       Peržiūrėti
                                     </Button>
-                    <Button size="small" color="primary">
-                      Pirkti
-                                    </Button>
+                                    <Button onClick={() =>addCart(itemp)} size="small" color="primary">Į
+                                        krepšelį</Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -226,9 +225,8 @@ export default function Album() {
                     <Button href={`/products/${item.id}`} size="small" color="primary">
                       Peržiūrėti
                                     </Button>
-                    <Button size="small" color="primary">
-                      Pirkti
-                                    </Button>
+                                    <Button onClick={() =>addCart(item)} size="small" color="primary">Į
+                                        krepšelį</Button>
                   </CardActions>
                 </Card>
               </Grid>
