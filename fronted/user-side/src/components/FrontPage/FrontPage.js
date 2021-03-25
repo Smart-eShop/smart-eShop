@@ -215,7 +215,7 @@ export default function Album() {
                       {item.title}
                     </Typography>
                     <Typography>
-                      {item.price} €
+                    € {item.price}
                                     </Typography>
                     <Typography className={classes.discount}>
                       - {item.discount}%
