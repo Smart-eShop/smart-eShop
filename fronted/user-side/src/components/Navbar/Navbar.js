@@ -178,7 +178,6 @@ export default function Navbar({totalQuantity}) {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Mano užsakymai</MenuItem>
               <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
             </Menu>
           </div>

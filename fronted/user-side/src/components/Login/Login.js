@@ -15,6 +15,7 @@ import Image from "../Login/login-bg2.png";
 import Box from "@material-ui/core/Box";
 import FrontPage from "../FrontPage/FrontPage";
 import Navbar from "../Navbar/Navbar";
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     paddingTop: "7em",
   },
+  large: {
+    marginBottom: '20px'
+  }
 }));
 
 export default function Login() {
@@ -59,6 +63,9 @@ export default function Login() {
   const [redir, setRedir] = useState(false);
   const [usernameInput, setUsername] = useState("");
   const [passwordInput, setPassword] = useState("");
+
+  const [categoryAdded, setCategoryAdded] = useState(false);
+  const [requestError, setRequestError] = useState(false);
 
   const loginFetch = (e) => {
     console.log("labas");
@@ -72,11 +79,20 @@ export default function Login() {
       }
     )
       .then((data) => data.json())
+      
       .then((data) => {
+        console.log(data.message);
+        if (data.message === "Neteisingi prisijungimo duomenys") {
+          setCategoryAdded(false);
+          setRequestError(true);
+        } else {
+          setRequestError(false);
+          setCategoryAdded(true);
+        }
         if (data.access_token) {
           return data.access_token;
         } else {
-          throw new Error("incorrect login");
+          throw new Error("incorrect login")
         }
       })
       .then((data) => localStorage.setItem("access_token", data))
@@ -86,7 +102,12 @@ export default function Login() {
           setRedir(true);
         }
       })
-      .catch((error) => console.error(error.message));
+      .catch((err) => {
+        setRequestError(true);
+        setCategoryAdded(false);
+      });
+ ;
+
   };
 
   const { handleSubmit, handleChange, touched, errors, handleBlur } = useFormik(
@@ -97,24 +118,25 @@ export default function Login() {
       },
       validationSchema: Yup.object({
         username: Yup.string()
-          .max(15, "Vartotojo vardas turi būti trumpesnis nei 10 simbolių")
+          .max(15, "Vartotojo vardas turi būti trumpesnis nei 15 simbolių")
           .required("Privaloma *"),
         password: Yup.string()
           .min(6, "Slaptažodis turi būti ilgesnis nei 6 simboliai")
           .required(),
       }),
-      onSubmit: ({ username, password }) => {
-        alert("Jūs sėkmingai prisijungėte");
-      },
+      // onSubmit: ({ username, password }) => {
+      //   alert("Jūs sėkmingai prisijungėte");
+      // },
+      
     }
   );
 
   if (redir) {
+    alert("Jūs sėkmingai prisijungėte");
     return (
       <>
         <Navbar />
         <FrontPage />
-
       </>
     );
   }
@@ -125,6 +147,16 @@ export default function Login() {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.large} />
+          {categoryAdded ? (
+            <Alert color="primary" closeButton>
+             Jūs sėkmingai prisijungėte!
+            </Alert>
+          ) : null}
+          {requestError ? (
+            <Alert color="warning" closeButton>
+              Neteisingi prisijungimo duomenys!
+            </Alert>
+          ) : null}
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               onChange={handleChange}
