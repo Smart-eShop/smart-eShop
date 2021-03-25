@@ -1,48 +1,54 @@
-import React, {useEffect, useState} from 'react';
-import Login from './Login/Login';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Register from './Register/Register';
-import About from './About/About';
-import Contact from './Contact/Contact';
-import Products from './Products/Products';
-import ShowProduct from './Products/ShowProduct';
-import ProductsByCategory from './Category/ProductsByCategory';
+import React, { useEffect, useState } from "react";
+import Login from "./Login/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Register from "./Register/Register";
+import About from "./About/About";
+import Contact from "./Contact/Contact";
+import Products from "./Products/Products";
+import ShowProduct from "./Products/ShowProduct";
+import ProductsByCategory from "./Category/ProductsByCategory";
 import "../neumorphism.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import TermsConditions from "../components/TermsConditions";
-import RemindPassword from './RemindPassword/RemindPassword';
-import ResetPassword from './RemindPassword/ResetPassword';
-import FrontPage from './FrontPage/FrontPage';
-import Checkout from './Checkout/Checkout';
-import Cart from './Cart/Cart';
-import useLocalStorage from './useLocalStorage'
+import RemindPassword from "./RemindPassword/RemindPassword";
+import ResetPassword from "./RemindPassword/ResetPassword";
+import FrontPage from "./FrontPage/FrontPage";
+import Checkout from "./Checkout/Checkout";
+import Cart from "./Cart/Cart";
+import useLocalStorage from "./useLocalStorage";
 import ProductsCategories from "./Category/ProductsCategories";
-import Category from './Category/Category';
+import Category from "./Category/Category";
 
 const Main = () => {
-    const [items, setItems] = useState([]);
-    const printItems = async () => {
-        const url = 'https://eshopsmart.herokuapp.com/api/items';
-        const response = await fetch(url);
-        const data = await response.json();
-        // console.log(data.items);
-        setItems(data.items);
-    }
+  const [items, setItems] = useState([]);
+  const printItems = async () => {
+    const url = "https://eshopsmart.herokuapp.com/api/items";
+    const response = await fetch(url);
+    const data = await response.json();
+    // console.log(data.items);
+    setItems(data.items);
+  };
 
-    useEffect(() => {
-        printItems();
-    }, []);
+  useEffect(() => {
+    printItems();
+  }, []);
 
-    const [cartItems, setCartItems] = useLocalStorage('items', []);
-    const [cartPriceBeforeTax, setCartPriceBeforeTax] = useLocalStorage('price', 0)
-    const [cartTaxes, setCartTaxes] = useLocalStorage('taxes', 0);
-    const [cartTotalPrice, setCartTotalPrice] = useLocalStorage('total_price', 0)
-    const [totalQuantity, setTotalQuantity] = useLocalStorage('total_quantity', 0)
-    const [categoryId, setCategoryId] = useState(0);
-   const accessToken = localStorage.getItem("access_token");
+  const [cartItems, setCartItems] = useLocalStorage("items", []);
+  const [cartPriceBeforeTax, setCartPriceBeforeTax] = useLocalStorage(
+    "price",
+    0
+  );
+  const [cartTaxes, setCartTaxes] = useLocalStorage("taxes", 0);
+  const [cartTotalPrice, setCartTotalPrice] = useLocalStorage("total_price", 0);
+  const [totalQuantity, setTotalQuantity] = useLocalStorage(
+    "total_quantity",
+    0
+  );
+  const [categoryId, setCategoryId] = useState(0);
+  const accessToken = localStorage.getItem("access_token");
 
-     const addCart = (item) => {
+  const addCart = (item) => {
     window.localStorage.setItem(item.title, item.quantity);
     const exist = cartItems.find((x) => x.id === item.id);
     if (exist && exist.quantity < item.quantity) {
@@ -57,6 +63,7 @@ const Main = () => {
       alert("Atsiprašome, daugiau prekių sandėlyje nėra");
     }
   };
+
   const plusCart = (item) => {
     console.log("pridedu preke", item.quantity);
     const itemQuantity = window.localStorage.getItem(item.title, item.quantity);
@@ -75,7 +82,6 @@ const Main = () => {
     } else {
       alert("Atsiprašome, daugiau prekių sandėlyje nėra");
     }
-
   };
 
   const minusCart = (item) => {
@@ -95,8 +101,8 @@ const Main = () => {
       alert("Negalite nusipirkti nulio");
     }
   };
-  
-   const totals = () => {
+
+  const totals = () => {
     const itemsPriceBeforeTaxes = cartItems.reduce(
       (a, c) => a + ((c.price * 79) / 100) * c.quantity,
       0
@@ -116,45 +122,69 @@ const Main = () => {
     totals();
   }, [cartItems]);
 
+  const [printCategories, setPrintCategories] = useState([]);
 
-  
-   
-    const [printCategories, setPrintCategories] = useState([]);
+  const printAllCategories = async () => {
+    const url = "https://eshopsmart.herokuapp.com/api/categories";
+    const response = await fetch(url);
+    const data = await response.json();
+    // console.log(data.Categories);
+    setPrintCategories(data.Categories);
+  };
+  console.log(printCategories);
+  useEffect(() => {
+    printAllCategories();
+  }, []);
 
-    const printAllCategories = async () => {
-        const url = "https://eshopsmart.herokuapp.com/api/categories";
-        const response = await fetch(url);
-        const data = await response.json();
-        // console.log(data.Categories);
-        setPrintCategories(data.Categories);
-    };
-    console.log(printCategories);
-    useEffect(() => {
-        printAllCategories();
-    }, []);
-
-    console.log(categoryId)
-    return (
-        <>
-            <Router>
-                <Navbar/>
-                <Switch>
-                    <Route path="/" exact component={FrontPage}/>
-                    <Route path="/login" exact component={Login}/>
-                    <Route path="/register" exact component={Register}/>
-                    <Route path="/products" exact render={(props) => (
-                        <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
-                    )}/>
-                    <Route path="/category" exact render={(props) => (
-                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
-                    )}/>
-                    <Route path="/products/:id" component={ShowProduct}/>
-                    <Route path="/about" exact component={About}/>
-                    <Route path="/category/:id" render={(props) => (
-                        <ProductsByCategory {...props} items={items} printCategories={printCategories} categoryId={categoryId} />
-                    )}/>
-                    <Route path="/contact-us" exact component={Contact}/>
-                     <Route
+  console.log(categoryId);
+  return (
+    <>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={FrontPage} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/register" exact component={Register} />
+          <Route
+            path="/products"
+            exact
+            render={(props) => (
+              <Products
+                {...props}
+                addCart={addCart}
+                items={items}
+                printItems={printItems}
+                printCategories={printCategories}
+              />
+            )}
+          />
+          <Route
+            path="/category"
+            exact
+            render={(props) => (
+              <ProductsCategories
+                {...props}
+                printCategories={printCategories}
+                setCategoryId={setCategoryId}
+                categoryId={categoryId}
+              />
+            )}
+          />
+          <Route path="/products/:id" component={ShowProduct} />
+          <Route path="/about" exact component={About} />
+          <Route
+            path="/category/:id"
+            render={(props) => (
+              <ProductsByCategory
+                {...props}
+                items={items}
+                printCategories={printCategories}
+                categoryId={categoryId}
+              />
+            )}
+          />
+          <Route path="/contact-us" exact component={Contact} />
+          <Route
             path="/checkout"
             exact
             render={(props) => (
@@ -168,7 +198,7 @@ const Main = () => {
               />
             )}
           />
-                     <Route
+          <Route
             path="/cart"
             exact
             render={(props) => (
@@ -181,12 +211,13 @@ const Main = () => {
               />
             )}
           />
-                    <Route path="/terms-conditions" exact component={TermsConditions}/>
-                    <Route path="/remind-password" exact component={RemindPassword}/>
-                    <Route path="/reset-password" exact component={ResetPassword}/>
-                </Switch>
-            </Router>
-        </>
-
+          <Route path="/terms-conditions" exact component={TermsConditions} />
+          <Route path="/remind-password" exact component={RemindPassword} />
+          <Route path="/reset-password" exact component={ResetPassword} />
+        </Switch>
+      </Router>
+    </>
+  );
+};
 
 export default Main;
