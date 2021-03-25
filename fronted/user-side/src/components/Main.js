@@ -19,6 +19,7 @@ import Checkout from './Checkout/Checkout';
 import Cart from './Cart/Cart';
 import useLocalStorage from './useLocalStorage'
 import ProductsCategories from "./Category/ProductsCategories";
+import Category from './Category/Category';
 
 const Main = () => {
     const [items, setItems] = useState([]);

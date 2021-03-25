@@ -10,15 +10,19 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(8),
         marginBottom: theme.spacing(4),
     },
+
 }));
 
 const ProductsCategories = ({printCategories, setCategoryId, categoryId}) => {
     const classes = useStyles();
+
     console.log(categoryId);
     const getCatId = (e,id) => {
         console.log("gaunu id gal" + id)
         setCategoryId(id);
     }
+
+    console.log(printCategories);
 
     return (
         <div>
