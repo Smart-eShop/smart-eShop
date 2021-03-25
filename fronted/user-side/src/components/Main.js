@@ -6,7 +6,6 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import Products from './Products/Products';
 import ShowProduct from './Products/ShowProduct';
-import ProductsCate from './Category/ProductsCate';
 import ProductsByCategory from './Category/ProductsByCategory';
 import "../neumorphism.css";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';

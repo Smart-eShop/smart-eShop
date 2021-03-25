@@ -56,7 +56,7 @@ const Products = ({addCart, items, printCategories}) => {
                         freeSolo
                         id="free-solo-2-demo"
                         disableClearable
-                        options={items.map((item) => item.title)}
+                        // options={items.map((item) => item.title)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
