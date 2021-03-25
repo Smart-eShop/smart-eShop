@@ -41,6 +41,7 @@ const Products = ({addCart, items, printCategories}) => {
     const classes = useStyles();
     console.log(printCategories);
     const [filter, setFilter] = useState("");
+    console.log(items)
 
     const handleSearchChange = (e) => {
         setFilter(e.target.value);
@@ -56,7 +57,7 @@ const Products = ({addCart, items, printCategories}) => {
                         freeSolo
                         id="free-solo-2-demo"
                         disableClearable
-                        options={items.map((item) => item.title)}
+                        options={ items && items.map((item) => item.title)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -72,7 +73,7 @@ const Products = ({addCart, items, printCategories}) => {
                 </div>
                 {/* End hero unit */}
                 <Grid container spacing={4}>
-                    {items.map((item) => (
+                    {items && items.map((item) => (
                         item.title.includes(filter) &&
                         <Grid item key={item.id} xs={12} sm={6} md={4}>
                             <Card className={classes.cardMedia}>

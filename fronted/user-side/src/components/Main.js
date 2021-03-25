@@ -123,20 +123,22 @@ const Main = () => {
                         <Products {...props} addCart={addCart} items={items} printItems={printItems} printCategories={printCategories}/>
                     )}/>
                     <Route path="/category" exact render={(props) => (
-                        <ProductsCategories {...props} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
+                        <ProductsCategories {...props} addCart={addCart} items={items} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
                     )}/>
-                    <Route path="/products/:id" component={ShowProduct}/>
+                    <Route path="/products/:id" exact render={(props) =>(
+                        <ShowProduct {...props} addCart={addCart} />
+                    )}/>
                     <Route path="/about" exact component={About}/>
                     <Route path="/category/:id" render={(props) => (
-                        <ProductsByCategory {...props} items={items} printCategories={printCategories} categoryId={categoryId} />
+                        <ProductsByCategory {...props} addCart={addCart} items={items} printCategories={printCategories} categoryId={categoryId} />
                     )}/>
                     <Route path="/contact-us" exact component={Contact}/>
                     <Route path="/checkout" exact render={(props) => (
-                        <Checkout{...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
+                        <Checkout {...props} cartPriceBeforeTax={cartPriceBeforeTax} cartTaxes={cartTaxes}
                                  cartTotalPrice={cartTotalPrice} totalQuantity={totalQuantity} cartItems={cartItems}/>
                     )}/>
                     <Route path="/cart" exact render={(props) => (
-                        <Cart{...props} cartItems={cartItems}/>
+                        <Cart {...props} cartItems={cartItems}/>
                     )}/>
                     <Route path="/terms-conditions" exact component={TermsConditions}/>
                     <Route path="/remind-password" exact component={RemindPassword}/>

@@ -45,6 +45,7 @@ function ProductsByCategory({addCart, items, printCategories, categoryId}) {
 
   const classes = useStyles();
   console.log(categoryId);
+//   console.log(items);
  // console.log(items);
  // console.log(printCategories)
 
