@@ -71,67 +71,6 @@ const OrderTable = () => {
       });
   }
 
-  function banUser(id) {
-    fetch(
-      `https://eshopsmart.herokuapp.com/api/ban/user_id=${id}?is_banned=1`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        getUserData();
-        console.log(data);
-        setMessage(data.message);
-        getUserData();
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      });
-  }
-  function unBan(id) {
-    fetch(`https://eshopsmart.herokuapp.com/api/unban/user_id=${id}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        getUserData();
-        console.log(data);
-        setMessage(data.message);
-        getUserData();
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      });
-  }
-  function deleteUser(id) {
-    fetch(`https://eshopsmart.herokuapp.com/api/delete/user_id=${id}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        getUserData();
-        console.log(data);
-        setMessage(data.message);
-        getUserData();
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      });
-  }
-
   const [details, setDetails] = useState([]);
   // const [items, setItems] = useState(usersData)
 
