@@ -116,14 +116,6 @@ const CartItem = ({
                 +
               </Button>
             </div>
-            <Button
-              onClick={() => deleteITM(item)}
-              variant="contained"
-              type="button"
-              color="secondary"
-            >
-              Ištrinti
-            </Button>
           </CardActions>
         </>
       ))}
