@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import {
   CButton,
   CCard,
@@ -19,7 +19,6 @@ import CIcon from "@coreui/icons-react";
 const AddPayment = ({ onReload }) => {
   const [paymentInput, setPayment] = useState("");
   const [paymentDescInput, setPaymentDesc] = useState("");
-  const [deleteMessage, setDeleteMessage] = useState("");
   const accessToken = localStorage.getItem("access_token");
   const [paymentAdded, setPaymentAdded] = useState(false);
   const [requestError, setRequestError] = useState(false);

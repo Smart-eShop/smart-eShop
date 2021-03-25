@@ -3,19 +3,13 @@ import {
   CCard,
   CCardBody,
   CButton,
-  CBadge,
   CDataTable,
   CCollapse,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownItem,
-  CDropdownMenu,
   CCardFooter,
   CCardHeader,
   CCol,
   CForm,
   CFormGroup,
-  CFormText,
   CTextarea,
   CInput,
   CInputFile,
@@ -30,8 +24,6 @@ const ProductTable = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [products, setProducts] = useState([]);
-  const [productAdded, setProductAdded] = useState(false);
-  const [requestError, setRequestError] = useState(false);
   const [file, setFile] = useState([]);
   const [fileName, setFileName] = useState("Pasirinkti failą");
   const [categoryInput, setCategory] = useState("");
@@ -39,7 +31,6 @@ const ProductTable = () => {
   console.log(titleInput);
   const [descriptionInput, setDescription] = useState("");
   const [keywordsInput, setKeywords] = useState([]);
-  const [imgInput, setImg] = useState([]);
   const [priceInput, setPrice] = useState("");
   const [discountInput, setDiscount] = useState("");
   const [quantityInput, setQuantity] = useState("");
@@ -191,20 +182,20 @@ const ProductTable = () => {
     },
   ];
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "Active":
-        return "success";
-      case "Inactive":
-        return "secondary";
-      case "Pending":
-        return "warning";
-      case "Banned":
-        return "danger";
-      default:
-        return "primary";
-    }
-  };
+  // const getBadge = (status) => {
+  //   switch (status) {
+  //     case "Active":
+  //       return "success";
+  //     case "Inactive":
+  //       return "secondary";
+  //     case "Pending":
+  //       return "warning";
+  //     case "Banned":
+  //       return "danger";
+  //     default:
+  //       return "primary";
+  //   }
+  // };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -266,7 +257,7 @@ const ProductTable = () => {
                                   {item.img?.length ? (
                                     <div>
                                       {item.img.map((a) => (
-                                        <img width="250" src={imgUrl + a} />
+                                        <img width="250" src={imgUrl + a}/>
                                       ))}
                                     </div>
                                   ) : (
@@ -432,7 +423,7 @@ const ProductTable = () => {
                                     multiple
                                     type="file"
                                     name="image"
-                                    multiple
+                           
                                     custom
                                     onChange={onChange}
                                   />

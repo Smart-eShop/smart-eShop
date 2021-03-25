@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TheLayout from '../containers/TheLayout'
-import { Router, Link } from 'react-router-dom'
 import {
   CButton,
   CCard,

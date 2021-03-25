@@ -8,7 +8,6 @@ import {
   CCol,
   CForm,
   CFormGroup,
-  CFormText,
   CTextarea,
   CInput,
   CInputFile,
@@ -20,9 +19,9 @@ import {
 import CIcon from "@coreui/icons-react";
 
 const AddProduct = () => {
-  console.log("Bandymas");
+  // console.log("Bandymas");
 
-  const [productAdded, setProductAdded] = useState(false);
+ 
   const [requestError, setRequestError] = useState(false);
   const accessToken = localStorage.getItem("access_token");
   const [file, setFile] = useState([]);
@@ -32,7 +31,7 @@ const AddProduct = () => {
   const [descriptionInput, setDescription] = useState("");
   const [keywordsInput, setKeywords] = useState([]);
   const [imgInput, setImg] = useState([]);
-  console.log(imgInput);
+  // console.log(imgInput);
   const [priceInput, setPrice] = useState("");
   const [discountInput, setDiscount] = useState("");
   const [quantityInput, setQuantity] = useState("");
@@ -305,7 +304,6 @@ const AddProduct = () => {
                       multiple
                       type="file"
                       name="file-multiple-input"
-                      multiple
                       custom
                       onChange={onChange}
                     />
