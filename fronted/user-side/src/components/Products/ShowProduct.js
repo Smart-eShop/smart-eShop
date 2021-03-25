@@ -9,25 +9,25 @@ import Carousel from "react-material-ui-carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: "200px",
-    marginBottom: "100px",
-    marginLeft: "100px",
-    marginRight: "100px",
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    width: "100%", // 16:9
-    height: "100%",
-  },
-  discount: {
-    color: "#e64a19",
-  },
+    root: {
+        flexGrow: 1,
+        marginTop: "200px",
+        marginBottom: "100px",
+        marginLeft: "100px",
+        marginRight: "100px",
+    },
+    card: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+    },
+    cardMedia: {
+        width: "100%", // 16:9
+        height: "100%",
+    },
+    discount: {
+        color: "#e64a19",
+    },
 }));
 
 
@@ -74,15 +74,15 @@ const ShowProduct = ({ match, addCart }) => {
                 <Grid key={item.id} container spacing={3}>
                     <Grid item xs={12} md={6} >
                         <Paper className={classes.paper}>
-                        <Card className={classes.card}>
-                            {(item.img?.length) ?
-                                <Carousel>
-                                    {
-                                        item.img.map(a => (                         
-                                        <img src={imgUrl + a} alt="nuotrauka" style={{height: "500px"}}   className={classes.cardMedia}  />))}
-                                </Carousel>
-                                 : false} 
-                             </Card>
+                            <Card className={classes.card}>
+                                {(item.img?.length) ?
+                                    <Carousel>
+                                        {
+                                            item.img.map(a => (
+                                                <img src={imgUrl + a} alt="nuotrauka" style={{ height: "500px" }} className={classes.cardMedia} />))}
+                                    </Carousel>
+                                    : false}
+                            </Card>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -93,13 +93,13 @@ const ShowProduct = ({ match, addCart }) => {
                             Dydis: {item.size}
                         </Typography>
                         <Typography gutterBottom variant="p" component="p">
-                            Aprašymas: <br>{item.description}</br>
+                            Aprašymas: {item.description}
                         </Typography>
                         <Typography >
-                        € {item.price} 
+                            € {item.price}
                         </Typography>
                         <Typography className={classes.discount}>
-                                        - {item.discount}%
+                            - {item.discount}%
                                     </Typography>
                         <Button onClick={() => addCart(item)} size="small" color="primary" className={classes.basket}>Dėti į krepšelį</Button>
                         <Button href={`/products`} className={classes.basket}>Atgal</Button>
