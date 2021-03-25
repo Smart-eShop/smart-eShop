@@ -44,7 +44,6 @@ const AddDelivery = () => {
       .then((res) => {
         console.log(res.message);
         if (res.message === "Pridėta sėkmingai") {
-          ///////cia nekeisti lietuviskai
           setDeliveryAdded(true);
           setRequestError(false);
           setTitle("");

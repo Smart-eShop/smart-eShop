@@ -32,7 +32,7 @@ const UserTable = () => {
       .then(
         (data) => {
           setIsLoaded(true);
-          console.log(data);
+          // console.log(data);
           const userObj = data;
           setUsers(userObj.users);
         },

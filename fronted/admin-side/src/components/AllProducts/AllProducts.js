@@ -8,13 +8,8 @@ import {
   CCardBody,
   CAlert,
   CButton,
-  CBadge,
   CDataTable,
   CCollapse,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownItem,
-  CDropdownMenu,
 } from "@coreui/react";
 import AddProduct from "../AddProduct";
 
@@ -104,20 +99,20 @@ const ProductTable = () => {
     },
   ];
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "Active":
-        return "success";
-      case "Inactive":
-        return "secondary";
-      case "Pending":
-        return "warning";
-      case "Banned":
-        return "danger";
-      default:
-        return "primary";
-    }
-  };
+  // const getBadge = (status) => {
+  //   switch (status) {
+  //     case "Active":
+  //       return "success";
+  //     case "Inactive":
+  //       return "secondary";
+  //     case "Pending":
+  //       return "warning";
+  //     case "Banned":
+  //       return "danger";
+  //     default:
+  //       return "primary";
+  //   }
+  // };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -143,7 +138,7 @@ const ProductTable = () => {
           color="primary"
         >
           <CModalHeader closeButton>
-            <CModalTitle>Sukurti naują apmokėjimą</CModalTitle>
+            <CModalTitle>Sukurti naują prekę</CModalTitle>
           </CModalHeader>
           <CModalBody>
             <AddProduct />

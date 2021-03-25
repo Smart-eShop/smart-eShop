@@ -18,7 +18,6 @@ const OrderTable = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
-  const [kart, setKart] = useState();
 
   const accessToken = localStorage.getItem("access_token");
   function getUserData() {
@@ -156,20 +155,20 @@ const OrderTable = () => {
     },
   ];
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "Active":
-        return "success";
-      case "Inactive":
-        return "secondary";
-      case "Pending":
-        return "warning";
-      case "Banned":
-        return "danger";
-      default:
-        return "primary";
-    }
-  };
+  // const getBadge = (status) => {
+  //   switch (status) {
+  //     case "Active":
+  //       return "success";
+  //     case "Inactive":
+  //       return "secondary";
+  //     case "Pending":
+  //       return "warning";
+  //     case "Banned":
+  //       return "danger";
+  //     default:
+  //       return "primary";
+  //   }
+  // };
 
   if (error) {
     return <div>Error: {error.message}</div>;

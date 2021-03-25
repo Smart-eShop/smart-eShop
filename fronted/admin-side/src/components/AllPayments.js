@@ -6,7 +6,6 @@ import {
   CModal,
   CModalHeader,
   CModalTitle,
-  CModalFooter,
   CAlert,
   CModalBody,
   CCard,
