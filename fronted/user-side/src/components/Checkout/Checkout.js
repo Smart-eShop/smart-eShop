@@ -125,10 +125,13 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
     useEffect(() => {
         sendCart();
     }, []);
-
+const redirect = () => {
+    window.location = '/';
+}
 const funkcija = () => {
     sendCart();
     alert ("Sąskaita išsiųsta į Jūsų el. paštą")
+    redirect();
 }
 
     return (
