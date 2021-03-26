@@ -31,6 +31,10 @@ const headersData = [
     href: "/contact-us",
   },
   {
+    label: "Apie mus",
+    href: "/about",
+  },
+  {
     label: "Prekių kategorijos",
     href: "/category",
   },
@@ -49,6 +53,10 @@ const newheadersData = [
     href: "/contact-us",
   },
   {
+    label: "Apie mus",
+    href: "/about",
+  },
+  {
     label: "Prekių kategorijos",
     href: "/category",
   },
@@ -56,6 +64,7 @@ const newheadersData = [
     label: "Prekės",
     href: "/products",
   },
+
   {
     label: "Prisijungti",
     href: "/login",

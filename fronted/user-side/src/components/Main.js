@@ -19,6 +19,8 @@ import Cart from "./Cart/Cart";
 import useLocalStorage from "./useLocalStorage";
 import ProductsCategories from "./Category/ProductsCategories";
 import Category from "./Category/Category";
+import Footer from "./Footer/Footer";
+
 
 
 const Main = () => {
@@ -142,27 +144,19 @@ const Main = () => {
   return (
     <>
       <Router>
-      <Route
-            exact
-            render={(props) => (
-              <Navbar
-                {...props}
-                
-                totalQuantity={totalQuantity}
-                
-              />
-            )}
-          />
-        <Switch>
         <Route
+          exact
+          render={(props) => (
+            <Navbar {...props} totalQuantity={totalQuantity} />
+          )}
+        />
+
+        <Switch>
+          <Route
             path="/"
             exact
             render={(props) => (
-              <Products
-                {...props}
-                addCart={addCart}
-                items={items}
-              />
+              <Products {...props} addCart={addCart} items={items} />
             )}
           />
           <Route path="/login" exact component={Login} />
@@ -180,17 +174,39 @@ const Main = () => {
               />
             )}
           />
-           <Route path="/category" exact render={(props) => (
-                        <ProductsCategories {...props} addCart={addCart} items={items} printCategories={printCategories} setCategoryId={setCategoryId} categoryId={categoryId}/>
-                    )}/>
-           <Route path="/products/:id" exact render={(props) =>(
-                        <ShowProduct {...props} addCart={addCart} />
-                    )}/>
-                      <Route path="/category/:id" exact render={(props) =>(
-                        <ProductsByCategory {...props} addCart={addCart} items={items} categoryId={categoryId}/>
-                    )}/>
+          <Route
+            path="/category"
+            exact
+            render={(props) => (
+              <ProductsCategories
+                {...props}
+                addCart={addCart}
+                items={items}
+                printCategories={printCategories}
+                setCategoryId={setCategoryId}
+                categoryId={categoryId}
+              />
+            )}
+          />
+          <Route
+            path="/products/:id"
+            exact
+            render={(props) => <ShowProduct {...props} addCart={addCart} />}
+          />
+          <Route
+            path="/category/:id"
+            exact
+            render={(props) => (
+              <ProductsByCategory
+                {...props}
+                addCart={addCart}
+                items={items}
+                categoryId={categoryId}
+              />
+            )}
+          />
           <Route path="/about" exact component={About} />
-          
+
           <Route path="/contact-us" exact component={Contact} />
           <Route
             path="/checkout"
