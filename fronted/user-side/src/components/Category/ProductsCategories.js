@@ -29,6 +29,15 @@ const useStyles = makeStyles(theme => ({
         },
         marginBottom: theme.spacing(8),
     },
+    cardGrid: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(10),
+    },
+    card: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
 
 }));
 
@@ -64,6 +73,7 @@ const ProductsCategories = ({printCategories, setCategoryId, items, addCart, cat
                         // type="button">{category.category_name}</Button>
 
                 ))}
+                  <Grid container spacing={4}>
                     {items.map((item) => {
                         if(item.category.id == categoryId){
                             return (
@@ -97,7 +107,7 @@ const ProductsCategories = ({printCategories, setCategoryId, items, addCart, cat
                             )
                         }
                     })}
-
+</Grid>
                 {/*<Footer/>*/}
             </Container>
         </div>
