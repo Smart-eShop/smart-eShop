@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice, totalQuantity, cartItems }) {
+  
     const [redir, setRedir] = useState(false);
     // console.log(cartTotalPrice);
     const classes = useStyles();
@@ -125,8 +126,10 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
         sendCart();
     }, []);
 
- 
-
+const funkcija = () => {
+    sendCart();
+    alert ("Sąskaita išsiųsta į Jūsų el. paštą")
+}
 
     return (
         <React.Fragment>
@@ -136,8 +139,8 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
                     <Typography component="h1" variant="h4" align="center">
                         Užsakymo patvirtinimas
                     </Typography>
-                    <React.Fragment >
-                
+                   
+                <form >
                         <Grid container spacing={4} >
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -213,8 +216,7 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
                                 />
                             </Grid>
                         </Grid> 
-                      </React.Fragment>
-
+                 
 
 
                     <Typography variant="subtitle1" className={classes.formControl}>
@@ -240,9 +242,10 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
                             <option value={delivery.id}>{delivery.name}</option>
                         ))}
                     </select>
+                    </form>
 
                     <div className={classes.buttons}>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={sendCart}>Pateikti užsakymą</Button>
+                        <Button type="submit" variant="contained" color="primary" className={classes.button} onClick={funkcija}>Pateikti užsakymą</Button>
                     </div>
 
 
