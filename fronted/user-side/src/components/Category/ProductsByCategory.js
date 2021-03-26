@@ -54,7 +54,7 @@ function ProductsByCategory({addCart, items, printCategories, categoryId}) {
     <React.Fragment>
     <Container className={classes.cardGrid} maxWidth="lg">
       <Typography variant="h4" marked="center" align="center" component="h2" className={classes.categoryName}>
-        Kategorijos pavadinimas
+        Kategorijos prekės
       </Typography>
       <Grid container spacing={4}>
       {items.map((item) => (
