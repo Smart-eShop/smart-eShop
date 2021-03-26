@@ -64,7 +64,7 @@ export default function Login() {
   const [usernameInput, setUsername] = useState("");
   const [passwordInput, setPassword] = useState("");
 
-  const [categoryAdded, setCategoryAdded] = useState(false);
+  const [loginSuccessful, setLoginSuccessful] = useState(false);
   const [requestError, setRequestError] = useState(false);
 
   const loginFetch = (e) => {
@@ -83,11 +83,11 @@ export default function Login() {
       .then((data) => {
         console.log(data.message);
         if (data.message === "Neteisingi prisijungimo duomenys") {
-          setCategoryAdded(false);
+          setLoginSuccessful(false);
           setRequestError(true);
         } else {
           setRequestError(false);
-          setCategoryAdded(true);
+          setLoginSuccessful(true);
         }
         if (data.access_token) {
           return data.access_token;
@@ -104,7 +104,7 @@ export default function Login() {
       })
       .catch((err) => {
         setRequestError(true);
-        setCategoryAdded(false);
+        setLoginSuccessful(false);
       });
  ;
 
@@ -147,7 +147,7 @@ export default function Login() {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.large} />
-          {categoryAdded ? (
+          {loginSuccessful ? (
             <Alert color="primary" closeButton>
              Jūs sėkmingai prisijungėte!
             </Alert>
