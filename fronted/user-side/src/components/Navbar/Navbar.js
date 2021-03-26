@@ -35,12 +35,30 @@ const headersData = [
     href: "/category",
   },
   {
-    label: "Prisijungti",
-    href: "/login",
+    label: "Prekės",
+    href: "/products",
+  },
+];
+const newheadersData = [
+  // {
+  //   label: "Apie mus",
+  //   href: "/about",
+  // },
+  {
+    label: "Kontaktai",
+    href: "/contact-us",
+  },
+  {
+    label: "Prekių kategorijos",
+    href: "/category",
   },
   {
     label: "Prekės",
     href: "/products",
+  },
+  {
+    label: "Prisijungti",
+    href: "/login",
   },
 ];
 
@@ -134,24 +152,21 @@ export default function Navbar({totalQuantity}) {
   }, []);
 
   const displayDesktop = () => {
-    return (
-      <Toolbar className={toolbar}>
-        {smartEShop}
+    if (access_token) {
+      return (
+        <Toolbar className={toolbar}>
+          {smartEShop}
 
-        <div>{getMenuButtons()}</div>
-        {access_token && (
+          <div>{getMenuButtons()}</div>
+
           <div>
-      
-             <Link href="/cart" color="inherit" className={classes.basketHover}>
-         
-             <IconButton aria-label="show basket" color="inherit">
-              <Badge  badgeContent={totalQuantity} color="secondary" >
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            
-  </Link>
-            
+            <Link href="/cart" color="inherit" className={classes.basketHover}>
+              <IconButton aria-label="show basket" color="inherit">
+                <Badge badgeContent={totalQuantity} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
 
             <IconButton
               aria-label="account of current user"
@@ -181,10 +196,34 @@ export default function Navbar({totalQuantity}) {
               <MenuItem onClick={() => clerLocalStorage()}>Atsijungti</MenuItem>
             </Menu>
           </div>
-        )}
-      </Toolbar>
-    );
-  };
+        </Toolbar>
+      );
+    }
+
+     if (!access_token) {
+       return (
+         <Toolbar className={toolbar}>
+           {smartEShop}
+
+           <div>{getMenuButtons()}</div>
+
+           <div>
+             <Link href="/cart" color="inherit" className={classes.basketHover}>
+               <IconButton aria-label="show basket" color="inherit">
+                 <Badge badgeContent={totalQuantity} color="secondary">
+                   <ShoppingCartIcon />
+                 </Badge>
+               </IconButton>
+             </Link>
+
+      
+
+             
+           </div>
+         </Toolbar>
+       );
+     }
+  }
 
   const displayMobile = () => {
     const handleDrawerOpen = () =>
@@ -216,9 +255,7 @@ export default function Navbar({totalQuantity}) {
           <div className={drawerContainer}>
             {getDrawerChoices()}
 
-            <Link to={"/login"} component={RouterLink}>
-              <MenuItem>Prisijungti</MenuItem>
-            </Link>
+            
           </div>
         </Drawer>
 
@@ -260,28 +297,49 @@ export default function Navbar({totalQuantity}) {
   };
 
   const getDrawerChoices = () => {
-    return headersData.map(({ label, href }) => {
-      return (
-        <>
-        <Link
-          {...{
-            component: RouterLink,
-            to: href,
-            color: "inherit",
-            style: { textDecoration: "none" },
-            key: label,
-          }}
-        >
-          <MenuItem>{label}</MenuItem>
-        </Link>
-       
-        <Link to={"/login"} component={RouterLink}>
-              <MenuItem>Prisijungti</MenuItem>
+ const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      return headersData.map(({ label, href }) => {
+        return (
+          <>
+            <Link
+           
+              {...{
+                component: RouterLink,
+                to: href,
+                color: "inherit",
+                style: { textDecoration: "none" },
+                key: label,
+              }}
+            >
+              <MenuItem>{label}</MenuItem>
             </Link>
-            </>
-        
-      );
-    });
+          </>
+        );
+      });
+    }if (!accessToken) {
+      return newheadersData.map(({ label, href }) => {
+        return (
+          <>
+            <Link
+              {...{
+                component: RouterLink,
+                to: href,
+                color: "inherit",
+                style: { textDecoration: "none" },
+                key: label,
+              }}
+            >
+              <MenuItem>{label}</MenuItem>
+            </Link>
+          </>
+        );
+      });
+    }
+
+
+
+
   };
 
   const smartEShop = (
@@ -294,21 +352,48 @@ export default function Navbar({totalQuantity}) {
   );
 
   const getMenuButtons = () => {
-    return headersData.map(({ label, href }) => {
-      return (
-        <Button
-          {...{
-            key: label,
-            color: "inherit",
-            to: href,
-            component: RouterLink,
-            className: menuButton,
-          }}
-        >
-          {label}
-        </Button>
+    const accessToken = localStorage.getItem("access_token");
+if (accessToken) {
+  return headersData.map(({ label, href }) => {
+    return (
+      <Button
+        {...{
+          key: label,
+          color: "inherit",
+          to: href,
+          component: RouterLink,
+          className: menuButton,
+        }}
+      >
+        {label}
+      </Button>
+    );
+  });
+}
+    if (!accessToken) {
+
+      return newheadersData.map(({ label, href }) => {
+        return (
+          <Button
+            {...{
+              key: label,
+              color: "inherit",
+              to: href,
+              component: RouterLink,
+              className: menuButton,
+            }}
+          >
+            {label}
+          </Button>
+        );
+      }
+      
+      
+      
       );
-    });
+
+    }
+    
   };
 
   return (

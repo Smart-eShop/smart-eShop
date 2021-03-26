@@ -247,6 +247,7 @@ export default function Checkout({ cartPriceBeforeTax, cartTaxes, cartTotalPrice
 
 
 
+
                 </Paper>
 
             </main>

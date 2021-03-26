@@ -135,7 +135,9 @@ const Cart = ({
             color="secondary"
             onClick={clearCart}
           >
-            Naikinti krepšelį
+
+           Išvalyti krepšelį
+
           </Button>
           <Button
             className={classes.checkoutButton}
@@ -146,7 +148,9 @@ const Cart = ({
             variant="contained"
             color="primary"
           >
+
             Užsakyti
+
           </Button>
         </div>
       </div>
