@@ -122,7 +122,7 @@ const Cart = ({
             color="secondary"
             onClick={clearCart}
           >
-            Empty cart
+           Išvalyti krepšelį
           </Button>
           <Button
             className={classes.checkoutButton}
@@ -133,7 +133,7 @@ const Cart = ({
             variant="contained"
             color="primary"
           >
-            Checkout
+            Pirkti
           </Button>
         </div>
       </div>

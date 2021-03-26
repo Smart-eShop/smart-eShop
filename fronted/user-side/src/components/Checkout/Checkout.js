@@ -112,7 +112,9 @@ const sendCart = async () => {
             });
             const data = await response.json();
             console.log(data);
+            const token = localStorage.getItem("access_token");
             localStorage.clear();
+            localStorage.setItem("access_token", token);
 
         } catch (error) {
             console.log(error);
@@ -217,8 +219,8 @@ const sendCart = async () => {
                 
                         <Typography variant="subtitle1" className={classes.formControl}>
                             Pasirinkite apmokėjimo būdą</Typography>
-                        
                             <select className={classes.formControl2} value={paymentId} onChange={(e) => setPaymentId(e.target.value)}>
+                            <option disabled selected>Pasirinkite apmokėjimo būdą...</option>
                                 {printPayment.map((payment) => (
                                     <option value={payment.id}>{payment.name}</option>
                                 ))}
@@ -232,6 +234,7 @@ const sendCart = async () => {
                             Pasirinkite pristatymo būdą</Typography>
                         
                             <select className={classes.formControl2} value={deliveryValue} onChange={(e) => setDeliveryValue(e.target.value)}>
+                               <option disabled selected>Pasirinkite pristatymo būdą...</option>
                                 {printDelivery.map((delivery) => (
                                     <option value={delivery.id}>{delivery.name}</option>
                                 ))}
