@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.7.3",
     "bootstrap": "^4.6.0",
     "formik": "^2.2.6",
+    "mdbreact": "^5.0.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.0",
     "react-dom": "^17.0.1",
